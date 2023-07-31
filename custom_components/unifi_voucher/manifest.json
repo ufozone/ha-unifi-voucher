@@ -1,6 +1,6 @@
 {
   "domain": "unifi_voucher",
-  "name": "UniFi WiFi Voucher Integration ",
+  "name": "UniFi WiFi Voucher Integration",
   "codeowners": [
     "@ufozone"
   ],
