@@ -1,4 +1,4 @@
-"""Constants for UniFi WiFi Voucher integration."""
+"""Constants for UniFi Hotspot Manager integration."""
 from logging import getLogger
 
 import voluptuous as vol

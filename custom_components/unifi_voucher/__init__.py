@@ -1,4 +1,4 @@
-"""UniFi WiFi Voucher integration."""
+"""UniFi Hotspot Manager integration."""
 from __future__ import annotations
 
 from homeassistant.core import HomeAssistant
