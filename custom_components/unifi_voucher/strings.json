@@ -1,0 +1,49 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "Set up your UniFi WiFi Voucher Manager instance.",
+        "data": {
+          "host": "[%key:common::config_flow::data::host%]",
+          "username": "[%key:common::config_flow::data::username%]",
+          "password": "[%key:common::config_flow::data::password%]",
+          "port": "[%key:common::config_flow::data::port%]",
+          "ssl": "[%key:common::config_flow::data::ssl%]",
+          "verify_ssl": "[%key:common::config_flow::data::verify_ssl%]"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+      "invalid_host": "[%key:common::config_flow::error::invalid_host%]",
+      "unknown": "[%key:common::config_flow::error::unknown%]",
+      "timeout_connect": "[%key:common::config_flow::error::timeout_connect%]"
+    },
+    "abort": {
+      "existing_instance_updated": "Updated existing configuration",
+      "already_configured": "[%key:common::config_flow::abort::already_configured_service%]"
+    }
+  },
+  "entity": {
+    "button": {
+      "button_name": {
+        "name": "Button name",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
+      }
+    },
+    "sensor": {
+      "sensor_name": {
+        "name": "Sensor name",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
+      }
+    }
+  }
+}
