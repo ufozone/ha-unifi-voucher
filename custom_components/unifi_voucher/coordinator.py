@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 from datetime import timedelta
-from pyunifi.controller import Controller
 
 from homeassistant.core import HomeAssistant
 from homeassistant.const import (
@@ -54,17 +53,6 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
             update_interval=update_interval,
         )
         self.config_entry = config_entry
-        self.controller = Controller(
-            config_entry.options.get(CONF_HOST, DEFAULT_HOST),
-            config_entry.options.get(CONF_USERNAME, ""),
-            config_entry.options.get(CONF_PASSWORD, ""),
-            config_entry.options.get(CONF_PORT, DEFAULT_PORT),
-            config_entry.options.get(CONF_VERSION, DEFAULT_VERSION),
-            config_entry.options.get(CONF_SITE_ID, DEFAULT_SITE_ID),
-            config_entry.options.get(CONF_VERIFY_SSL, DEFAULT_VERIFY_SSL),
-        )
-        vouchers = self.controller.list_vouchers()
-        LOGGER.debug(vouchers)
         self.controller = None # TODO
         self._last_pull = None
 

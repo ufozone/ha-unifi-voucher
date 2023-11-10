@@ -1,7 +1,7 @@
 """Adds config flow for UniFi WiFi Voucher."""
 from __future__ import annotations
 
-from pyunifi.controller import Controller
+from types import MappingProxyType
 
 from homeassistant.config_entries import (
     ConfigFlow,
@@ -28,13 +28,13 @@ from .const import (
     LOGGER,
     DOMAIN,
     DEFAULT_SITE_ID,
-    DEFAULT_VERSION,
     DEFAULT_HOST,
     DEFAULT_PORT,
     DEFAULT_VERIFY_SSL,
     CONF_SITE_ID,
-    CONF_VERSION,
 )
+from .controller import get_unifi_controller
+from .errors import AuthenticationRequired, CannotConnect
 
 
 class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
@@ -59,35 +59,33 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                     CONF_PORT: user_input[CONF_PORT],
                 }
             )
+            _data = {
+                CONF_HOST: user_input[CONF_HOST],
+                CONF_USERNAME: user_input[CONF_USERNAME],
+                CONF_PASSWORD: user_input[CONF_PASSWORD],
+                CONF_PORT: int(user_input[CONF_PORT]),
+                CONF_VERIFY_SSL: user_input[CONF_VERIFY_SSL],
+                CONF_SITE_ID: DEFAULT_SITE_ID,
+            }
             try:
                 session = async_create_clientsession(self.hass, user_input[CONF_VERIFY_SSL])
-                controller = await self.hass.async_add_executor_job(
-                    Controller, 
-                    user_input[CONF_HOST],
-                    user_input[CONF_USERNAME],
-                    user_input[CONF_PASSWORD],
-                    user_input[CONF_PORT],
-                    user_input[CONF_VERSION],
-                    DEFAULT_SITE_ID,
-                    user_input[CONF_VERIFY_SSL],
+                controller = await get_unifi_controller(
+                    self.hass, MappingProxyType(_data)
                 )
-                vouchers = controller.list_vouchers()
-                LOGGER.debug(vouchers)
+                await controller.sites.update()
+                self.sites = controller.sites
+                LOGGER.debug(controller.sites)
+            except AuthenticationRequired:
+                errors["base"] = "invalid_auth"
+            except CannotConnect:
+                errors["base"] = "cannot_connect"
             except Exception as exception:
                 LOGGER.exception(exception)
                 errors["base"] = "unknown"
 
             if not errors:
                 # Input is valid, set data
-                self.data = {
-                    CONF_HOST: user_input[CONF_HOST],
-                    CONF_USERNAME: user_input[CONF_USERNAME],
-                    CONF_PASSWORD: user_input[CONF_PASSWORD],
-                    CONF_PORT: user_input[CONF_PORT],
-                    CONF_VERIFY_SSL: user_input[CONF_VERIFY_SSL],
-                    CONF_VERSION: user_input[CONF_VERSION],
-                    CONF_SITE_ID: DEFAULT_SITE_ID,
-                }
+                self.data = _data
                 self.data.update()
                 return self.async_create_entry(
                     title=self.data[CONF_HOST],
@@ -141,21 +139,6 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                         CONF_VERIFY_SSL,
                         default=(user_input or {}).get(CONF_VERIFY_SSL, DEFAULT_VERIFY_SSL),
                     ): selector.BooleanSelector(),
-                    vol.Required(
-                        CONF_VERSION,
-                        default=(user_input or {}).get(CONF_VERSION, DEFAULT_VERSION),
-                    ): selector.SelectSelector(
-                        selector.SelectSelectorConfig(
-                            options=[
-                                "unifiOS",
-                                "UDMP-unifiOS",
-                                "v4",
-                                "v5",
-                            ],
-                            mode=selector.SelectSelectorMode.DROPDOWN,
-                            multiple=False,
-                        ),
-                    ),
                 }
             ),
             errors=errors,
