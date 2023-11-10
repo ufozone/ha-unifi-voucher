@@ -1,4 +1,4 @@
-"""UniFi WiFi Voucher button platform."""
+"""UniFi Hotspot Manager button platform."""
 from __future__ import annotations
 
 from collections.abc import Callable, Coroutine
@@ -25,7 +25,7 @@ from .entity import UnifiVoucherEntity
 
 @dataclass
 class UnifiVoucherButtonDescriptionMixin:
-    """Mixin to describe a UniFi WiFi Voucher button entity."""
+    """Mixin to describe a UniFi Hotspot Manager button entity."""
 
     press_action: Callable[[UnifiVoucherCoordinator], Coroutine]
 
@@ -35,7 +35,7 @@ class UnifiVoucherButtonDescription(
     ButtonEntityDescription,
     UnifiVoucherButtonDescriptionMixin,
 ):
-    """UniFi WiFi Voucher button description."""
+    """UniFi Hotspot Manager button description."""
 
 
 async def async_setup_entry(
@@ -69,7 +69,7 @@ async def async_setup_entry(
 
 
 class UnifiVoucherButton(UnifiVoucherEntity, ButtonEntity):
-    """Representation of a UniFi WiFi Voucher button."""
+    """Representation of a UniFi Hotspot Manager button."""
 
     def __init__(
         self,

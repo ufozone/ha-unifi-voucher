@@ -2,26 +2,17 @@
 from __future__ import annotations
 
 from homeassistant.core import HomeAssistant
-from homeassistant.const import (
-    CONF_HOST,
-    CONF_PASSWORD,
-    CONF_PORT,
-    CONF_USERNAME,
-    CONF_VERIFY_SSL,
-)
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .const import (
     DOMAIN,
     PLATFORMS,
-    CONF_SITE_ID,
 )
 from .coordinator import UnifiVoucherCoordinator
 
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
-    """Set up DUniFi WiFi Voucher component."""
+    """Set up DUniFi Hotspot Manager component."""
     hass.data.setdefault(DOMAIN, {})
 
     return True

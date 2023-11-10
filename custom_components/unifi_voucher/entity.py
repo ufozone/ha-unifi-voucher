@@ -1,4 +1,4 @@
-"""UniFi WiFi Voucher entity."""
+"""UniFi Hotspot Manager entity."""
 from __future__ import annotations
 
 from homeassistant.core import callback
@@ -23,7 +23,7 @@ from .coordinator import UnifiVoucherCoordinator
 
 
 class UnifiVoucherEntity(CoordinatorEntity):
-    """UniFi WiFi Voucher class."""
+    """UniFi Hotspot Manager class."""
 
     _attr_has_entity_name = True
 

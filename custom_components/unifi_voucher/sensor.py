@@ -1,4 +1,4 @@
-"""UniFi WiFi Voucher sensor platform."""
+"""UniFi Hotspot Manager sensor platform."""
 from __future__ import annotations
 
 from homeassistant.core import HomeAssistant
@@ -57,7 +57,7 @@ async def async_setup_entry(
 
 
 class UnifiVoucherSensor(UnifiVoucherEntity, SensorEntity):
-    """Representation of a UniFi WiFi Voucher sensor."""
+    """Representation of a UniFi Hotspot Manager sensor."""
 
     def __init__(
         self,

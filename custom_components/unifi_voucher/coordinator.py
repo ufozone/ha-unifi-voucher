@@ -1,4 +1,4 @@
-"""DataUpdateCoordinator for UniFi WiFi Voucher."""
+"""DataUpdateCoordinator for UniFi Hotspot Manager."""
 from __future__ import annotations
 
 from datetime import timedelta
@@ -23,21 +23,25 @@ from .const import (
     DOMAIN,
     LOGGER,
     UPDATE_INTERVAL,
-    DEFAULT_SITE_ID,
-    DEFAULT_VERSION,
     DEFAULT_HOST,
     DEFAULT_PORT,
     DEFAULT_VERIFY_SSL,
+    DEFAULT_SITE_ID,
     CONF_SITE_ID,
-    CONF_VERSION,
     ATTR_AVAILABLE,
     ATTR_LAST_PULL,
+)
+from .api import (
+    UnifiVoucherApiClient,
+    UnifiVoucherApiAuthenticationError,
+    UnifiVoucherApiConnectionError,
+    UnifiVoucherApiError,
 )
 
 
 # https://developers.home-assistant.io/docs/integration_fetching_data#coordinated-single-api-poll-for-data-for-all-entities
 class UnifiVoucherCoordinator(DataUpdateCoordinator):
-    """Class to manage fetching data from the UniFi WiFi Voucher."""
+    """Class to manage fetching data from the UniFi Hotspot Manager."""
 
     def __init__(
         self,
@@ -53,7 +57,15 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
             update_interval=update_interval,
         )
         self.config_entry = config_entry
-        self.controller = None # TODO
+        self.client = UnifiVoucherApiClient(
+            hass,
+            host=config_entry.options.get(CONF_HOST, DEFAULT_HOST),
+            username=config_entry.options.get(CONF_USERNAME, ""),
+            password=config_entry.options.get(CONF_PASSWORD, ""),
+            port=int(config_entry.options.get(CONF_PORT, DEFAULT_PORT)),
+            site_id=config_entry.options.get(CONF_SITE_ID, DEFAULT_SITE_ID),
+            verify_ssl=config_entry.options.get(CONF_VERIFY_SSL, DEFAULT_VERIFY_SSL),
+        )
         self._last_pull = None
 
     async def __aenter__(self):

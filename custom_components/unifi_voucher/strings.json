@@ -2,14 +2,20 @@
   "config": {
     "step": {
       "user": {
-        "description": "Set up your UniFi WiFi Voucher Manager instance.",
+        "description": "Set up your UniFi Hotspot Manager Manager instance.",
         "data": {
           "host": "[%key:common::config_flow::data::host%]",
           "username": "[%key:common::config_flow::data::username%]",
           "password": "[%key:common::config_flow::data::password%]",
           "port": "[%key:common::config_flow::data::port%]",
-          "ssl": "[%key:common::config_flow::data::ssl%]",
           "verify_ssl": "[%key:common::config_flow::data::verify_ssl%]"
+        }
+      },
+      "site": {
+        "title": "Select site",
+        "description": "Select the site for which you want to manage the vouchers.",
+        "data": {
+          "site_id": "Select site"
         }
       }
     },
@@ -17,8 +23,10 @@
       "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
       "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
       "invalid_host": "[%key:common::config_flow::error::invalid_host%]",
+      "no_access": "No access",
       "unknown": "[%key:common::config_flow::error::unknown%]",
-      "timeout_connect": "[%key:common::config_flow::error::timeout_connect%]"
+      "timeout_connect": "[%key:common::config_flow::error::timeout_connect%]",
+      "site_invalid": "Site invalid"
     },
     "abort": {
       "existing_instance_updated": "Updated existing configuration",
