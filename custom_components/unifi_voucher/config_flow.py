@@ -1,9 +1,6 @@
 """Adds config flow for UniFi Hotspot Manager."""
 from __future__ import annotations
 
-from aiounifi.interfaces.sites import Sites
-from aiounifi.models.site import Site
-
 from homeassistant.core import (
     callback,
     HomeAssistant,

@@ -2,29 +2,21 @@
 from __future__ import annotations
 
 import asyncio
-import ssl
 from dataclasses import dataclass
 
 from aiohttp import CookieJar
 import aiounifi
-from aiounifi.interfaces.api_handlers import ItemEvent
-from aiounifi.interfaces.sites import Sites
 from aiounifi.models.configuration import Configuration
-from aiounifi.models.api import ApiItem, ApiRequest
+from aiounifi.models.api import ApiRequest
 
 from homeassistant.core import (
     callback,
     HomeAssistant,
 )
 from homeassistant.helpers import aiohttp_client
-from homeassistant.helpers.dispatcher import (
-    async_dispatcher_connect,
-    async_dispatcher_send,
-)
 
 from .const import (
     LOGGER,
-    DOMAIN,
 )
 
 RETRY_TIMER = 15
@@ -52,7 +44,7 @@ class UnifiVoucherListRequest(ApiRequest):
     @classmethod
     def create(
         cls
-    ) -> Self:
+    ) -> self:
         """Create voucher list request."""
         return cls(
             method="get",
@@ -73,7 +65,7 @@ class UnifiVoucherCreateRequest(ApiRequest):
         down_bandwidth: int | None = None,
         byte_quota: int | None = None,
         note: str | None = None,
-    ) -> Self:
+    ) -> self:
         """
         Create voucher create request.
 
@@ -214,6 +206,9 @@ class UnifiVoucherApiClient:
             )
             raise UnifiVoucherApiAuthenticationError from err
         except aiounifi.AiounifiException as err:
-            LOGGER.exception("Unknown UniFi Network communication error occurred: %s", err)
+            LOGGER.exception(
+                "Unknown UniFi Network communication error occurred: %s",
+                err,
+            )
             raise UnifiVoucherApiError from err
         return False

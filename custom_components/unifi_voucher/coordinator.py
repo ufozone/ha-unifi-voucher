@@ -10,8 +10,6 @@ from homeassistant.const import (
     CONF_PORT,
     CONF_USERNAME,
     CONF_VERIFY_SSL,
-    ATTR_STATE,
-    ATTR_TEMPERATURE,
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.update_coordinator import (
