@@ -1,6 +1,6 @@
 pip>=21.0,<23.2
 colorlog==6.7.0
-ruff==0.0.270
+ruff==0.1.5
 pydocstyle==6.3.0
 isort==5.12.0
 homeassistant==2023.6.0
