@@ -89,11 +89,11 @@
           "status": {
             "name": "Status",
             "state": {
-               "USED": "Einmal benutzt",
-               "USED_MULTIPLE": "Mehrmals benutzt",
-               "EXPIRED": "Abgelaufen",
-               "VALID_ONE": "Einmal gültig",
-               "VALID_MULTI": "Mehrmals gültig"
+              "USED": "Einmal benutzt",
+              "USED_MULTIPLE": "Mehrmals benutzt",
+              "EXPIRED": "Abgelaufen",
+              "VALID_ONE": "Einmal gültig",
+              "VALID_MULTI": "Mehrmals gültig"
             }
           },
           "last_pull": {
