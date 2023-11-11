@@ -36,21 +36,37 @@ UniFi Hotspot Manager as a Custom Component for Home Assistant. The most UniFi N
 
 ## Available components 
 
-### Binary Sensors
-
-coming soon...
-
 ### Buttons
 
-coming soon...
+* update
+
+    ```
+    attributes: 
+    last_poll
+    ```
+
+* create
+
+    ```
+    attributes: 
+    last_poll
+    ```
+
+* remove
+
+    ```
+    attributes: 
+    last_poll
+    ```
 
 ### Sensors
 
-coming soon...
+* voucher
 
-### Services
-
-coming soon...
+    ```
+    attributes: 
+    quota, used, duration, status, create_time, start_time, end_time, status_expires, last_poll
+    ```
 
 ### Logging
 
