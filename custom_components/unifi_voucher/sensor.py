@@ -61,16 +61,16 @@ class UnifiVoucherSensor(UnifiVoucherEntity, SensorEntity):
         )
         self.entity_description = entity_description
 
-    def _get_last_voucher(self) -> dict[str, any] | None:
+    def _get_latest_voucher(self) -> dict[str, any] | None:
         """Get last voucher."""
-        if (voucher_id := self.coordinator.last_voucher_id) in self.coordinator.vouchers:
+        if (voucher_id := self.coordinator.latest_voucher_id) in self.coordinator.vouchers:
             return self.coordinator.vouchers[voucher_id]
 
         return None
 
     def _update_extra_state_attributes(self) -> None:
         """Update extra attributes."""
-        if (voucher := self._get_last_voucher()) is None:
+        if (voucher := self._get_latest_voucher()) is None:
             return None
 
         _x = {
@@ -94,12 +94,12 @@ class UnifiVoucherSensor(UnifiVoucherEntity, SensorEntity):
     @property
     def available(self) -> bool:
         """Return True if entity is available."""
-        return (self.coordinator.last_voucher_id in self.coordinator.vouchers)
+        return (self.coordinator.latest_voucher_id in self.coordinator.vouchers)
 
     @property
     def native_value(self) -> str | None:
         """Return the native value of the sensor."""
-        if (voucher := self._get_last_voucher()) is None:
+        if (voucher := self._get_latest_voucher()) is None:
             return None
 
         return voucher.get("code")

@@ -68,7 +68,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
             verify_ssl=config_entry.data.get(CONF_VERIFY_SSL),
         )
         self.vouchers = {}
-        self.last_voucher_id = None
+        self.latest_voucher_id = None
         self._last_pull = None
         self._available = False
         self._scheduled_update_listeners: asyncio.TimerHandle | None = None
@@ -140,7 +140,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
     ) -> None:
         """Fetch data for all vouchers."""
         _vouchers = {}
-        _last_voucher_id = None
+        _latest_voucher_id = None
 
         vouchers = UnifiVouchers(self.client.controller)
         await vouchers.update()
@@ -173,13 +173,13 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
 
         for _i, _v in _vouchers.items():
             if (
-                _last_voucher_id is None or
-                _vouchers.get(_last_voucher_id, {}).get("create_time") < _v.get("create_time")
+                _latest_voucher_id is None or
+                _vouchers.get(_latest_voucher_id, {}).get("create_time") < _v.get("create_time")
             ):
-                _last_voucher_id = _i
+                _latest_voucher_id = _i
 
         self.vouchers = _vouchers
-        self.last_voucher_id = _last_voucher_id
+        self.latest_voucher_id = _latest_voucher_id
 
     async def async_update_vouchers(
         self,
@@ -240,7 +240,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         try:
             # No voucher ID given
             if obj_id is None:
-                if (obj_id := self.last_voucher_id) is None:
+                if (obj_id := self.latest_voucher_id) is None:
                     raise ValueError
 
             await self.client.controller.request(
