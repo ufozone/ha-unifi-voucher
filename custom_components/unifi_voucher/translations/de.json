@@ -1,0 +1,106 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "Richte deine UniFi Hotspot Manager Manager-Instanz ein.",
+        "data": {
+          "host": "Host",
+          "username": "Benutzername",
+          "password": "Passwort",
+          "port": "Port",
+          "verify_ssl": "SSL-Zertifikat überprüfen"
+        }
+      },
+      "site": {
+        "title": "Site auswählen",
+        "description": "Wähle die Site aus, für die du die Gutscheine verwalten möchtest.",
+        "data": {
+          "site_id": "Site auswählen"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung fehlgeschlagen",
+      "invalid_auth": "Ungültige Authentifizierung",
+      "invalid_host": "Ungültiger Hostname oder IP-Adresse",
+      "no_access": "Kein Zugriff",
+      "unknown": "Unerwarteter Fehler",
+      "timeout_connect": "Zeitüberschreitung beim Verbindungsaufbau",
+      "site_invalid": "Site ungültig"
+    },
+    "abort": {
+      "already_configured": "Dienst ist bereits konfiguriert",
+      "configuration_updated": "Konfiguration aktualisiert",
+      "reauth_successful": "Re-Authentifizierung war erfolgreich"
+    }
+  },
+  "entity": {
+    "button": {
+      "update": {
+        "name": "Aktualisieren",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Letzter Abruf"
+          }
+        }
+      },
+      "create": {
+        "name": "Gutschein erstellen",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Letzter Abruf"
+          }
+        }
+      },
+      "remove": {
+        "name": "Gutschein löschen",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Letzter Abruf"
+          }
+        }
+      }
+    },
+    "sensor": {
+      "voucher": {
+        "name": "Gutschein",
+        "state_attributes": {
+          "quota": {
+            "name": "Kontingent"
+          },
+          "used": {
+            "name": "Benutzt"
+          },
+          "duration": {
+            "name": "Laufzeit"
+          },
+          "create_time": {
+            "name": "Erstellt"
+          },
+          "start_time": {
+            "name": "Gestartet"
+          },
+          "end_time": {
+            "name": "Endet"
+          },
+          "status_expires": {
+            "name": "Läuft aus"
+          },
+          "status": {
+            "name": "Status",
+            "state": {
+               "USED": "Einmal benutzt",
+               "USED_MULTIPLE": "Mehrmals benutzt",
+               "EXPIRED": "Abgelaufen",
+               "VALID_ONE": "Einmal gültig",
+               "VALID_MULTI": "Mehrmals gültig"
+            }
+          },
+          "last_pull": {
+            "name": "Letzter Abruf"
+          }
+        }
+      }
+    }
+  }
+}
