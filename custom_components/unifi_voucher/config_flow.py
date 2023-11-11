@@ -209,7 +209,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                     title=self.title,
                     data=self.data,
                 )
-        
+
         # Only one site is available, skip selection
         if len(self.sites.values()) == 1:
             return await self.async_step_site(

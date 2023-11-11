@@ -104,8 +104,7 @@ class UnifiVoucherCreateRequest(ApiRequest):
         byte_quota: int | None = None,
         note: str | None = None,
     ) -> Self:
-        """
-        Create voucher create request.
+        """Create voucher create request.
 
         :param number: number of vouchers
         :param quota: number of using; 0 = unlimited
@@ -150,9 +149,7 @@ class UnifiVoucherRemoveRequest(ApiRequest):
         cls,
         obj_id: int,
     ) -> Self:
-        """
-        Create voucher remove request.
-        """
+        """Create voucher remove request."""
         data = {
             "cmd": "delete-voucher",
             "_id": obj_id,
@@ -188,7 +185,7 @@ class UnifiVoucher(ApiItem):
     def code(self) -> str:
         """Code."""
         if len(c := self.raw.get("code", "")) > 5:
-            return '%s-%s' % (c[:5], c[5:])
+            return c[:5] + '-' + c[5:]
         return c
 
     @property
@@ -301,7 +298,7 @@ class UnifiVoucherApiClient:
         """Initialize the system."""
         self.hass = hass
         self.host = host
-        
+
         if verify_ssl:
             session = aiohttp_client.async_get_clientsession(
                 hass,
@@ -354,10 +351,10 @@ class UnifiVoucherApiClient:
                 await self.controller.login()
                 await self.controller.sites.update()
                 for _unique_id, _site in self.controller.sites.items():
-                    # User must have admin or hotspot permissions 
+                    # User must have admin or hotspot permissions
                     if _site.role in ("admin", "hotspot"):
                         _sites[_unique_id] = _site
-                
+
                 # No site with the required permissions found
                 if len(_sites) == 0:
                     LOGGER.warning(

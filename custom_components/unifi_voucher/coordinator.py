@@ -138,6 +138,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
     async def async_fetch_vouchers(
         self,
     ) -> None:
+        """Fetch data for all vouchers."""
         _vouchers = {}
         _last_voucher_id = None
 
@@ -172,7 +173,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
 
         for _i, _v in _vouchers.items():
             if (
-                _last_voucher_id is None or 
+                _last_voucher_id is None or
                 _vouchers.get(_last_voucher_id, {}).get("create_time") < _v.get("create_time")
             ):
                 _last_voucher_id = _i
