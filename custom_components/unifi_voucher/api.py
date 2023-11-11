@@ -7,7 +7,10 @@ from dataclasses import dataclass
 from aiohttp import CookieJar
 import aiounifi
 from aiounifi.models.configuration import Configuration
-from aiounifi.models.api import ApiRequest
+from aiounifi.models.api import (
+    ApiRequest,
+    TypedApiResponse,
+)
 
 from homeassistant.core import (
     callback,
@@ -169,11 +172,13 @@ class UnifiVoucherApiClient:
         try:
             async with asyncio.timeout(10):
                 await self.api.login()
-                
                 await self.api.sites.update()
-                for _id, _site in self.api.sites.items():
+                for _unique_id, _site in self.api.sites.items():
+                    # User must have admin or hotspot permissions 
                     if _site.role in ("admin", "hotspot"):
-                        _sites[_id] = _site.description
+                        _sites[_unique_id] = _site
+                
+                # No site with the required permissions found
                 if len(_sites) == 0:
                     LOGGER.warning(
                         "Connected to UniFi Network at %s but no access.",
@@ -181,6 +186,17 @@ class UnifiVoucherApiClient:
                     )
                     raise UnifiVoucherApiAccessError
                 return _sites
+        except (
+            aiounifi.LoginRequired,
+            aiounifi.Unauthorized,
+            aiounifi.Forbidden,
+        ) as err:
+            LOGGER.warning(
+                "Connected to UniFi Network at %s but login required: %s",
+                self.host,
+                err,
+            )
+            raise UnifiVoucherApiAuthenticationError from err
         except (
             asyncio.TimeoutError,
             aiounifi.BadGateway,
@@ -195,20 +211,19 @@ class UnifiVoucherApiClient:
             )
             raise UnifiVoucherApiConnectionError from err
         except (
-            aiounifi.LoginRequired,
-            aiounifi.Unauthorized,
-            aiounifi.Forbidden,
+            aiounifi.AiounifiException,
+            Exception,
         ) as err:
-            LOGGER.warning(
-                "Connected to UniFi Network at %s but login required: %s",
-                self.host,
-                err,
-            )
-            raise UnifiVoucherApiAuthenticationError from err
-        except aiounifi.AiounifiException as err:
             LOGGER.exception(
                 "Unknown UniFi Network communication error occurred: %s",
                 err,
             )
             raise UnifiVoucherApiError from err
         return False
+
+    async def request(
+        self,
+        api_request: ApiRequest,
+    ) -> TypedApiResponse:
+        """Make a request to the API, retry login on failure."""
+        return await self.api.request(api_request)

@@ -59,7 +59,6 @@ async def async_setup_entry(
         [
             UnifiVoucherButton(
                 coordinator=coordinator,
-                host=config_entry.data[CONF_HOST],
                 entity_description=entity_description,
             )
             for entity_description in entity_descriptions
@@ -74,13 +73,11 @@ class UnifiVoucherButton(UnifiVoucherEntity, ButtonEntity):
     def __init__(
         self,
         coordinator: UnifiVoucherCoordinator,
-        host: str,
         entity_description: UnifiVoucherButtonDescription,
     ) -> None:
         """Initialize the button class."""
         super().__init__(
             coordinator=coordinator,
-            host=host,
             entity_type="button",
             entity_key=entity_description.key,
         )

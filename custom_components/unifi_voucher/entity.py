@@ -30,14 +30,13 @@ class UnifiVoucherEntity(CoordinatorEntity):
     def __init__(
         self,
         coordinator: UnifiVoucherCoordinator,
-        host: str,
         entity_type: str,
         entity_key: str,
     ) -> None:
         """Initialize."""
         super().__init__(coordinator)
 
-        self._host = host
+        self._host = "unifi_voucher" # TODO
         self._entity_type = entity_type
         self._entity_key = entity_key
 

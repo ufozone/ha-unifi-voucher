@@ -41,13 +41,17 @@ async def async_setup_entry(
         #    unit_of_measurement=REVOLUTIONS_PER_MINUTE,
         #    state_class=SensorStateClass.MEASUREMENT,
         #),
+        SensorEntityDescription(
+            key="voucher",
+            translation_key="voucher",
+            icon="mdi:numeric",
+        ),
     ]
 
     async_add_entities(
         [
             UnifiVoucherSensor(
                 coordinator=coordinator,
-                host=config_entry.data[CONF_HOST],
                 entity_description=entity_description,
             )
             for entity_description in entity_descriptions
@@ -62,13 +66,11 @@ class UnifiVoucherSensor(UnifiVoucherEntity, SensorEntity):
     def __init__(
         self,
         coordinator: UnifiVoucherCoordinator,
-        host: str,
         entity_description: SensorEntityDescription,
     ) -> None:
         """Initialize the sensor class."""
         super().__init__(
             coordinator=coordinator,
-            host=host,
             entity_type="sensor",
             entity_key=entity_description.key,
         )

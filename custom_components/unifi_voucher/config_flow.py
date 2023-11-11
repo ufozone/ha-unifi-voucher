@@ -52,9 +52,11 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
 
     def __init__(self) -> None:
         """Initialize the UniFi Network flow."""
-        self._title: str | None = None
-        self._options: dict[str, any] | None = None
-        self._sites: dict[str, str] | None = None
+        self.title: str | None = None
+        self.data: dict[str, any] | None = None
+        self.sites: dict[str, str] | None = None
+        self.reauth_config_entry: config_entries.ConfigEntry | None = None
+        self.reauth_schema: dict[vol.Marker, Any] = {}
 
     async def async_step_user(
         self,
@@ -63,12 +65,6 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
         """Invoke when a user initiates a flow via the user interface."""
         errors: dict[str, str] = {}
         if user_input is not None:
-            self._async_abort_entries_match(
-                {
-                    CONF_HOST: user_input[CONF_HOST],
-                    CONF_USERNAME: user_input[CONF_USERNAME],
-                }
-            )
             try:
                 client = UnifiVoucherApiClient(
                     self.hass,
@@ -79,7 +75,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                     site_id=DEFAULT_SITE_ID,
                     verify_ssl=user_input[CONF_VERIFY_SSL],
                 )
-                self._sites = await client.check_api_user()
+                self.sites = await client.check_api_user()
             except UnifiVoucherApiConnectionError:
                 errors["base"] = "cannot_connect"
             except UnifiVoucherApiAuthenticationError:
@@ -92,7 +88,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
 
             if not errors:
                 # Input is valid, set data
-                self._options = {
+                self.data = {
                     CONF_HOST: user_input.get(CONF_HOST, "").strip(),
                     CONF_USERNAME: user_input.get(CONF_USERNAME, "").strip(),
                     CONF_PASSWORD: user_input.get(CONF_PASSWORD, "").strip(),
@@ -100,22 +96,19 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                     CONF_SITE_ID: DEFAULT_SITE_ID,
                     CONF_VERIFY_SSL: user_input.get(CONF_VERIFY_SSL, False),
                 }
+                # Reauth
+                if (
+                    self.reauth_config_entry
+                    and self.reauth_config_entry.unique_id is not None
+                    and self.reauth_config_entry.unique_id in self.sites
+                ):
+                    return await self.async_step_site(
+                        {
+                            CONF_SITE_ID: self.reauth_config_entry.unique_id
+                        }
+                    )
                 # Go to site selection, if user has access to more than one site
-                if len(self._sites) > 1:
-                    return await self.async_step_site()
-
-                site_id = list(self._sites.keys())[0]
-
-                self._title = self._sites.get(site_id)
-                self._options.update({
-                    CONF_SITE_ID: site_id
-                })
-                # User is done, create the config entry.
-                return self.async_create_entry(
-                    title=self._title,
-                    data={},
-                    options=self._options,
-                )
+                return await self.async_step_site()
 
         if await _async_discover_unifi(
             self.hass
@@ -147,7 +140,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                         default=(user_input or {}).get(CONF_PASSWORD, DEFAULT_PASSWORD),
                     ): selector.TextSelector(
                         selector.TextSelectorConfig(
-                            type=selector.TextSelectorType.TEXT
+                            type=selector.TextSelectorType.PASSWORD
                         ),
                     ),
                     vol.Required(
@@ -176,23 +169,57 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
         """Second step in config flow to save site."""
         errors: dict[str, str] = {}
         if user_input is not None:
-            site_id = user_input.get(CONF_SITE_ID, "")
+            unique_id = user_input.get(CONF_SITE_ID, "")
 
-            if not self._sites.get(site_id):
+            if not self.sites.get(unique_id):
                 errors["base"] = "site_invalid"
+
+            config_entry = await self.async_set_unique_id(unique_id)
+            abort_reason = "configuration_updated"
+
+            if self.reauth_config_entry:
+                config_entry = self.reauth_config_entry
+                abort_reason = "reauth_successful"
+            else:
+                # Abort if site is already configured
+                self._async_abort_entries_match(
+                    {
+                        CONF_HOST: user_input[CONF_HOST],
+                        CONF_SITE_ID: self.sites[unique_id].name,
+                    }
+                )
+
+            if config_entry:
+                self.hass.config_entries.async_update_entry(
+                    config_entry, data=self.config
+                )
+                await self.hass.config_entries.async_reload(
+                    config_entry.entry_id
+                )
+                return self.async_abort(
+                    reason=abort_reason
+                )
 
             if not errors:
                 # Input is valid, set data.
-                self._title = self._sites.get(site_id)
-                self._options.update({
-                    CONF_SITE_ID: site_id
+                self.title = self.sites[unique_id].description
+                self.data.update({
+                    CONF_SITE_ID: self.sites[unique_id].name
                 })
                 # User is done, create the config entry.
                 return self.async_create_entry(
-                    title=self._title,
-                    data={},
-                    options=self._options,
+                    title=self.title,
+                    data=self.data,
                 )
+        
+        # Only one site is available, skip selection
+        if len(self.sites.values()) == 1:
+            return await self.async_step_site(
+                {
+                    CONF_SITE_ID: next(iter(self.sites)),
+                }
+            )
+
         return self.async_show_form(
             step_id="site",
             data_schema=vol.Schema(
@@ -204,10 +231,10 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                         selector.SelectSelectorConfig(
                             options=[
                                 selector.SelectOptionDict(
-                                    value=site_id,
-                                    label=site_description,
+                                    value=_unique_id,
+                                    label=_site.description,
                                 )
-                                for site_id, site_description in self._sites.items()
+                                for _unique_id, _site in self.sites.items()
                             ],
                             mode=selector.SelectSelectorMode.DROPDOWN,
                             translation_key=CONF_SITE_ID,
@@ -218,6 +245,63 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
             ),
             errors=errors,
         )
+
+    async def async_step_reauth(
+        self,
+        entry_data: dict[str, any],
+    ) -> FlowResult:
+        """Trigger a reauthentication flow."""
+        config_entry = self.hass.config_entries.async_get_entry(
+            self.context["entry_id"]
+        )
+        assert config_entry
+        self.reauth_config_entry = config_entry
+
+        self.context["title_placeholders"] = {
+            CONF_HOST: config_entry.data[CONF_HOST],
+            CONF_SITE_ID: config_entry.title,
+        }
+
+        self.reauth_schema = {
+            vol.Required(
+                CONF_HOST,
+                default=config_entry.data[CONF_HOST],
+            ): selector.TextSelector(
+                selector.TextSelectorConfig(
+                    type=selector.TextSelectorType.TEXT
+                ),
+            ),
+            vol.Required(
+                CONF_USERNAME,
+                default=config_entry.data[CONF_USERNAME],
+            ): selector.TextSelector(
+                selector.TextSelectorConfig(
+                    type=selector.TextSelectorType.TEXT
+                ),
+            ),
+            vol.Required(
+                CONF_PASSWORD,
+            ): selector.TextSelector(
+                selector.TextSelectorConfig(
+                    type=selector.TextSelectorType.PASSWORD
+                ),
+            ),
+            vol.Required(
+                CONF_PORT,
+                default=config_entry.data[CONF_PORT],
+            ): selector.NumberSelector(
+                selector.NumberSelectorConfig(
+                    mode=selector.NumberSelectorMode.BOX,
+                    min=1,
+                    max=65535,
+                )
+            ),
+            vol.Required(
+                CONF_VERIFY_SSL,
+                default=config_entry.data[CONF_VERIFY_SSL],
+            ): selector.BooleanSelector(),
+        }
+        return await self.async_step_user()
 
 async def _async_discover_unifi(hass: HomeAssistant) -> str | None:
     """Discover UniFi Network address."""

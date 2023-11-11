@@ -29,8 +29,9 @@
       "site_invalid": "Site invalid"
     },
     "abort": {
-      "existing_instance_updated": "Updated existing configuration",
-      "already_configured": "[%key:common::config_flow::abort::already_configured_service%]"
+      "already_configured": "[%key:common::config_flow::abort::already_configured_service%]",
+      "configuration_updated": "Configuration updated",
+      "reauth_successful": "[%key:common::config_flow::abort::reauth_successful%]"
     }
   },
   "entity": {

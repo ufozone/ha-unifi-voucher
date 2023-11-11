@@ -31,6 +31,8 @@ from .const import (
 )
 from .api import (
     UnifiVoucherApiClient,
+    UnifiVoucherListRequest,
+    UnifiVoucherCreateRequest,
     UnifiVoucherApiAuthenticationError,
     UnifiVoucherApiConnectionError,
     UnifiVoucherApiError,
@@ -55,14 +57,14 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
             update_interval=update_interval,
         )
         self.config_entry = config_entry
-        self.client = UnifiVoucherApiClient(
+        self.api = UnifiVoucherApiClient(
             hass,
-            host=config_entry.options.get(CONF_HOST, DEFAULT_HOST),
-            username=config_entry.options.get(CONF_USERNAME, ""),
-            password=config_entry.options.get(CONF_PASSWORD, ""),
-            port=int(config_entry.options.get(CONF_PORT, DEFAULT_PORT)),
-            site_id=config_entry.options.get(CONF_SITE_ID, DEFAULT_SITE_ID),
-            verify_ssl=config_entry.options.get(CONF_VERIFY_SSL, DEFAULT_VERIFY_SSL),
+            host=config_entry.data.get(CONF_HOST, DEFAULT_HOST),
+            username=config_entry.data.get(CONF_USERNAME, ""),
+            password=config_entry.data.get(CONF_PASSWORD, ""),
+            port=int(config_entry.data.get(CONF_PORT, DEFAULT_PORT)),
+            site_id=config_entry.data.get(CONF_SITE_ID, DEFAULT_SITE_ID),
+            verify_ssl=config_entry.data.get(CONF_VERIFY_SSL, DEFAULT_VERIFY_SSL),
         )
         self._last_pull = None
 
@@ -81,6 +83,10 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         try:
             self._last_pull = dt_util.now()
             _available = True
+            
+            foo = await self.api.request(UnifiVoucherListRequest.create())
+            LOGGER.debug(foo)
+            
         # TODO
         #except (UnifiVoucherClientTimeoutError, UnifiVoucherClientCommunicationError, UnifiVoucherClientAuthenticationError) as exception:
         #    LOGGER.error(str(exception))
