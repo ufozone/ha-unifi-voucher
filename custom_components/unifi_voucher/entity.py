@@ -7,7 +7,6 @@ from homeassistant.const import (
     ATTR_NAME,
     ATTR_IDENTIFIERS,
     ATTR_MANUFACTURER,
-    ATTR_STATE,
 )
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.util import slugify
@@ -15,8 +14,6 @@ from homeassistant.util import slugify
 from .const import (
     DOMAIN,
     MANUFACTURER,
-    ATTR_EXTRA_STATE_ATTRIBUTES,
-    ATTR_AVAILABLE,
     ATTR_LAST_PULL,
 )
 from .coordinator import UnifiVoucherCoordinator

@@ -1,6 +1,8 @@
 """DataUpdateCoordinator for UniFi Hotspot Manager."""
 from __future__ import annotations
 
+import asyncio
+
 from datetime import timedelta
 
 from homeassistant.core import HomeAssistant
@@ -12,8 +14,12 @@ from homeassistant.const import (
     CONF_VERIFY_SSL,
 )
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.exceptions import (
+    ConfigEntryAuthFailed,
+)
 from homeassistant.helpers.update_coordinator import (
     DataUpdateCoordinator,
+    UpdateFailed,
 )
 import homeassistant.util.dt as dt_util
 
@@ -22,8 +28,6 @@ from .const import (
     LOGGER,
     UPDATE_INTERVAL,
     CONF_SITE_ID,
-    ATTR_AVAILABLE,
-    ATTR_LAST_PULL,
 )
 from .api import (
     UnifiVoucherApiClient,
@@ -32,7 +36,6 @@ from .api import (
     UnifiVoucherRemoveRequest,
     UnifiVoucherApiAuthenticationError,
     UnifiVoucherApiAccessError,
-    UnifiVoucherApiConnectionError,
     UnifiVoucherApiError,
 )
 

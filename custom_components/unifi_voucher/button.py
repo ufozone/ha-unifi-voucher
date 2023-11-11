@@ -5,9 +5,6 @@ from collections.abc import Callable, Coroutine
 from dataclasses import dataclass
 
 from homeassistant.core import HomeAssistant
-from homeassistant.const import (
-    CONF_HOST,
-)
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.components.button import (
     ButtonDeviceClass,

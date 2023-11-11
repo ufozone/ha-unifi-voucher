@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 from homeassistant.core import (
-    callback,
     HomeAssistant,
 )
 from homeassistant.config_entries import (
@@ -55,8 +54,8 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
         self.title: str | None = None
         self.data: dict[str, any] | None = None
         self.sites: dict[str, str] | None = None
-        self.reauth_config_entry: config_entries.ConfigEntry | None = None
-        self.reauth_schema: dict[vol.Marker, Any] = {}
+        self.reauth_config_entry: ConfigEntry | None = None
+        self.reauth_schema: dict[vol.Marker, any] = {}
 
     async def async_step_user(
         self,
@@ -110,10 +109,9 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                 # Go to site selection, if user has access to more than one site
                 return await self.async_step_site()
 
-        if await _async_discover_unifi(
-            self.hass
-        ):
-            DEFAULT_HOST = "unifi"
+        _default_host = DEFAULT_HOST
+        if await _async_discover_unifi(self.hass):
+            _default_host = "unifi"
 
         return self.async_show_form(
             step_id="user",
@@ -121,7 +119,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                 {
                     vol.Required(
                         CONF_HOST,
-                        default=(user_input or {}).get(CONF_HOST, DEFAULT_HOST),
+                        default=(user_input or {}).get(CONF_HOST, _default_host),
                     ): selector.TextSelector(
                         selector.TextSelectorConfig(
                             type=selector.TextSelectorType.TEXT
