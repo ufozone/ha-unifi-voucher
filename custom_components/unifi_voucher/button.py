@@ -60,6 +60,13 @@ async def async_setup_entry(
             device_class=ButtonDeviceClass.RESTART,
             press_action=lambda coordinator: coordinator.async_create_voucher(),
         ),
+        UnifiVoucherButtonDescription(
+            key="remove",
+            icon="mdi:numeric-negative-1",
+            translation_key="remove",
+            device_class=ButtonDeviceClass.RESTART,
+            press_action=lambda coordinator: coordinator.async_remove_voucher(),
+        ),
     ]
 
     async_add_entities(

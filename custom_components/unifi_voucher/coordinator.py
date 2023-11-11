@@ -29,6 +29,7 @@ from .api import (
     UnifiVoucherApiClient,
     UnifiVouchers,
     UnifiVoucherCreateRequest,
+    UnifiVoucherRemoveRequest,
     UnifiVoucherApiAuthenticationError,
     UnifiVoucherApiAccessError,
     UnifiVoucherApiConnectionError,
@@ -194,15 +195,24 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
 
     async def async_create_voucher(
         self,
-        number: int = 1,
-        quota: int = 1,
-        expire: int = 480,
+        number: int | None = None,
+        quota: int | None = None,
+        expire: int | None = None,
         up_bandwidth: int | None = None,
         down_bandwidth: int | None = None,
         byte_quota: int | None = None,
     ) -> None:
         """Create new voucher."""
         try:
+            if number is None:
+                number = 1 # TODO
+
+            if quota is None:
+                quota = 1 # TODO
+
+            if expire is None:
+                expire = 480 # TODO
+
             await self.client.controller.request(
                 UnifiVoucherCreateRequest.create(
                     number=number,
@@ -212,6 +222,26 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
                     down_bandwidth=down_bandwidth,
                     byte_quota=byte_quota,
                     note="HA-generated",
+                )
+            )
+            await self.async_update_vouchers()
+        except Exception as exception:
+            LOGGER.exception(exception)
+
+    async def async_remove_voucher(
+        self,
+        obj_id: int | None = None,
+    ) -> None:
+        """Remove voucher."""
+        try:
+            # No voucher ID given
+            if obj_id is None:
+                if (obj_id := self.last_voucher_id) is None:
+                    raise ValueError
+
+            await self.client.controller.request(
+                UnifiVoucherRemoveRequest.create(
+                    obj_id=obj_id,
                 )
             )
             await self.async_update_vouchers()

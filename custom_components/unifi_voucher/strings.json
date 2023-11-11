@@ -51,6 +51,14 @@
             "name": "Last pull"
           }
         }
+      },
+      "remove": {
+        "name": "Delete voucher",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
       }
     },
     "sensor": {

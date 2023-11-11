@@ -13,6 +13,10 @@ from .const import (
     PLATFORMS,
 )
 from .coordinator import UnifiVoucherCoordinator
+from .api import (
+    UnifiVoucherApiAuthenticationError,
+    UnifiVoucherApiAccessError,
+)
 
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
@@ -34,7 +38,10 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
         await coordinator.initialize()
         await coordinator.async_config_entry_first_refresh()
 
-    except AuthenticationRequired as err:
+    except (
+        UnifiVoucherApiAuthenticationError,
+        UnifiVoucherApiAccessError,
+    ) as err:
         raise ConfigEntryAuthFailed from err
 
     except Exception as err:
@@ -42,7 +49,9 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
 
     hass.data[DOMAIN][config_entry.entry_id] = coordinator
     await hass.config_entries.async_forward_entry_setups(config_entry, PLATFORMS)
-    config_entry.async_on_unload(config_entry.add_update_listener(async_reload_entry))
+    config_entry.async_on_unload(
+        config_entry.add_update_listener(async_reload_entry)
+    )
 
     return True
 

@@ -3,7 +3,10 @@ from __future__ import annotations
 
 import asyncio
 from dataclasses import dataclass
-from typing import TypedDict
+from typing import (
+    Self,
+    TypedDict,
+)
 
 from datetime import (
     timedelta,
@@ -78,7 +81,7 @@ class UnifiVoucherListRequest(ApiRequest):
     @classmethod
     def create(
         cls
-    ) -> self:
+    ) -> Self:
         """Create voucher list request."""
         return cls(
             method="get",
@@ -100,7 +103,7 @@ class UnifiVoucherCreateRequest(ApiRequest):
         down_bandwidth: int | None = None,
         byte_quota: int | None = None,
         note: str | None = None,
-    ) -> self:
+    ) -> Self:
         """
         Create voucher create request.
 
@@ -130,7 +133,30 @@ class UnifiVoucherCreateRequest(ApiRequest):
             data["bytes"] = byte_quota
         if note:
             data["note"] = note
-        
+
+        return cls(
+            method="post",
+            path="/cmd/hotspot",
+            data=data,
+        )
+
+
+@dataclass
+class UnifiVoucherRemoveRequest(ApiRequest):
+    """Request object for voucher create."""
+
+    @classmethod
+    def create(
+        cls,
+        obj_id: int,
+    ) -> Self:
+        """
+        Create voucher remove request.
+        """
+        data = {
+            "cmd": "delete-voucher",
+            "_id": obj_id,
+        }
         return cls(
             method="post",
             path="/cmd/hotspot",
