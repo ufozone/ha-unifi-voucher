@@ -77,7 +77,7 @@ class UnifiVoucherSensor(UnifiVoucherEntity, SensorEntity):
             "quota": voucher.get("quota"),
             "used": voucher.get("used"),
             "duration": str(voucher.get("duration")),
-            "status": voucher.get("status"),
+            "status": voucher.get("status").lower(),
             "create_time": voucher.get("create_time"),
         }
         if voucher.get("start_time") is not None:
