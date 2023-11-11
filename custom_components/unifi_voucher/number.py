@@ -62,6 +62,8 @@ async def async_setup_entry(
 class UnifiVoucherNumber(UnifiVoucherEntity, NumberEntity):
     """Representation of a UniFi Hotspot Manager number."""
 
+    _attr_entity_registry_enabled_default = False
+
     def __init__(
         self,
         coordinator: UnifiVoucherCoordinator,

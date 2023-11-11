@@ -61,6 +61,32 @@
         }
       }
     },
+    "number": {
+      "voucher_number": {
+        "name": "Standard: Vouchers",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
+      },
+      "voucher_quota": {
+        "name": "Standard: Quota",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
+      },
+      "voucher_expire": {
+        "name": "Standard: Expire",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
+      }
+    },
     "sensor": {
       "voucher": {
         "name": "Voucher",

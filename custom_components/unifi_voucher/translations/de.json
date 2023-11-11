@@ -61,6 +61,32 @@
         }
       }
     },
+    "number": {
+      "voucher_number": {
+        "name": "Standard: Gutscheine",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Letzter Abruf"
+          }
+        }
+      },
+      "voucher_quota": {
+        "name": "Standard: Verwendung",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Letzter Abruf"
+          }
+        }
+      },
+      "voucher_expire": {
+        "name": "Standard: Ablaufen",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Letzter Abruf"
+          }
+        }
+      }
+    },
     "sensor": {
       "voucher": {
         "name": "Gutschein",
