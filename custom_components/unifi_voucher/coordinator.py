@@ -142,6 +142,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         self,
         conf_key: str,
     ) -> any:
+        """Get config entry option with default value as fallback."""
         _default_value = DEFAULT_VOUCHER.get(conf_key, {}).get("default")
         return self.config_entry.options.get(conf_key, _default_value)
 
@@ -244,13 +245,13 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         """Create new voucher."""
         try:
             if number is None:
-                number = self.get_entry_option(CONF_VOUCHER_NUMBER)
+                number = int(self.get_entry_option(CONF_VOUCHER_NUMBER))
 
             if quota is None:
-                quota = self.get_entry_option(CONF_VOUCHER_QUOTA)
+                quota = int(self.get_entry_option(CONF_VOUCHER_QUOTA))
 
             if expire is None:
-                expire = self.get_entry_option(CONF_VOUCHER_EXPIRE)
+                expire = int(self.get_entry_option(CONF_VOUCHER_EXPIRE))
 
             await self.client.controller.request(
                 UnifiVoucherCreateRequest.create(

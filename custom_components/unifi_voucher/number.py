@@ -1,9 +1,6 @@
 """UniFi Hotspot Manager number platform."""
 from __future__ import annotations
 
-from collections.abc import Callable, Coroutine
-from dataclasses import dataclass
-
 from homeassistant.core import HomeAssistant
 from homeassistant.const import (
     UnitOfTime,
@@ -16,7 +13,6 @@ from homeassistant.components.number import (
 from homeassistant.helpers.entity import Entity
 
 from .const import (
-    LOGGER,
     DOMAIN,
     CONF_VOUCHER_QUOTA,
     CONF_VOUCHER_EXPIRE,
