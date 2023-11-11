@@ -76,7 +76,7 @@ class UnifiVoucherSensor(UnifiVoucherEntity, SensorEntity):
         _x = {
             "quota": voucher.get("quota"),
             "used": voucher.get("used"),
-            "duration": str(voucher.get("duration")),
+            "duration": str(voucher.get("duration")), # TODO: Localized string
             "status": voucher.get("status").lower(),
             "create_time": voucher.get("create_time"),
         }
@@ -87,7 +87,7 @@ class UnifiVoucherSensor(UnifiVoucherEntity, SensorEntity):
             _x["end_time"] = voucher.get("end_time")
 
         if voucher.get("status_expires") is not None:
-            _x["status_expires"] = str(voucher.get("status_expires"))
+            _x["status_expires"] = str(voucher.get("status_expires")) # TODO: Localized string
 
         self._additional_extra_state_attributes = _x
 

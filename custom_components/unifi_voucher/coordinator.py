@@ -26,8 +26,14 @@ import homeassistant.util.dt as dt_util
 from .const import (
     DOMAIN,
     LOGGER,
+    DEFAULT_VOUCHER_NUMBER,
+    DEFAULT_VOUCHER_QUOTA,
+    DEFAULT_VOUCHER_EXPIRE,
     UPDATE_INTERVAL,
     CONF_SITE_ID,
+    CONF_DEFAULT_VOUCHER_NUMBER,
+    CONF_DEFAULT_VOUCHER_QUOTA,
+    CONF_DEFAULT_VOUCHER_EXPIRE,
 )
 from .api import (
     UnifiVoucherApiClient,
@@ -209,13 +215,13 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         """Create new voucher."""
         try:
             if number is None:
-                number = 1 # TODO
+                number = self.config_entry.options.get(CONF_DEFAULT_VOUCHER_NUMBER, DEFAULT_VOUCHER_NUMBER)
 
             if quota is None:
-                quota = 1 # TODO
+                quota = self.config_entry.options.get(CONF_DEFAULT_VOUCHER_QUOTA, DEFAULT_VOUCHER_QUOTA)
 
             if expire is None:
-                expire = 480 # TODO
+                expire = self.config_entry.options.get(CONF_DEFAULT_VOUCHER_EXPIRE, DEFAULT_VOUCHER_EXPIRE)
 
             await self.client.controller.request(
                 UnifiVoucherCreateRequest.create(
