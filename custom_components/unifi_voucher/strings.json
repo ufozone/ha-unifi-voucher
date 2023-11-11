@@ -89,9 +89,8 @@
           "status": {
             "name": "Status",
             "state": {
-              "EXPIRED": "Expired",
-              "VALID_ONE": "Valid once",
-              "VALID_MULTI": "Valid multiple times"
+              "true": "Verbunden",
+              "false": "Getrennt"
             }
           },
           "last_pull": {
