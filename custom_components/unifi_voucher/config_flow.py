@@ -201,9 +201,11 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
             if not errors:
                 # Input is valid, set data.
                 self.title = self.sites[unique_id].description
-                self.data.update({
-                    CONF_SITE_ID: self.sites[unique_id].name
-                })
+                self.data.update(
+                    {
+                        CONF_SITE_ID: self.sites[unique_id].name
+                    }
+                )
                 # User is done, create the config entry.
                 return self.async_create_entry(
                     title=self.title,

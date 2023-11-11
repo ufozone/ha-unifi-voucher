@@ -26,14 +26,12 @@ import homeassistant.util.dt as dt_util
 from .const import (
     DOMAIN,
     LOGGER,
-    DEFAULT_VOUCHER_NUMBER,
-    DEFAULT_VOUCHER_QUOTA,
-    DEFAULT_VOUCHER_EXPIRE,
     UPDATE_INTERVAL,
     CONF_SITE_ID,
-    CONF_DEFAULT_VOUCHER_NUMBER,
-    CONF_DEFAULT_VOUCHER_QUOTA,
-    CONF_DEFAULT_VOUCHER_EXPIRE,
+    CONF_VOUCHER_NUMBER,
+    CONF_VOUCHER_QUOTA,
+    CONF_VOUCHER_EXPIRE,
+    DEFAULT_VOUCHER,
 )
 from .api import (
     UnifiVoucherApiClient,
@@ -77,7 +75,10 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         self.latest_voucher_id = None
         self._last_pull = None
         self._available = False
+
+        self._loop = asyncio.get_event_loop()
         self._scheduled_update_listeners: asyncio.TimerHandle | None = None
+        self._scheduled_update_entry: asyncio.TimerHandle | None = None
 
     async def __aenter__(self):
         """Return Self."""
@@ -136,6 +137,34 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         _port = self.config_entry.data.get(CONF_PORT)
         _site_id = self.config_entry.data.get(CONF_SITE_ID)
         return f"https://{_host}:{_port}/network/{_site_id}/hotspot"
+
+    def get_entry_option(
+        self,
+        conf_key: str,
+    ) -> any:
+        _default_value = DEFAULT_VOUCHER.get(conf_key, {}).get("default")
+        return self.config_entry.options.get(conf_key, _default_value)
+
+    async def async_set_entry_option(
+        self,
+        key: str,
+        value: any,
+    ) -> None:
+        """Set config entry option and update config entry after 3 second."""
+        _options = dict(self.config_entry.options)
+        _options.update(
+            {
+                key: value
+            }
+        )
+        if self._scheduled_update_entry:
+            self._scheduled_update_entry.cancel()
+        self._scheduled_update_entry = self.hass.loop.call_later(
+            3,
+            lambda: self.hass.config_entries.async_update_entry(
+                self.config_entry, options=_options
+            ),
+        )
 
     async def initialize(self) -> None:
         """Set up a UniFi Network instance."""
@@ -215,13 +244,13 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         """Create new voucher."""
         try:
             if number is None:
-                number = self.config_entry.options.get(CONF_DEFAULT_VOUCHER_NUMBER, DEFAULT_VOUCHER_NUMBER)
+                number = self.get_entry_option(CONF_VOUCHER_NUMBER)
 
             if quota is None:
-                quota = self.config_entry.options.get(CONF_DEFAULT_VOUCHER_QUOTA, DEFAULT_VOUCHER_QUOTA)
+                quota = self.get_entry_option(CONF_VOUCHER_QUOTA)
 
             if expire is None:
-                expire = self.config_entry.options.get(CONF_DEFAULT_VOUCHER_EXPIRE, DEFAULT_VOUCHER_EXPIRE)
+                expire = self.get_entry_option(CONF_VOUCHER_EXPIRE)
 
             await self.client.controller.request(
                 UnifiVoucherCreateRequest.create(
