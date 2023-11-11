@@ -89,8 +89,6 @@
           "status": {
             "name": "Status",
             "state": {
-              "USED": "Used once",
-              "USED_MULTIPLE": "Used multiple times",
               "EXPIRED": "Expired",
               "VALID_ONE": "Valid once",
               "VALID_MULTI": "Valid multiple times"
