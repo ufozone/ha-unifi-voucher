@@ -7,6 +7,9 @@ from homeassistant.exceptions import (
     ConfigEntryAuthFailed,
     ConfigEntryNotReady,
 )
+from homeassistant.helpers import (
+    config_validation as cv,
+)
 
 from .const import (
     DOMAIN,
@@ -18,6 +21,7 @@ from .api import (
     UnifiVoucherApiAccessError,
 )
 
+CONFIG_SCHEMA = cv.empty_config_schema(DOMAIN)
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
     """Set up UniFi Hotspot Manager component."""
