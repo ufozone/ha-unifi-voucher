@@ -184,7 +184,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                 # Abort if site is already configured
                 self._async_abort_entries_match(
                     {
-                        CONF_HOST: user_input[CONF_HOST],
+                        CONF_HOST: self.data[CONF_HOST],
                         CONF_SITE_ID: self.sites[unique_id].name,
                     }
                 )

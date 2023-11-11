@@ -19,6 +19,7 @@ from homeassistant.helpers.entity import Entity
 
 from .const import (
     DOMAIN,
+    ATTR_VOUCHER,
 )
 from .coordinator import UnifiVoucherCoordinator
 from .entity import UnifiVoucherEntity
@@ -32,19 +33,11 @@ async def async_setup_entry(
     """Do setup sensors from a config entry created in the integrations UI."""
     coordinator = hass.data[DOMAIN][config_entry.entry_id]
     entity_descriptions = [
-        # TODO
-        #SensorEntityDescription(
-        #    key=ATTR_FANSPEED,
-        #    translation_key=ATTR_FANSPEED,
-        #    icon="mdi:fan",
-        #    native_unit_of_measurement=REVOLUTIONS_PER_MINUTE,
-        #    unit_of_measurement=REVOLUTIONS_PER_MINUTE,
-        #    state_class=SensorStateClass.MEASUREMENT,
-        #),
         SensorEntityDescription(
-            key="voucher",
-            translation_key="voucher",
+            key=ATTR_VOUCHER,
+            translation_key=ATTR_VOUCHER,
             icon="mdi:numeric",
+            device_class=None,
         ),
     ]
 
@@ -76,7 +69,45 @@ class UnifiVoucherSensor(UnifiVoucherEntity, SensorEntity):
         )
         self.entity_description = entity_description
 
+    def _get_last_voucher(self) -> dict[str, any] | None:
+        """Get last voucher."""
+        if (voucher_id := self.coordinator.last_voucher_id) in self.coordinator.vouchers:
+            return self.coordinator.vouchers[voucher_id]
+
+        return None
+
+    def _update_extra_state_attributes(self) -> None:
+        """Update extra attributes."""
+        if (voucher := self._get_last_voucher()) is None:
+            return None
+
+        _x = {
+            "quota": voucher.get("quota"),
+            "used": voucher.get("used"),
+            "duration": str(voucher.get("duration")),
+            "status": voucher.get("status"),
+            "create_time": voucher.get("create_time"),
+        }
+        if voucher.get("start_time") is not None:
+            _x["start_time"] = voucher.get("start_time")
+
+        if voucher.get("end_time") is not None:
+            _x["end_time"] = voucher.get("end_time")
+
+        if voucher.get("status_expires") is not None:
+            _x["status_expires"] = str(voucher.get("status_expires"))
+
+        self._additional_extra_state_attributes = _x
+
     @property
-    def native_value(self) -> str:
+    def available(self) -> bool:
+        """Return True if entity is available."""
+        return (self.coordinator.last_voucher_id in self.coordinator.vouchers)
+
+    @property
+    def native_value(self) -> str | None:
         """Return the native value of the sensor."""
-        return self._get_state()
+        if (voucher := self._get_last_voucher()) is None:
+            return None
+
+        return voucher.get("code")

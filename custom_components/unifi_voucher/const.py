@@ -24,8 +24,9 @@ DEFAULT_VERIFY_SSL = False
 
 UPDATE_INTERVAL = 120
 
-CONF_SITE_ID = "site"
+CONF_SITE_ID = "site_id"
 
 ATTR_EXTRA_STATE_ATTRIBUTES = "extra_state_attributes"
-ATTR_AVAILABLE = "available"
 ATTR_LAST_PULL = "last_pull"
+ATTR_AVAILABLE = "available"
+ATTR_VOUCHER = "voucher"

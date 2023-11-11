@@ -36,30 +36,25 @@ class UnifiVoucherEntity(CoordinatorEntity):
         """Initialize."""
         super().__init__(coordinator)
 
-        self._host = "unifi_voucher" # TODO
+        self._entry_id = coordinator.get_entry_id()
         self._entity_type = entity_type
         self._entity_key = entity_key
 
         if entity_key:
-            self._unique_id = slugify(f"{self._host}_{entity_key}")
+            self._unique_id = slugify(f"{self._entry_id}_{entity_key}")
         else:
-            self._unique_id = slugify(f"{self._host}")
+            self._unique_id = slugify(f"{self._entry_id}")
 
+        self._additional_extra_state_attributes = {}
         self.entity_id = f"{entity_type}.{self._unique_id}"
 
-    def _get_state(
-        self,
-    ) -> any:
-        """Get state of the current entity."""
-        return self.coordinator.data.get(self._entity_key, {}).get(ATTR_STATE, None)
+    def _update_extra_state_attributes(self) -> None:
+        """Update extra attributes."""
+        self._additional_extra_state_attributes = {}
 
-    def _get_attribute(
-        self,
-        attr: str,
-        default_value: any | None = None,
-    ) -> any:
-        """Get attribute of the current entity."""
-        return self.coordinator.data.get(self._entity_key, {}).get(attr, default_value)
+    def _update_handler(self) -> None:
+        """Handle updated data."""
+        self._update_extra_state_attributes()
 
     @property
     def unique_id(self) -> str:
@@ -69,26 +64,27 @@ class UnifiVoucherEntity(CoordinatorEntity):
     @property
     def available(self) -> bool:
         """Return True if entity is available."""
-        return self.coordinator.data.get(ATTR_AVAILABLE)
+        return self.coordinator._available
 
     @property
     def device_info(self):
         """Return the device info."""
         return {
             ATTR_IDENTIFIERS: {
-                (DOMAIN, self._host)
+                (DOMAIN, self._entry_id)
             },
-            ATTR_NAME: self._host,
+            ATTR_NAME: self.coordinator.get_entry_title(),
             ATTR_MANUFACTURER: MANUFACTURER,
+            ATTR_CONFIGURATION_URL: self.coordinator.get_configuration_url(),
         }
 
     @property
     def extra_state_attributes(self) -> dict[str, any]:
         """Return axtra attributes."""
-        _extra_state_attributes = self._get_attribute(ATTR_EXTRA_STATE_ATTRIBUTES, {})
+        _extra_state_attributes = self._additional_extra_state_attributes
         _extra_state_attributes.update(
             {
-                ATTR_LAST_PULL: self.coordinator.data.get(ATTR_LAST_PULL),
+                ATTR_LAST_PULL: self.coordinator._last_pull,
             }
         )
         return _extra_state_attributes
@@ -102,6 +98,3 @@ class UnifiVoucherEntity(CoordinatorEntity):
         """Handle updated data from the coordinator."""
         self._update_handler()
         self.async_write_ha_state()
-
-    def _update_handler(self) -> None:
-        """Handle updated data."""

@@ -3,11 +3,19 @@ from __future__ import annotations
 
 import asyncio
 from dataclasses import dataclass
+from typing import TypedDict
+
+from datetime import (
+    timedelta,
+    datetime,
+)
 
 from aiohttp import CookieJar
 import aiounifi
+from aiounifi.interfaces.api_handlers import APIHandler
 from aiounifi.models.configuration import Configuration
 from aiounifi.models.api import (
+    ApiItem,
     ApiRequest,
     TypedApiResponse,
 )
@@ -17,6 +25,7 @@ from homeassistant.core import (
     HomeAssistant,
 )
 from homeassistant.helpers import aiohttp_client
+import homeassistant.util.dt as dt_util
 
 from .const import (
     LOGGER,
@@ -40,6 +49,28 @@ class UnifiVoucherApiAuthenticationError(UnifiVoucherApiError):
     """Exception to indicate an authentication error."""
 
 
+class UnifiTypedVoucher(TypedDict):
+    """Voucher description."""
+
+    _id: str
+    site_id: str
+    note: str
+    code: str
+    quota: int
+    duration: int
+    qos_overwrite: bool
+    qos_usage_quota: str
+    qos_rate_max_up: int
+    qos_rate_max_down: int
+    used: int
+    create_time: datetime
+    start_time: int
+    end_time: int
+    for_hotspot: bool
+    admin_name: str
+    status: str
+    status_expires: int
+
 @dataclass
 class UnifiVoucherListRequest(ApiRequest):
     """Request object for device list."""
@@ -53,6 +84,7 @@ class UnifiVoucherListRequest(ApiRequest):
             method="get",
             path="/stat/voucher",
         )
+
 
 @dataclass
 class UnifiVoucherCreateRequest(ApiRequest):
@@ -80,30 +112,152 @@ class UnifiVoucherCreateRequest(ApiRequest):
         :param byte_quota: quantity of bytes allowed in MB
         :param note: description
         """
-        params = {
+        data = {
+            "cmd": "create-voucher",
             "n": number,
             "quota": quota,
             "expire": "custom",
             "expire_number": expire,
             "expire_unit": 1,
+            "down": None,
+            "up": None,
         }
         if up_bandwidth:
-            params["up"] = up_bandwidth
+            data["up"] = up_bandwidth
         if down_bandwidth:
-            params["down"] = down_bandwidth
+            data["down"] = down_bandwidth
         if byte_quota:
-            params["bytes"] = byte_quota
+            data["bytes"] = byte_quota
         if note:
-            params["note"] = note
+            data["note"] = note
         
         return cls(
             method="post",
             path="/cmd/hotspot",
-            data={
-                "cmd": "create-voucher",
-                "params": params,
-            },
+            data=data,
         )
+
+
+class UnifiVoucher(ApiItem):
+    """Represents a voucher."""
+
+    raw: UnifiTypedVoucher
+
+    @property
+    def id(self) -> str:
+        """ID of voucher."""
+        return self.raw["_id"]
+
+    @property
+    def site_id(self) -> str:
+        """Site ID."""
+        return self.raw["_id"]
+
+    @property
+    def note(self) -> str:
+        """Note."""
+        return self.raw.get("note") or ""
+
+    @property
+    def code(self) -> str:
+        """Code."""
+        if len(c := self.raw.get("code", "")) > 5:
+            return '%s-%s' % (c[:5], c[5:])
+        return c
+
+    @property
+    def quota(self) -> int:
+        """Nmber of vouchers."""
+        return self.raw.get("quota", 0)
+
+    @property
+    def duration(self) -> timedelta:
+        """Expiration of voucher."""
+        return timedelta(
+            minutes=self.raw.get("duration", 0)
+        )
+
+    @property
+    def qos_overwrite(self) -> bool:
+        """Used count."""
+        return self.raw.get("qos_overwrite", False)
+
+    @property
+    def qos_usage_quota(self) -> int:
+        """Quantity of bytes allowed in MB."""
+        return int(self.raw.get("qos_usage_quota", 0))
+
+    @property
+    def qos_rate_max_up(self) -> int:
+        """Up speed allowed in kbps."""
+        return self.raw.get("qos_rate_max_up", 0)
+
+    @property
+    def qos_rate_max_down(self) -> int:
+        """Down speed allowed in kbps."""
+        return self.raw.get("qos_rate_max_down", 0)
+
+    @property
+    def used(self) -> int:
+        """Number of using; 0 = unlimited."""
+        return self.raw.get("used", 0)
+
+    @property
+    def create_time(self) -> datetime:
+        """Create datetime."""
+        return dt_util.as_local(
+            datetime.fromtimestamp(self.raw["create_time"])
+        )
+
+    @property
+    def start_time(self) -> datetime | None:
+        """Start datetime."""
+        if "start_time" in self.raw:
+            return dt_util.as_local(
+                datetime.fromtimestamp(self.raw["start_time"])
+            )
+        return None
+
+    @property
+    def end_time(self) -> datetime | None:
+        """End datetime."""
+        if "end_time" in self.raw:
+            return dt_util.as_local(
+                datetime.fromtimestamp(self.raw["end_time"])
+            )
+        return None
+
+    @property
+    def for_hotspot(self) -> bool:
+        """For hotspot."""
+        return self.raw.get("for_hotspot", False)
+
+    @property
+    def admin_name(self) -> str:
+        """Admin name."""
+        return self.raw.get("admin_name", "")
+
+    @property
+    def status(self) -> str:
+        """Status."""
+        return self.raw.get("status", "")
+
+    @property
+    def status_expires(self) -> int | None:
+        """Status expires."""
+        if self.raw.get("status_expires", 0) > 0:
+            return timedelta(
+                seconds=self.raw.get("status_expires")
+            )
+        return None
+
+
+class UnifiVouchers(APIHandler[UnifiVoucher]):
+    """Represent UniFi vouchers."""
+
+    obj_id_key = "_id"
+    item_cls = UnifiVoucher
+    api_request = UnifiVoucherListRequest.create()
 
 class UnifiVoucherApiClient:
     """API Client."""
@@ -132,7 +286,7 @@ class UnifiVoucherApiClient:
                 verify_ssl=False,
                 cookie_jar=CookieJar(unsafe=True),
             )
-        self.api = aiounifi.Controller(
+        self.controller = aiounifi.Controller(
             Configuration(
                 session,
                 host=host,
@@ -155,7 +309,7 @@ class UnifiVoucherApiClient:
         """Try to reconnect UniFi Network session."""
         try:
             async with asyncio.timeout(5):
-                await self.api.login()
+                await self.controller.login()
         except (
             asyncio.TimeoutError,
             aiounifi.BadGateway,
@@ -171,9 +325,9 @@ class UnifiVoucherApiClient:
         _sites = {}
         try:
             async with asyncio.timeout(10):
-                await self.api.login()
-                await self.api.sites.update()
-                for _unique_id, _site in self.api.sites.items():
+                await self.controller.login()
+                await self.controller.sites.update()
+                for _unique_id, _site in self.controller.sites.items():
                     # User must have admin or hotspot permissions 
                     if _site.role in ("admin", "hotspot"):
                         _sites[_unique_id] = _site
@@ -226,4 +380,4 @@ class UnifiVoucherApiClient:
         api_request: ApiRequest,
     ) -> TypedApiResponse:
         """Make a request to the API, retry login on failure."""
-        return await self.api.request(api_request)
+        return await self.controller.request(api_request)

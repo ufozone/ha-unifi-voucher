@@ -46,13 +46,20 @@ async def async_setup_entry(
     """Do setup buttons from a config entry created in the integrations UI."""
     coordinator = hass.data[DOMAIN][config_entry.entry_id]
     entity_descriptions = [
-        # TODO
-        #UnifiVoucherButtonDescription(
-        #    key=ATTR_REBOOT,
-        #    translation_key=ATTR_REBOOT,
-        #    device_class=ButtonDeviceClass.RESTART,
-        #    press_action=lambda coordinator: coordinator.async_reboot(),
-        #),
+        UnifiVoucherButtonDescription(
+            key="update",
+            icon="mdi:update",
+            translation_key="update",
+            device_class=ButtonDeviceClass.UPDATE,
+            press_action=lambda coordinator: coordinator.async_update_vouchers(),
+        ),
+        UnifiVoucherButtonDescription(
+            key="create",
+            icon="mdi:numeric-positive-1",
+            translation_key="create",
+            device_class=ButtonDeviceClass.RESTART,
+            press_action=lambda coordinator: coordinator.async_create_voucher(),
+        ),
     ]
 
     async_add_entities(

@@ -36,8 +36,16 @@
   },
   "entity": {
     "button": {
-      "button_name": {
-        "name": "Button name",
+      "update": {
+        "name": "Update",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
+      },
+      "create": {
+        "name": "Create voucher",
         "state_attributes": {
           "last_pull": {
             "name": "Last pull"
@@ -46,9 +54,40 @@
       }
     },
     "sensor": {
-      "sensor_name": {
-        "name": "Sensor name",
+      "voucher": {
+        "name": "Voucher",
         "state_attributes": {
+          "quota": {
+            "name": "Quota"
+          },
+          "used": {
+            "name": "Used"
+          },
+          "duration": {
+            "name": "Duration"
+          },
+          "create_time": {
+            "name": "Created"
+          },
+          "start_time": {
+            "name": "Started"
+          },
+          "end_time": {
+            "name": "Ends"
+          },
+          "status_expires": {
+            "name": "Expires"
+          },
+          "status": {
+            "name": "Status",
+            "state": {
+               "USED": "Used once",
+               "USED_MULTIPLE": "Used multiple times",
+               "EXPIRED": "Expired",
+               "VALID_ONE": "Valid once",
+               "VALID_MULTI": "Valid multiple times"
+            }
+          },
           "last_pull": {
             "name": "Last pull"
           }
