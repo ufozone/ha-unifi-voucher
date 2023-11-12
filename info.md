@@ -59,6 +59,22 @@ UniFi Hotspot Manager as a Custom Component for Home Assistant. The most UniFi N
     last_poll
     ```
 
+### Numbers
+
+* voucher_quota
+
+    ```
+    attributes: 
+    last_poll
+    ```
+
+* voucher_expire
+
+    ```
+    attributes: 
+    last_poll
+    ```
+
 ### Sensors
 
 * voucher
