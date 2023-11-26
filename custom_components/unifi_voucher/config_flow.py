@@ -3,10 +3,12 @@ from __future__ import annotations
 
 from homeassistant.core import (
     HomeAssistant,
+    callback,
 )
 from homeassistant.config_entries import (
     ConfigEntry,
     ConfigFlow,
+    OptionsFlow,
     CONN_CLASS_LOCAL_PUSH,
 )
 from homeassistant.const import (
@@ -33,6 +35,7 @@ from .const import (
     DEFAULT_PORT,
     DEFAULT_VERIFY_SSL,
     CONF_SITE_ID,
+    CONF_WLAN_NAME,
 )
 from .api import (
     UnifiVoucherApiClient,
@@ -53,6 +56,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
         """Initialize the UniFi Network flow."""
         self.title: str | None = None
         self.data: dict[str, any] | None = None
+        self.options: dict[str, any] | None = None
         self.sites: dict[str, str] | None = None
         self.reauth_config_entry: ConfigEntry | None = None
         self.reauth_schema: dict[vol.Marker, any] = {}
@@ -74,7 +78,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                     site_id=DEFAULT_SITE_ID,
                     verify_ssl=user_input[CONF_VERIFY_SSL],
                 )
-                self.sites = await client.check_api_user()
+                self.sites = await client.get_sites()
             except UnifiVoucherApiConnectionError:
                 errors["base"] = "cannot_connect"
             except UnifiVoucherApiAuthenticationError:
@@ -86,7 +90,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                 errors["base"] = "unknown"
 
             if not errors:
-                # Input is valid, set data
+                # Input is valid, set data and options
                 self.data = {
                     CONF_HOST: user_input.get(CONF_HOST, "").strip(),
                     CONF_USERNAME: user_input.get(CONF_USERNAME, "").strip(),
@@ -94,6 +98,9 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                     CONF_PORT: int(user_input[CONF_PORT]),
                     CONF_SITE_ID: DEFAULT_SITE_ID,
                     CONF_VERIFY_SSL: user_input.get(CONF_VERIFY_SSL, False),
+                }
+                self.options = {
+                    CONF_WLAN_NAME: "",
                 }
                 # Reauth
                 if (
@@ -206,11 +213,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                         CONF_SITE_ID: self.sites[unique_id].name
                     }
                 )
-                # User is done, create the config entry.
-                return self.async_create_entry(
-                    title=self.title,
-                    data=self.data,
-                )
+                return await self.async_step_wlan()
 
         # Only one site is available, skip selection
         if len(self.sites.values()) == 1:
@@ -244,6 +247,60 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                 }
             ),
             errors=errors,
+        )
+
+    async def async_step_wlan(
+        self,
+        user_input: dict[str, any] | None = None,
+    ) -> FlowResult:
+        """Third step in config flow to save site."""
+        if user_input is not None:
+            # Input is valid, set data.
+            self.options.update(
+                {
+                    CONF_WLAN_NAME: user_input.get(CONF_WLAN_NAME, "").strip()
+                }
+            )
+            # User is done, create the config entry.
+            return self.async_create_entry(
+                title=self.title,
+                data=self.data,
+                options=self.options,
+            )
+
+        _default_wlan_name = ""
+        try:
+            client = UnifiVoucherApiClient(
+                self.hass,
+                host=self.data.get(CONF_HOST),
+                username=self.data.get(CONF_USERNAME),
+                password=self.data.get(CONF_PASSWORD),
+                port=self.data.get(CONF_PORT),
+                site_id=self.data.get(CONF_SITE_ID),
+                verify_ssl=self.data.get(CONF_VERIFY_SSL),
+            )
+            if (wlans := await client.get_guest_wlans()) is not None:
+                _default_wlan_name = wlans[0]
+        except Exception:
+            LOGGER.info(
+                "Could not access the UniFi Network guest WLANs. Perhaps the user does not have admin rights.",
+            )
+
+        return self.async_show_form(
+            step_id="wlan",
+            data_schema=vol.Schema(
+                {
+                    vol.Required(
+                        CONF_WLAN_NAME,
+                        default=(user_input or {}).get(CONF_WLAN_NAME, _default_wlan_name),
+                    ): selector.TextSelector(
+                        selector.TextSelectorConfig(
+                            type=selector.TextSelectorType.TEXT
+                        ),
+                    ),
+                }
+            ),
+            last_step=True,
         )
 
     async def async_step_reauth(
@@ -302,6 +359,52 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
             ): selector.BooleanSelector(),
         }
         return await self.async_step_user()
+
+    @staticmethod
+    @callback
+    def async_get_options_flow(config_entry) -> UnifiVoucherOptionsFlowHandler:
+        """Get the options flow for this handler."""
+        return UnifiVoucherOptionsFlowHandler(config_entry)
+
+class UnifiVoucherOptionsFlowHandler(OptionsFlow):
+    """Handle Unifi Network options."""
+
+    def __init__(self, config_entry: ConfigEntry) -> None:
+        """Initialize UniFi Network options flow."""
+        self.config_entry = config_entry
+        self.options = dict(config_entry.options)
+
+    async def async_step_init(
+        self, user_input: dict[str, Any] | None = None
+    ) -> FlowResult:
+        if user_input is not None:
+            # Input is valid, set data.
+            self.options.update(
+                {
+                    CONF_WLAN_NAME: user_input.get(CONF_WLAN_NAME, "").strip()
+                }
+            )
+            # User is done, update the config entry.
+            return self.async_create_entry(
+                title="",
+                data=self.options,
+            )
+        return self.async_show_form(
+            step_id="init",
+            data_schema=vol.Schema(
+                {
+                    vol.Required(
+                        CONF_WLAN_NAME,
+                        default=(user_input or {}).get(CONF_WLAN_NAME, ""),
+                    ): selector.TextSelector(
+                        selector.TextSelectorConfig(
+                            type=selector.TextSelectorType.TEXT
+                        ),
+                    ),
+                }
+            ),
+            last_step=True,
+        )
 
 async def _async_discover_unifi(hass: HomeAssistant) -> str | None:
     """Discover UniFi Network address."""

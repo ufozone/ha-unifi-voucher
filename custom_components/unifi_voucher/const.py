@@ -19,6 +19,7 @@ PLATFORMS = [
 UPDATE_INTERVAL = 300
 
 CONF_SITE_ID = "site_id"
+CONF_WLAN_NAME = "wlan_name"
 CONF_VOUCHER_NUMBER = "voucher_number"
 CONF_VOUCHER_QUOTA = "voucher_quota"
 CONF_VOUCHER_EXPIRE = "voucher_expire"

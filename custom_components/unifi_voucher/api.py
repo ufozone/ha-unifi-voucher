@@ -341,7 +341,7 @@ class UnifiVoucherApiClient:
         ):
             self.hass.loop.call_later(RETRY_TIMER, self.reconnect)
 
-    async def check_api_user(
+    async def get_sites(
         self,
     ) -> dict[str, any]:
         """Check the given API user."""
@@ -363,6 +363,59 @@ class UnifiVoucherApiClient:
                     )
                     raise UnifiVoucherApiAccessError
                 return _sites
+        except (
+            aiounifi.LoginRequired,
+            aiounifi.Unauthorized,
+            aiounifi.Forbidden,
+        ) as err:
+            LOGGER.warning(
+                "Connected to UniFi Network at %s but login required: %s",
+                self.host,
+                err,
+            )
+            raise UnifiVoucherApiAuthenticationError from err
+        except (
+            asyncio.TimeoutError,
+            aiounifi.BadGateway,
+            aiounifi.ServiceUnavailable,
+            aiounifi.RequestError,
+            aiounifi.ResponseError,
+        ) as err:
+            LOGGER.error(
+                "Error connecting to the UniFi Network at %s: %s",
+                self.host,
+                err,
+            )
+            raise UnifiVoucherApiConnectionError from err
+        except (
+            aiounifi.AiounifiException,
+            Exception,
+        ) as err:
+            LOGGER.exception(
+                "Unknown UniFi Network communication error occurred: %s",
+                err,
+            )
+            raise UnifiVoucherApiError from err
+        return False
+
+    async def get_guest_wlans(
+        self,
+    ) -> list[str] | None:
+        """Check the given API user."""
+        _wlans = []
+        try:
+            async with asyncio.timeout(10):
+                await self.controller.login()
+                await self.controller.wlans.update()
+                for _wlan in self.controller.wlans.values():
+                    # Is flagged as guest WLAN
+                    if _wlan.is_guest:
+                        _wlans.append(_wlan.name)
+
+                # No guest WLAN found
+                if len(_wlans) == 0:
+                    return None
+                return _wlans
         except (
             aiounifi.LoginRequired,
             aiounifi.Unauthorized,
