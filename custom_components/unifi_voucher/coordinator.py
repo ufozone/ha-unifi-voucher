@@ -61,6 +61,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
             name=DOMAIN,
             update_interval=update_interval,
         )
+        self.hass = hass
         self.config_entry = config_entry
         self.client = UnifiVoucherApiClient(
             hass,
