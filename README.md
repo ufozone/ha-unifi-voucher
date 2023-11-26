@@ -34,7 +34,7 @@ The most UniFi Network Controller by Ubiquiti Networks, inc., e.g. Cloud Key 2, 
 
 ## Installation
 
-Requires Home Assistant 2023.10.0 or newer.
+Requires Home Assistant 2023.11.0 or newer.
 
 ### Installation through HACS
 
