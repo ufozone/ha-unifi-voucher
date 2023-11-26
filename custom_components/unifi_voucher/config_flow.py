@@ -259,7 +259,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
         self,
         user_input: dict[str, any] | None = None,
     ) -> FlowResult:
-        """Third step in config flow to save site."""
+        """Third step in config flow to save options."""
         if user_input is not None:
             # Input is valid, set data.
             self.options.update(
@@ -439,8 +439,9 @@ class UnifiVoucherOptionsFlowHandler(OptionsFlow):
         self.options = dict(config_entry.options)
 
     async def async_step_init(
-        self, user_input: dict[str, Any] | None = None
+        self, user_input: dict[str, any] | None = None
     ) -> FlowResult:
+        """Options flow to save configurable options."""
         if user_input is not None:
             # Input is valid, set data.
             self.options.update(

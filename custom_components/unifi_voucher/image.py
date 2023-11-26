@@ -20,6 +20,7 @@ from homeassistant.helpers.entity import Entity
 import homeassistant.util.dt as dt_util
 
 from .const import (
+    LOGGER,
     DOMAIN,
     CONF_WLAN_NAME,
     ATTR_QR_CODE,
@@ -105,7 +106,7 @@ class UnifiVoucherImage(UnifiVoucherEntity, ImageEntity):
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
         if (_wlan_name := self.coordinator.config_entry.options.get(CONF_WLAN_NAME, "")) != self.current_wlan_name:
-            _LOGGER.debug("Guest WLAN name changed to %s", _wlan_name)
+            LOGGER.debug("Guest WLAN name changed to %s", _wlan_name)
 
             self.current_wlan_name = _wlan_name
             self._attr_image_last_updated = dt_util.utcnow()
