@@ -12,6 +12,7 @@ MANUFACTURER = "Ubiquiti Networks"
 
 PLATFORMS = [
     Platform.BUTTON,
+    Platform.IMAGE,
     Platform.NUMBER,
     Platform.SENSOR,
 ]
@@ -28,6 +29,7 @@ ATTR_EXTRA_STATE_ATTRIBUTES = "extra_state_attributes"
 ATTR_LAST_PULL = "last_pull"
 ATTR_AVAILABLE = "available"
 ATTR_VOUCHER = "voucher"
+ATTR_QR_CODE = "qr_code"
 
 DEFAULT_SITE_ID = "default"
 DEFAULT_HOST = ""
