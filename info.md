@@ -17,7 +17,20 @@ Latest -
 [![lint-badge]][lint-workflow]
 [![issues][issues-shield]][issues-link]
 
-UniFi Hotspot Manager as a Custom Component for Home Assistant. The most UniFi Network Controller by Ubiquiti Networks, inc., e.g. Cloud Key 2, UDM, UDM Pro are supported.
+UniFi Hotspot Manager as a Custom Component for Home Assistant.
+
+This integration facilitates user-friendly management of guest Wi-Fi vouchers. By integrating with Home Assistant, users can swiftly and easily generate and display personalized access codes. These vouchers can then be shared with guests, granting temporary access to the Wi-Fi network.
+
+Key features of the integration include:
+* **Voucher Creation:** Users can effortlessly generate new access codes, with various configuration options such as validity period and available data volume.
+* **Display of Voucher:** The last created voucher is presented in the Home Assistant interface.
+* **QR Code Display:** The integration enables the display of a QR code for the guest Wi-Fi, facilitating quick connectivity for guests.
+* **Automation:** The integration can be incorporated into existing automations, enabling, for instance, time-triggered voucher creation.
+* **User-Friendliness:** The integration is designed to offer an intuitive user experience, utilizing the Home Assistant interface as a central control center for guest Wi-Fi management.
+
+The UniFi Hotspot Manager Integration provides a practical solution for the temporary provision of Wi-Fi access, seamlessly integrating into the Home Assistant environment for intuitive use.
+
+The most UniFi Network Controller by Ubiquiti Networks, inc., e.g. Cloud Key 2, UDM, UDM Pro are supported.
 
 ## Installation
 * First: This is not a Home Assistant Add-On. It's a custom component.
@@ -57,6 +70,15 @@ UniFi Hotspot Manager as a Custom Component for Home Assistant. The most UniFi N
     ```
     attributes: 
     last_poll
+    ```
+
+### Images
+
+* qr_code
+
+    ```
+    attributes: 
+    wlan_name, last_poll
     ```
 
 ### Numbers
