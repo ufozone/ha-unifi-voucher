@@ -17,6 +17,13 @@
         "data": {
           "site_id": "Select site"
         }
+      },
+      "wlan": {
+        "title": "Enter guest WLAN",
+        "description": "Enter the name of the guest WLAN.",
+        "data": {
+          "wlan_name": "Guest WLAN"
+        }
       }
     },
     "error": {
@@ -32,6 +39,18 @@
       "already_configured": "[%key:common::config_flow::abort::already_configured_service%]",
       "configuration_updated": "Configuration updated",
       "reauth_successful": "[%key:common::config_flow::abort::reauth_successful%]"
+    }
+  },
+  "options": {
+    "error": {},
+    "step": {
+      "init": {
+        "title": "Enter guest WLAN",
+        "description": "Enter the name of the guest WLAN.",
+        "data": {
+          "wlan_name": "Guest WLAN"
+        }
+      }
     }
   },
   "entity": {

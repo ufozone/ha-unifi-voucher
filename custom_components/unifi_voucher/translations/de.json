@@ -17,6 +17,13 @@
         "data": {
           "site_id": "Site auswählen"
         }
+      },
+      "wlan": {
+        "title": "Gast-WLAN eingeben",
+        "description": "Gib den Namen des Gast-WLANs ein.",
+        "data": {
+          "wlan_name": "Gast-WLAN"
+        }
       }
     },
     "error": {
@@ -32,6 +39,18 @@
       "already_configured": "Dienst ist bereits konfiguriert",
       "configuration_updated": "Konfiguration aktualisiert",
       "reauth_successful": "Re-Authentifizierung war erfolgreich"
+    }
+  },
+  "options": {
+    "error": {},
+    "step": {
+      "init": {
+        "title": "Gast-WLAN eingeben",
+        "description": "Gib den Namen des Gast-WLANs ein.",
+        "data": {
+          "wlan_name": "Gast-WLAN"
+        }
+      }
     }
   },
   "entity": {

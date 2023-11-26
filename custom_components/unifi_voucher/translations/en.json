@@ -17,6 +17,13 @@
         "data": {
           "site_id": "Select site"
         }
+      },
+      "wlan": {
+        "title": "Enter guest WLAN",
+        "description": "Enter the name of the guest WLAN.",
+        "data": {
+          "wlan_name": "Guest WLAN"
+        }
       }
     },
     "error": {
@@ -32,6 +39,18 @@
       "already_configured": "Service is already configured",
       "configuration_updated": "Configuration updated",
       "reauth_successful": "Re-authentication was successful"
+    }
+  },
+  "options": {
+    "error": {},
+    "step": {
+      "init": {
+        "title": "Enter guest WLAN",
+        "description": "Enter the name of the guest WLAN.",
+        "data": {
+          "wlan_name": "Guest WLAN"
+        }
+      }
     }
   },
   "entity": {
