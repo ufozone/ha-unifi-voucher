@@ -18,11 +18,14 @@
           "site_id": "Site auswählen"
         }
       },
-      "wlan": {
-        "title": "Gast-WLAN eingeben",
-        "description": "Gib den Namen des Gast-WLANs ein.",
+      "options": {
+        "title": "Einstellungen",
+        "description": "Ändere hier die Einstellungen der Integration.",
         "data": {
-          "wlan_name": "Gast-WLAN"
+          "wlan_name": "Wie lautet der Namen deines Gast-WLANs?",
+          "voucher_number": "Wie viele neue Voucher sollen gleichzeitig erstellt werden?",
+          "voucher_quota": "Wie viel Datenverkehr soll pro Voucher nutzbar sein? (0 = unbegrenzt)",
+          "voucher_expire": "Wie lange soll ein Voucher ab Einlösen gültig sein?"
         }
       }
     },
@@ -45,10 +48,13 @@
     "error": {},
     "step": {
       "init": {
-        "title": "Gast-WLAN eingeben",
-        "description": "Gib den Namen des Gast-WLANs ein.",
+        "title": "Einstellungen",
+        "description": "Ändere hier die Einstellungen der Integration.",
         "data": {
-          "wlan_name": "Gast-WLAN"
+          "wlan_name": "Wie lautet der Namen deines Gast-WLANs?",
+          "voucher_number": "Wie viele neue Voucher sollen gleichzeitig erstellt werden?",
+          "voucher_quota": "Wie viel Datenverkehr soll pro Voucher nutzbar sein? (0 = unbegrenzt)",
+          "voucher_expire": "Wie lange soll ein Voucher ab Einlösen gültig sein?"
         }
       }
     }
@@ -74,6 +80,19 @@
       "remove": {
         "name": "Gutschein löschen",
         "state_attributes": {
+          "last_pull": {
+            "name": "Letzter Abruf"
+          }
+        }
+      }
+    },
+    "image": {
+      "qr_code": {
+        "name": "Gast-WLAN QR-Code",
+        "state_attributes": {
+          "wlan_name": {
+            "name": "WLAN-Name"
+          },
           "last_pull": {
             "name": "Letzter Abruf"
           }

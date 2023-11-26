@@ -18,11 +18,14 @@
           "site_id": "Select site"
         }
       },
-      "wlan": {
-        "title": "Enter guest WLAN",
-        "description": "Enter the name of the guest WLAN.",
+      "options": {
+        "title": "Settings",
+        "description": "Change the integration settings here.",
         "data": {
-          "wlan_name": "Guest WLAN"
+          "wlan_name": "What is the name of your guest WLAN?",
+          "voucher_number": "How many new vouchers should be created at the same time?",
+          "voucher_quota": "How much data traffic should be available per voucher? (0 = unlimited)",
+          "voucher_expire": "How long should a voucher be valid from the time it is used?"
         }
       }
     },
@@ -45,10 +48,13 @@
     "error": {},
     "step": {
       "init": {
-        "title": "Enter guest WLAN",
-        "description": "Enter the name of the guest WLAN.",
+        "title": "Settings",
+        "description": "Change the integration settings here.",
         "data": {
-          "wlan_name": "Guest WLAN"
+          "wlan_name": "What is the name of your guest WLAN?",
+          "voucher_number": "How many new vouchers should be created at the same time?",
+          "voucher_quota": "How much data traffic should be available per voucher? (0 = unlimited)",
+          "voucher_expire": "How long should a voucher be valid from the time it is used?"
         }
       }
     }
@@ -74,6 +80,19 @@
       "remove": {
         "name": "Delete voucher",
         "state_attributes": {
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
+      }
+    },
+    "image": {
+      "qr_code": {
+        "name": "Guest WLAN QR code",
+        "state_attributes": {
+          "wlan_name": {
+            "name": "WLAN name"
+          },
           "last_pull": {
             "name": "Last pull"
           }
