@@ -33,16 +33,51 @@ The UniFi Hotspot Manager Integration provides a practical solution for the temp
 The most UniFi Network Controller by Ubiquiti Networks, inc., e.g. Cloud Key 2, UDM, UDM Pro are supported.
 
 ## Installation
-* First: This is not a Home Assistant Add-On. It's a custom component.
-* There are three ways to install:
-    * First you can download the folder custom_component and copy it into your Home-Assistant config folder.
-    * Second option is to install HACS (Home Assistant Custom Component Store) and visit the HACS _Integrations_ pane and add `https://github.com/ufozone/ha-unifi-voucher.git` as an `Integration` by following [these instructions](https://hacs.xyz/docs/faq/custom_repositories/). You'll then be able to install it through the _Integrations_ pane.
-    * ~~Third option is to install HACS (Home Assistant Custom Component Store) and select "UniFi Hotspot Managervoucher" from the Integrations catalog.~~
-* Restart Home Assistant after installation.
-* Make sure that you refresh your browser window too.
-* Use the "Add Integration" in Home Assistant, Settings, Devices & Services and select "UniFi Hotspot Managervoucher".
+
+Requires Home Assistant 2023.10.0 or newer.
+
+### Installation through HACS
+
+Installation using Home Assistant Community Store (HACS) is recommended.
+
+1. If HACS is not installed, follow HACS installation and configuration at https://hacs.xyz/.
+
+2. Visit HACS _Integrations_ pane and add `https://github.com/ufozone/ha-unifi-voucher.git` as an `Integration` by following [these instructions](https://hacs.xyz/docs/faq/custom_repositories/).
+
+2. Click the button below or visit the HACS _Integrations_ pane and search for "UniFi Hotspot Manager".
+
+    [![my_button](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=ufozone&repository=ha-unifi-voucher&category=integration)
+
+3. Install the integration.
+
+4. Restart Home Assistant!
+
+5. Make sure that you refresh your browser window too.
+
+### Manual installation
+
+1. Download the `unifi_voucher.zip` file from the repository [release section](https://github.com/ufozone/ha-unifi-voucher/releases).
+
+   Do **not** download directly from the `main` branch.
+
+2. Extract and copy the content into the path `/config/custom_components/unifi_voucher` of your HA installation.
+
+3. Restart Home Assistant!
+
+4. Make sure that you refresh your browser window too.
+
+### Setup integration
+
+Start setup:
+
+* Click this button:
+
+    [![my_button](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=unifi_voucher)
+
+* Or use the "Add Integration" in Home Assistant, Settings, Devices & Services and select "UniFi Hotspot Manager".
 
 ## Configuration
+
 * All configuration options are offered from the front end.
 * For UniFi OS a local-only user needs to be created. A user who uses the Ubiquiti cloud will not work.
 * The user needs administrator or hotspot privileges in order to manage guest vouchers.
@@ -74,6 +109,8 @@ The most UniFi Network Controller by Ubiquiti Networks, inc., e.g. Cloud Key 2, 
 
 ### Images
 
+_This entity is disabled by default. You have to activate it if you want to use it._
+
 * qr_code
 
     ```
@@ -82,6 +119,8 @@ The most UniFi Network Controller by Ubiquiti Networks, inc., e.g. Cloud Key 2, 
     ```
 
 ### Numbers
+
+_These entities are disabled by default. You have to activate it if you want to use it._
 
 * voucher_quota
 
