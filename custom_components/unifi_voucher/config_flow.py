@@ -264,9 +264,9 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
             self.options.update(
                 {
                     CONF_WLAN_NAME: user_input.get(CONF_WLAN_NAME, "").strip(),
-                    CONF_VOUCHER_NUMBER: int(user_input.get(CONF_VOUCHER_NUMBER, DEFAULT_VOUCHER[CONF_VOUCHER_NUMBER].get("default", 0))),
-                    CONF_VOUCHER_QUOTA: int(user_input.get(CONF_VOUCHER_QUOTA, DEFAULT_VOUCHER[CONF_VOUCHER_QUOTA].get("default", 0))),
-                    CONF_VOUCHER_EXPIRE: int(user_input.get(CONF_VOUCHER_EXPIRE, DEFAULT_VOUCHER[CONF_VOUCHER_EXPIRE].get("default", 0))),
+                    CONF_VOUCHER_NUMBER: _set_option(user_input, CONF_VOUCHER_NUMBER),
+                    CONF_VOUCHER_QUOTA: _set_option(user_input, CONF_VOUCHER_QUOTA),
+                    CONF_VOUCHER_EXPIRE: _set_option(user_input, CONF_VOUCHER_EXPIRE),
                 }
             )
             # User is done, create the config entry.
@@ -301,7 +301,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                     vol.Optional(
                         CONF_WLAN_NAME,
                         description={
-                            "suggested_value": (user_input or {}).get(CONF_WLAN_NAME, ""),
+                            "suggested_value": (user_input or {}).get(CONF_WLAN_NAME, _default_wlan_name),
                         },
                     ): selector.TextSelector(
                         selector.TextSelectorConfig(
@@ -312,10 +312,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                         CONF_VOUCHER_NUMBER,
                         default=DEFAULT_VOUCHER[CONF_VOUCHER_NUMBER].get("default", 0),
                         description={
-                            "suggested_value": (user_input or {}).get(
-                                CONF_VOUCHER_NUMBER,
-                                DEFAULT_VOUCHER[CONF_VOUCHER_NUMBER].get("default", 0),
-                            ),
+                            "suggested_value": _get_option((user_input or {}), CONF_VOUCHER_NUMBER),
                         },
                     ): selector.NumberSelector(
                         selector.NumberSelectorConfig(
@@ -329,10 +326,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                         CONF_VOUCHER_QUOTA,
                         default=DEFAULT_VOUCHER[CONF_VOUCHER_QUOTA].get("default", 0),
                         description={
-                            "suggested_value": (user_input or {}).get(
-                                CONF_VOUCHER_QUOTA,
-                                DEFAULT_VOUCHER[CONF_VOUCHER_QUOTA].get("default", 0),
-                            ),
+                            "suggested_value": _get_option((user_input or {}), CONF_VOUCHER_QUOTA),
                         },
                     ): selector.NumberSelector(
                         selector.NumberSelectorConfig(
@@ -346,10 +340,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                         CONF_VOUCHER_EXPIRE,
                         default=DEFAULT_VOUCHER[CONF_VOUCHER_EXPIRE].get("default", 0),
                         description={
-                            "suggested_value": (user_input or {}).get(
-                                CONF_VOUCHER_EXPIRE,
-                                DEFAULT_VOUCHER[CONF_VOUCHER_EXPIRE].get("default", 0),
-                            ),
+                            "suggested_value": _get_option((user_input or {}), CONF_VOUCHER_EXPIRE),
                         },
                     ): selector.NumberSelector(
                         selector.NumberSelectorConfig(
@@ -445,9 +436,9 @@ class UnifiVoucherOptionsFlowHandler(OptionsFlow):
             self.options.update(
                 {
                     CONF_WLAN_NAME: user_input.get(CONF_WLAN_NAME, "").strip(),
-                    CONF_VOUCHER_NUMBER: int(user_input.get(CONF_VOUCHER_NUMBER, DEFAULT_VOUCHER[CONF_VOUCHER_NUMBER].get("default", 0))),
-                    CONF_VOUCHER_QUOTA: int(user_input.get(CONF_VOUCHER_QUOTA, DEFAULT_VOUCHER[CONF_VOUCHER_QUOTA].get("default", 0))),
-                    CONF_VOUCHER_EXPIRE: int(user_input.get(CONF_VOUCHER_EXPIRE, DEFAULT_VOUCHER[CONF_VOUCHER_EXPIRE].get("default", 0))),
+                    CONF_VOUCHER_NUMBER: _set_option(user_input, CONF_VOUCHER_NUMBER),
+                    CONF_VOUCHER_QUOTA: _set_option(user_input, CONF_VOUCHER_QUOTA),
+                    CONF_VOUCHER_EXPIRE: _set_option(user_input, CONF_VOUCHER_EXPIRE),
                 }
             )
             # User is done, update the config entry.
@@ -473,10 +464,7 @@ class UnifiVoucherOptionsFlowHandler(OptionsFlow):
                         CONF_VOUCHER_NUMBER,
                         default=DEFAULT_VOUCHER[CONF_VOUCHER_NUMBER].get("default", 0),
                         description={
-                            "suggested_value": (user_input or self.options or {}).get(
-                                CONF_VOUCHER_NUMBER,
-                                DEFAULT_VOUCHER[CONF_VOUCHER_NUMBER].get("default", 0),
-                            ),
+                            "suggested_value": _get_option((user_input or self.options or {}), CONF_VOUCHER_NUMBER),
                         },
                     ): selector.NumberSelector(
                         selector.NumberSelectorConfig(
@@ -490,10 +478,7 @@ class UnifiVoucherOptionsFlowHandler(OptionsFlow):
                         CONF_VOUCHER_QUOTA,
                         default=DEFAULT_VOUCHER[CONF_VOUCHER_QUOTA].get("default", 0),
                         description={
-                            "suggested_value": (user_input or self.options or {}).get(
-                                CONF_VOUCHER_QUOTA,
-                                DEFAULT_VOUCHER[CONF_VOUCHER_QUOTA].get("default", 0),
-                            ),
+                            "suggested_value": _get_option((user_input or self.options or {}), CONF_VOUCHER_QUOTA),
                         },
                     ): selector.NumberSelector(
                         selector.NumberSelectorConfig(
@@ -507,10 +492,7 @@ class UnifiVoucherOptionsFlowHandler(OptionsFlow):
                         CONF_VOUCHER_EXPIRE,
                         default=DEFAULT_VOUCHER[CONF_VOUCHER_EXPIRE].get("default", 0),
                         description={
-                            "suggested_value": (user_input or self.options or {}).get(
-                                CONF_VOUCHER_EXPIRE,
-                                DEFAULT_VOUCHER[CONF_VOUCHER_EXPIRE].get("default", 0),
-                            ),
+                            "suggested_value": _get_option((user_input or self.options or {}), CONF_VOUCHER_EXPIRE),
                         },
                     ): selector.NumberSelector(
                         selector.NumberSelectorConfig(
@@ -532,3 +514,23 @@ async def _async_discover_unifi(hass: HomeAssistant) -> str | None:
         return await hass.async_add_executor_job(socket.gethostbyname, "unifi")
     except socket.gaierror:
         return None
+
+def _get_option(
+    input: dict[str, any],
+    option: str,
+    fallback_default: int = 0
+) -> int:
+    _scale = DEFAULT_VOUCHER[option].get("scale", 1)
+    _default = DEFAULT_VOUCHER[option].get("default", fallback_default) * _scale
+    _value = input.get(option, _default)
+    return int(_value / _scale)
+
+def _set_option(
+    input: dict[str, any],
+    option: str,
+    fallback_default: int = 0
+) -> int:
+    _scale = DEFAULT_VOUCHER[option].get("scale", 1)
+    _default = DEFAULT_VOUCHER[option].get("default", fallback_default)
+    _value = input.get(option, _default)
+    return int(_value * _scale)
