@@ -142,7 +142,7 @@ _These entities are disabled by default. You have to activate it if you want to 
 
     ```
     attributes: 
-    quota, used, duration, status, create_time, start_time, end_time, status_expires, last_poll
+    wlan_name, quota, used, duration, status, create_time, start_time, end_time, status_expires, byte_quota, up_bandwidth, down_bandwidth, last_poll
     ```
 
 ### Logging
