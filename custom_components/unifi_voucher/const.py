@@ -44,7 +44,7 @@ DEFAULT_VOUCHER = {
         "max": 10000,
     },
     CONF_VOUCHER_QUOTA: {
-        "default": 0,
+        "default": 1,
         "min": 0,
         "max": 1048576,
     },

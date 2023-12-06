@@ -53,8 +53,9 @@
         "data": {
           "wlan_name": "Wie lautet der Namen deines Gast-WLANs?",
           "voucher_number": "Wie viele neue Voucher sollen gleichzeitig erstellt werden?",
-          "voucher_quota": "Wie viel Datenverkehr soll pro Voucher nutzbar sein? (0 = unbegrenzt)",
-          "voucher_expire": "Wie lange soll ein Voucher ab Einlösen gültig sein?"
+          "voucher_quota": "Wie häufig soll ein Voucher nutzbar sein? (0 = unbegrenzt)",
+          "voucher_expire": "Wie lange soll ein Voucher ab Einlösen gültig sein?",
+          "voucher_data_limit": "Wie viel Datenverkehr soll pro Voucher nutzbar sein? (0 = unbegrenzt)"
         }
       }
     }
