@@ -35,68 +35,69 @@ The most UniFi Network Controller by Ubiquiti Networks, inc., e.g. Cloud Key 2, 
 ## Example of use
 
 The voucher can be presented together with the QR code on a lovelace card:
+
 ![Lovelace Card](https://github.com/ufozone/ha-unifi-voucher/blob/main/screenshots/lovelace-card.jpg?raw=true)
 
 <details>
-  <summary>Realization of the example</summary>
+  <summary>Blueprint of the example</summary>
+  The example shown can be implemented as follows. The image file for the background must be stored in the `/config/www/` folder.
 
   ```
-  long console output here
-type: picture-elements
-image: /local/static/images/hotspot-bg.jpg
-elements:
-  - type: image
-    entity: image.123456789073fdb051c706194_qr_code
-    style:
-      top: 50%
-      left: 20%
-      width: 30%
-  - type: state-label
-    entity: sensor.123456789073fdb051c706194_voucher
-    style:
-      top: 50%
-      left: 67%
-      background: rgba(11, 11, 11, 70%)
-      padding: 10px
-      height: 60px
-      border-radius: 12px
-      font-size: 275%
-      font-weight: bold
-    title: null
-    tap_action:
-      action: none
-    hold_action:
-      action: none
-  - type: state-label
-    entity: sensor.123456789073fdb051c706194_voucher
-    attribute: duration
-    prefix: 'Duration: '
-    style:
-      top: 58%
-      left: 67%
-    title: null
-    tap_action:
-      action: none
-    hold_action:
-      action: none
-  - type: service-button
-    title: Refresh
-    style:
-      transform: none
-      bottom: 5%
-      left: 5%
-    service: button.press
-    service_data:
-      entity_id: button.123456789073fdb051c706194_update
-  - type: service-button
-    title: Create
-    style:
-      transform: none
-      bottom: 5%
-      right: 5%
-    service: button.press
-    service_data:
-      entity_id: button.123456789073fdb051c706194_create
+  type: picture-elements
+  image: /local/hotspot-bg.jpg
+  elements:
+    - type: image
+      entity: image.123456789073fdb051c706194_qr_code
+      style:
+        top: 50%
+        left: 20%
+        width: 30%
+    - type: state-label
+      entity: sensor.123456789073fdb051c706194_voucher
+      style:
+        top: 50%
+        left: 67%
+        background: rgba(11, 11, 11, 70%)
+        padding: 10px
+        height: 60px
+        border-radius: 12px
+        font-size: 275%
+        font-weight: bold
+      title: null
+      tap_action:
+        action: none
+      hold_action:
+        action: none
+    - type: state-label
+      entity: sensor.123456789073fdb051c706194_voucher
+      attribute: duration
+      prefix: 'Duration: '
+      style:
+        top: 58%
+        left: 67%
+      title: null
+      tap_action:
+        action: none
+      hold_action:
+        action: none
+    - type: service-button
+      title: Refresh
+      style:
+        transform: none
+        bottom: 5%
+        left: 5%
+      service: button.press
+      service_data:
+        entity_id: button.123456789073fdb051c706194_update
+    - type: service-button
+      title: Create
+      style:
+        transform: none
+        bottom: 5%
+        right: 5%
+      service: button.press
+      service_data:
+        entity_id: button.123456789073fdb051c706194_create
   ```
 </details>
 
