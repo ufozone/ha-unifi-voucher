@@ -129,6 +129,9 @@
       "voucher": {
         "name": "Voucher",
         "state_attributes": {
+          "wlan_name": {
+            "name": "WLAN Name"
+          },
           "quota": {
             "name": "Quota"
           },
@@ -159,6 +162,15 @@
               "valid_one": "Valid once",
               "valid_multi": "Valid multiple times"
             }
+          },
+          "data_limit": {
+            "name": "Data Limit"
+          },
+          "upload_limit": {
+            "name": "Upload Limit"
+          },
+          "download_limit": {
+            "name": "Download Limit"
           },
           "last_pull": {
             "name": "Last pull"

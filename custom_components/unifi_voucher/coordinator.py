@@ -28,6 +28,7 @@ from .const import (
     LOGGER,
     UPDATE_INTERVAL,
     CONF_SITE_ID,
+    CONF_WLAN_NAME,
     CONF_VOUCHER_NUMBER,
     CONF_VOUCHER_QUOTA,
     CONF_VOUCHER_EXPIRE,
@@ -138,6 +139,12 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         _port = self.config_entry.data.get(CONF_PORT)
         _site_id = self.config_entry.data.get(CONF_SITE_ID)
         return f"https://{_host}:{_port}/network/{_site_id}/hotspot"
+
+    def get_wlan_name(
+        self,
+    ) -> str:
+        """Get guest WLAN name."""
+        return self.config_entry.options.get(CONF_WLAN_NAME, "")
 
     def get_entry_option(
         self,

@@ -213,12 +213,12 @@ class UnifiVoucher(ApiItem):
     @property
     def qos_rate_max_up(self) -> int:
         """Up speed allowed in kbps."""
-        return self.raw.get("qos_rate_max_up", 0)
+        return self.raw.get("qos_rate_max_up") or 0
 
     @property
     def qos_rate_max_down(self) -> int:
         """Down speed allowed in kbps."""
-        return self.raw.get("qos_rate_max_down", 0)
+        return self.raw.get("qos_rate_max_down") or 0
 
     @property
     def used(self) -> int:

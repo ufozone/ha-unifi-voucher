@@ -74,6 +74,7 @@ class UnifiVoucherSensor(UnifiVoucherEntity, SensorEntity):
             return None
 
         _x = {
+            "wlan_name": self.coordinator.get_wlan_name(),
             "quota": voucher.get("quota"),
             "used": voucher.get("used"),
             "duration": str(voucher.get("duration")), # TODO: Localized string
@@ -88,6 +89,15 @@ class UnifiVoucherSensor(UnifiVoucherEntity, SensorEntity):
 
         if voucher.get("status_expires") is not None:
             _x["status_expires"] = str(voucher.get("status_expires")) # TODO: Localized string
+
+        if voucher.get("qos_usage_quota") > 0:
+            _x["data_limit"] = voucher.get("qos_usage_quota")
+
+        if voucher.get("qos_rate_max_up") > 0:
+            _x["upload_limit"] = voucher.get("qos_rate_max_up")
+
+        if voucher.get("qos_rate_max_down") > 0:
+            _x["download_limit"] = voucher.get("qos_rate_max_down")
 
         self._additional_extra_state_attributes = _x
 

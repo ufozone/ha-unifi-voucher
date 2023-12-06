@@ -129,6 +129,9 @@
       "voucher": {
         "name": "Gutschein",
         "state_attributes": {
+          "wlan_name": {
+            "name": "WLAN Name"
+          },
           "quota": {
             "name": "Kontingent"
           },
@@ -159,6 +162,15 @@
               "valid_one": "Einmal gültig",
               "valid_multi": "Mehrmals gültig"
             }
+          },
+          "data_limit": {
+            "name": "Datengrenze"
+          },
+          "upload_limit": {
+            "name": "Upload-Geschwindigkeit"
+          },
+          "download_limit": {
+            "name": "Download-Geschwindigkeit"
           },
           "last_pull": {
             "name": "Letzter Abruf"
