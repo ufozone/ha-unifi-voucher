@@ -23,7 +23,7 @@ This integration facilitates user-friendly management of guest Wi-Fi vouchers. B
 
 Key features of the integration include:
 * **Voucher Creation:** Users can effortlessly generate new access codes, with various configuration options such as validity period and available data volume.
-* **Display of Voucher:** The last created voucher is presented in the Home Assistant interface.
+* **Display of Voucher:** The last created voucher is presented in the Home Assistant interface. As soon as the voucher has been used, the next one will be displayed.
 * **QR Code Display:** The integration enables the display of a QR code for the guest Wi-Fi, facilitating quick connectivity for guests.
 * **Automation:** The integration can be incorporated into existing automations, enabling, for instance, time-triggered voucher creation.
 * **User-Friendliness:** The integration is designed to offer an intuitive user experience, utilizing the Home Assistant interface as a central control center for guest Wi-Fi management.
@@ -31,6 +31,74 @@ Key features of the integration include:
 The UniFi Hotspot Manager Integration provides a practical solution for the temporary provision of Wi-Fi access, seamlessly integrating into the Home Assistant environment for intuitive use.
 
 The most UniFi Network Controller by Ubiquiti Networks, inc., e.g. Cloud Key 2, UDM, UDM Pro are supported.
+
+## Example of use
+
+The voucher can be presented together with the QR code on a lovelace card:
+![Lovelace Card](https://github.com/ufozone/ha-unifi-voucher/blob/main/screenshots/lovelace-card.jpg?raw=true)
+
+<details>
+  <summary>Realization of the example</summary>
+
+  ```
+  long console output here
+type: picture-elements
+image: /local/static/images/hotspot-bg.jpg
+elements:
+  - type: image
+    entity: image.123456789073fdb051c706194_qr_code
+    style:
+      top: 50%
+      left: 20%
+      width: 30%
+  - type: state-label
+    entity: sensor.123456789073fdb051c706194_voucher
+    style:
+      top: 50%
+      left: 67%
+      background: rgba(11, 11, 11, 70%)
+      padding: 10px
+      height: 60px
+      border-radius: 12px
+      font-size: 275%
+      font-weight: bold
+    title: null
+    tap_action:
+      action: none
+    hold_action:
+      action: none
+  - type: state-label
+    entity: sensor.123456789073fdb051c706194_voucher
+    attribute: duration
+    prefix: 'Duration: '
+    style:
+      top: 58%
+      left: 67%
+    title: null
+    tap_action:
+      action: none
+    hold_action:
+      action: none
+  - type: service-button
+    title: Refresh
+    style:
+      transform: none
+      bottom: 5%
+      left: 5%
+    service: button.press
+    service_data:
+      entity_id: button.123456789073fdb051c706194_update
+  - type: service-button
+    title: Create
+    style:
+      transform: none
+      bottom: 5%
+      right: 5%
+    service: button.press
+    service_data:
+      entity_id: button.123456789073fdb051c706194_create
+  ```
+</details>
 
 ## Installation
 
