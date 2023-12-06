@@ -15,6 +15,7 @@ from homeassistant.helpers.entity import Entity
 
 from .const import (
     DOMAIN,
+    CONF_WLAN_NAME,
     ATTR_VOUCHER,
 )
 from .coordinator import UnifiVoucherCoordinator
@@ -78,7 +79,7 @@ class UnifiVoucherSensor(UnifiVoucherEntity, SensorEntity):
             return None
 
         _x = {
-            "wlan_name": self.coordinator.get_wlan_name(),
+            CONF_WLAN_NAME: self.coordinator.get_wlan_name(),
             "quota": voucher.get("quota"),
             "used": voucher.get("used"),
             "duration": str(voucher.get("duration")), # TODO: Localized string
