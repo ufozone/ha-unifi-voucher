@@ -105,7 +105,7 @@ class UnifiVoucherImage(UnifiVoucherEntity, ImageEntity):
     @callback
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
-        if (_wlan_name := self.coordinator.config_entry.options.get(CONF_WLAN_NAME, "")) != self.current_wlan_name:
+        if (_wlan_name := self.coordinator.get_wlan_name()) != self.current_wlan_name:
             LOGGER.debug("Guest WLAN name changed to %s", _wlan_name)
 
             self.current_wlan_name = _wlan_name
