@@ -55,7 +55,7 @@
           "voucher_number": "Wie viele neue Voucher sollen gleichzeitig erstellt werden?",
           "voucher_quota": "Wie häufig soll ein Voucher nutzbar sein? (0 = unbegrenzt)",
           "voucher_expire": "Wie lange soll ein Voucher ab Einlösen gültig sein?",
-          "voucher_data_limit": "Wie viel Datenverkehr soll pro Voucher nutzbar sein? (0 = unbegrenzt)"
+          "voucher_byte_quota": "Wie viel Datenverkehr soll pro Voucher nutzbar sein? (0 = unbegrenzt)"
         }
       }
     }
@@ -164,14 +164,14 @@
               "valid_multi": "Mehrmals gültig"
             }
           },
-          "data_limit": {
-            "name": "Datengrenze"
-          },
-          "upload_limit": {
+          "up_bandwidth": {
             "name": "Upload-Geschwindigkeit"
           },
-          "download_limit": {
+          "down_bandwidth": {
             "name": "Download-Geschwindigkeit"
+          },
+          "byte_quota": {
+            "name": "Datengrenze"
           },
           "last_pull": {
             "name": "Letzter Abruf"

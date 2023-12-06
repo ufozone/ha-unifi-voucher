@@ -95,13 +95,13 @@ class UnifiVoucherSensor(UnifiVoucherEntity, SensorEntity):
             _x["status_expires"] = str(voucher.get("status_expires")) # TODO: Localized string
 
         if voucher.get("qos_usage_quota") > 0:
-            _x["data_limit"] = str(voucher.get("qos_usage_quota")) + " " + UnitOfInformation.MEGABYTES
+            _x["byte_quota"] = str(voucher.get("qos_usage_quota")) + " " + UnitOfInformation.MEGABYTES
 
         if voucher.get("qos_rate_max_up") > 0:
-            _x["upload_limit"] = str(voucher.get("qos_rate_max_up")) + " " + UnitOfDataRate.KILOBITS_PER_SECOND
+            _x["up_bandwidth"] = str(voucher.get("qos_rate_max_up")) + " " + UnitOfDataRate.KILOBITS_PER_SECOND
 
         if voucher.get("qos_rate_max_down") > 0:
-            _x["download_limit"] = str(voucher.get("qos_rate_max_down")) + " " + UnitOfDataRate.KILOBITS_PER_SECOND
+            _x["down_bandwidth"] = str(voucher.get("qos_rate_max_down")) + " " + UnitOfDataRate.KILOBITS_PER_SECOND
 
         self._additional_extra_state_attributes = _x
 

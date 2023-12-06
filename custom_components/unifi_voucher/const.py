@@ -24,9 +24,9 @@ CONF_WLAN_NAME = "wlan_name"
 CONF_VOUCHER_NUMBER = "voucher_number"
 CONF_VOUCHER_QUOTA = "voucher_quota"
 CONF_VOUCHER_EXPIRE = "voucher_expire"
-CONF_VOUCHER_DATA_LIMIT = "data_limit"
-CONF_VOUCHER_UPLOAD_LIMIT = "upload_limit"
-CONF_VOUCHER_DOWNLOAD_LIMIT = "download_limit"
+CONF_VOUCHER_BYTE_QUOTA = "byte_quota"
+CONF_VOUCHER_UP_BANDWIDTH = "up_bandwidth"
+CONF_VOUCHER_DOWN_BANDWIDTH = "down_bandwidth"
 
 ATTR_EXTRA_STATE_ATTRIBUTES = "extra_state_attributes"
 ATTR_LAST_PULL = "last_pull"
@@ -58,17 +58,17 @@ DEFAULT_VOUCHER = {
         "step": 1,
         "scale": 60,
     },
-    CONF_VOUCHER_DATA_LIMIT: {
+    CONF_VOUCHER_BYTE_QUOTA: {
         "default": 0,
         "min": 0,
         "max": 1048576,
     },
-    CONF_VOUCHER_UPLOAD_LIMIT: {
+    CONF_VOUCHER_UP_BANDWIDTH: {
         "default": 0,
         "min": 0,
         "max": 100000,
     },
-    CONF_VOUCHER_DOWNLOAD_LIMIT: {
+    CONF_VOUCHER_DOWN_BANDWIDTH: {
         "default": 0,
         "min": 0,
         "max": 100000,
