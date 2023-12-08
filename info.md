@@ -46,16 +46,30 @@ The voucher can be presented together with the QR code on a lovelace card:
   type: picture-elements
   image: /local/hotspot-bg.jpg
   elements:
+    - type: state-label
+      entity: image.5e9c5769873fdb051c706194_qr_code
+      attribute: wlan_name
+      style:
+        top: 15%
+        left: 50%
+        font-size: 200%
+        font-weight: bold
+        cursor: default
+      tap_action:
+        action: none
+      hold_action:
+        action: none
     - type: image
       entity: image.123456789073fdb051c706194_qr_code
       style:
-        top: 50%
+        top: 53%
         left: 20%
         width: 30%
+        cursor: default
     - type: state-label
       entity: sensor.123456789073fdb051c706194_voucher
       style:
-        top: 50%
+        top: 53%
         left: 67%
         background: rgba(11, 11, 11, 70%)
         padding: 10px
@@ -63,7 +77,7 @@ The voucher can be presented together with the QR code on a lovelace card:
         border-radius: 12px
         font-size: 275%
         font-weight: bold
-      title: null
+        cursor: default
       tap_action:
         action: none
       hold_action:
@@ -73,9 +87,9 @@ The voucher can be presented together with the QR code on a lovelace card:
       attribute: duration
       prefix: 'Duration: '
       style:
-        top: 58%
+        top: 61%
         left: 67%
-      title: null
+        cursor: default
       tap_action:
         action: none
       hold_action:
