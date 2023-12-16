@@ -225,12 +225,32 @@ _These entities are disabled by default. You have to activate it if you want to 
 
     ```
     attributes: 
-    wlan_name, quota, used, duration, status, create_time, start_time, end_time, status_expires, byte_quota, up_bandwidth, down_bandwidth, last_poll
+    wlan_name, id, quota, used, duration, status, create_time, start_time, end_time, status_expires, byte_quota, up_bandwidth, down_bandwidth, last_poll
     ```
 
-### Logging
+### Services
 
-Set the logging to debug with the following settings in case of problems.
+* list:
+
+    Get a list of all valid vouchers.
+
+* create:
+
+    Create a new voucher with your own parameters or the default settings of the integration.
+
+* remove:
+
+    Remove a special voucher or the last created voucher.
+
+* update:
+
+    Fetch data from UniFi Controller immediately.
+
+## Debugging
+
+To enable debug logging for this integration you can control this in your Home Assistant `configuration.yaml` file.
+
+Set the logging to debug with the following settings in case of problems:
 
 ```
 logger:
@@ -240,6 +260,7 @@ logger:
     custom_components.unifi_voucher: debug
 ```
 
+After a restart detailed log entries will appear in `/config/home-assistant.log`.
 
 ***
 
