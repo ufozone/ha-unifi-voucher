@@ -194,7 +194,7 @@
           "description": "Gibt an, wie viele Gutscheine pro Anruf erstellt werden."
         },
         "quota": {
-          "name": "Verwendungen pro Gutschein",
+          "name": "Kontingent pro Gutschein",
           "description": "Gibt an, wie oft ein Gutschein verwendet werden kann (0 = unbegrenzt)."
         },
         "expire": {

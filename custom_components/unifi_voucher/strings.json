@@ -194,7 +194,7 @@
           "description": "Specifies how many vouchers are created per call."
         },
         "quota": {
-          "name": "Uses per Voucher",
+          "name": "Quota per Voucher",
           "description": "Specifies how often a voucher can be used (0 = unlimited)."
         },
         "expire": {
