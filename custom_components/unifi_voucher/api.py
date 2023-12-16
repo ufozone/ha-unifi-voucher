@@ -9,8 +9,8 @@ from typing import (
 )
 
 from datetime import (
-    timedelta,
     datetime,
+    timedelta,
 )
 
 from aiohttp import CookieJar
@@ -76,7 +76,7 @@ class UnifiTypedVoucher(TypedDict):
 
 @dataclass
 class UnifiVoucherListRequest(ApiRequest):
-    """Request object for device list."""
+    """Request object for voucher list."""
 
     @classmethod
     def create(
@@ -98,38 +98,37 @@ class UnifiVoucherCreateRequest(ApiRequest):
         cls,
         number: int,
         quota: int,
-        expire: int,
-        up_bandwidth: int | None = None,
-        down_bandwidth: int | None = None,
-        byte_quota: int | None = None,
+        expire_number: int,
+        expire_unit: int = 1,
+        usage_quota: int | None = None,
+        rate_max_up: int | None = None,
+        rate_max_down: int | None = None,
         note: str | None = None,
     ) -> Self:
         """Create voucher create request.
 
         :param number: number of vouchers
         :param quota: number of using; 0 = unlimited
-        :param expire: expiration of voucher in minutes
-        :param up_bandwidth: up speed allowed in kbps
-        :param down_bandwidth: down speed allowed in kbps
-        :param byte_quota: quantity of bytes allowed in MB
+        :param expire_number: expiration of voucher per expire_unit
+        :param expire_unit: scale of expire_number, 1 = minute, 60 = hour, 3600 = day
+        :param usage_quota: quantity of bytes allowed in MB
+        :param rate_max_up: up speed allowed in kbps
+        :param rate_max_down: down speed allowed in kbps
         :param note: description
         """
         data = {
             "cmd": "create-voucher",
             "n": number,
             "quota": quota,
-            "expire": "custom",
-            "expire_number": expire,
-            "expire_unit": 1,
-            "down": None,
-            "up": None,
+            "expire_number": expire_number,
+            "expire_unit": expire_unit,
         }
-        if up_bandwidth:
-            data["up"] = up_bandwidth
-        if down_bandwidth:
-            data["down"] = down_bandwidth
-        if byte_quota:
-            data["bytes"] = byte_quota
+        if usage_quota:
+            data["bytes"] = usage_quota
+        if rate_max_up:
+            data["up"] = rate_max_up
+        if rate_max_down:
+            data["down"] = rate_max_down
         if note:
             data["note"] = note
 
@@ -141,15 +140,15 @@ class UnifiVoucherCreateRequest(ApiRequest):
 
 
 @dataclass
-class UnifiVoucherRemoveRequest(ApiRequest):
-    """Request object for voucher create."""
+class UnifiVoucherDeleteRequest(ApiRequest):
+    """Request object for voucher delete."""
 
     @classmethod
     def create(
         cls,
-        obj_id: int,
+        obj_id: str,
     ) -> Self:
-        """Create voucher remove request."""
+        """Create voucher delete request."""
         data = {
             "cmd": "delete-voucher",
             "_id": obj_id,
@@ -190,7 +189,7 @@ class UnifiVoucher(ApiItem):
 
     @property
     def quota(self) -> int:
-        """Nmber of vouchers."""
+        """Number of uses."""
         return self.raw.get("quota", 0)
 
     @property
@@ -266,7 +265,7 @@ class UnifiVoucher(ApiItem):
         return self.raw.get("status", "")
 
     @property
-    def status_expires(self) -> int | None:
+    def status_expires(self) -> timedelta | None:
         """Status expires."""
         if self.raw.get("status_expires", 0) > 0:
             return timedelta(

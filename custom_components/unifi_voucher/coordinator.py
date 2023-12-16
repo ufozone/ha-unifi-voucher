@@ -38,7 +38,7 @@ from .api import (
     UnifiVoucherApiClient,
     UnifiVouchers,
     UnifiVoucherCreateRequest,
-    UnifiVoucherRemoveRequest,
+    UnifiVoucherDeleteRequest,
     UnifiVoucherApiAuthenticationError,
     UnifiVoucherApiAccessError,
     UnifiVoucherApiError,
@@ -199,9 +199,10 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
                 continue
 
             _voucher = {
+                "id": voucher.id,
                 "code": voucher.code,
                 "quota": voucher.quota,
-                "duration": voucher.duration,
+                "duration": int(voucher.duration.total_seconds() / 3600),
                 "qos_overwrite": voucher.qos_overwrite,
                 "qos_usage_quota": voucher.qos_usage_quota,
                 "qos_rate_max_up": voucher.qos_rate_max_up,
@@ -211,7 +212,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
                 "start_time": voucher.start_time,
                 "end_time": voucher.end_time,
                 "status": voucher.status,
-                "status_expires": voucher.status_expires,
+                "status_expires": int(voucher.status_expires.total_seconds() / 3600) if voucher.status_expires else None,
             }
             _vouchers[voucher.id] = _voucher
 
@@ -225,30 +226,14 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         self.vouchers = _vouchers
         self.latest_voucher_id = _latest_voucher_id
 
-    async def async_update_vouchers(
-        self,
-    ) -> None:
-        """Create new voucher."""
-        try:
-            await self.async_fetch_vouchers()
-
-            # Always update HA states after a command was executed.
-            # API calls that change the lawn mower's state update the local object when
-            # executing the command, so only the HA state needs further updates.
-            self.hass.async_create_task(
-                self._async_update_listeners()
-            )
-        except Exception as exception:
-            LOGGER.exception(exception)
-
     async def async_create_voucher(
         self,
         number: int | None = None,
         quota: int | None = None,
         expire: int | None = None,
-        up_bandwidth: int | None = None,
-        down_bandwidth: int | None = None,
-        byte_quota: int | None = None,
+        usage_quota: int | None = None,
+        rate_max_up: int | None = None,
+        rate_max_down: int | None = None,
     ) -> None:
         """Create new voucher."""
         try:
@@ -265,10 +250,11 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
                 UnifiVoucherCreateRequest.create(
                     number=number,
                     quota=quota,
-                    expire=expire,
-                    up_bandwidth=up_bandwidth,
-                    down_bandwidth=down_bandwidth,
-                    byte_quota=byte_quota,
+                    expire_number=expire,
+                    expire_unit=60,
+                    usage_quota=usage_quota,
+                    rate_max_up=rate_max_up,
+                    rate_max_down=rate_max_down,
                     note="HA-generated",
                 )
             )
@@ -276,9 +262,9 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         except Exception as exception:
             LOGGER.exception(exception)
 
-    async def async_remove_voucher(
+    async def async_delete_voucher(
         self,
-        obj_id: int | None = None,
+        obj_id: str | None = None,
     ) -> None:
         """Remove voucher."""
         try:
@@ -288,10 +274,26 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
                     raise ValueError
 
             await self.client.controller.request(
-                UnifiVoucherRemoveRequest.create(
+                UnifiVoucherDeleteRequest.create(
                     obj_id=obj_id,
                 )
             )
             await self.async_update_vouchers()
+        except Exception as exception:
+            LOGGER.exception(exception)
+
+    async def async_update_vouchers(
+        self,
+    ) -> None:
+        """Create new voucher."""
+        try:
+            await self.async_fetch_vouchers()
+
+            # Always update HA states after a command was executed.
+            # API calls that change the lawn mower's state update the local object when
+            # executing the command, so only the HA state needs further updates.
+            self.hass.async_create_task(
+                self._async_update_listeners()
+            )
         except Exception as exception:
             LOGGER.exception(exception)

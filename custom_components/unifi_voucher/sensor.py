@@ -5,6 +5,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.const import (
     UnitOfInformation,
     UnitOfDataRate,
+    UnitOfTime,
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.components.sensor import (
@@ -80,9 +81,10 @@ class UnifiVoucherSensor(UnifiVoucherEntity, SensorEntity):
 
         _x = {
             CONF_WLAN_NAME: self.coordinator.get_wlan_name(),
+            "id": voucher.get("id"),
             "quota": voucher.get("quota"),
             "used": voucher.get("used"),
-            "duration": str(voucher.get("duration")), # TODO: Localized string
+            "duration": str(voucher.get("duration")) + " " + UnitOfTime.HOURS,
             "status": voucher.get("status").lower(),
             "create_time": voucher.get("create_time"),
         }
@@ -93,16 +95,16 @@ class UnifiVoucherSensor(UnifiVoucherEntity, SensorEntity):
             _x["end_time"] = voucher.get("end_time")
 
         if voucher.get("status_expires") is not None:
-            _x["status_expires"] = str(voucher.get("status_expires")) # TODO: Localized string
+            _x["status_expires"] = str(voucher.get("status_expires")) + " " + UnitOfTime.HOURS
 
         if voucher.get("qos_usage_quota") > 0:
-            _x["byte_quota"] = str(voucher.get("qos_usage_quota")) + " " + UnitOfInformation.MEGABYTES
+            _x["usage_quota"] = str(voucher.get("qos_usage_quota")) + " " + UnitOfInformation.MEGABYTES
 
         if voucher.get("qos_rate_max_up") > 0:
-            _x["up_bandwidth"] = str(voucher.get("qos_rate_max_up")) + " " + UnitOfDataRate.KILOBITS_PER_SECOND
+            _x["rate_max_up"] = str(voucher.get("qos_rate_max_up")) + " " + UnitOfDataRate.KILOBITS_PER_SECOND
 
         if voucher.get("qos_rate_max_down") > 0:
-            _x["down_bandwidth"] = str(voucher.get("qos_rate_max_down")) + " " + UnitOfDataRate.KILOBITS_PER_SECOND
+            _x["rate_max_down"] = str(voucher.get("qos_rate_max_down")) + " " + UnitOfDataRate.KILOBITS_PER_SECOND
 
         self._additional_extra_state_attributes = _x
 

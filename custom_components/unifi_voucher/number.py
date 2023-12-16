@@ -76,19 +76,14 @@ class UnifiVoucherNumber(UnifiVoucherEntity, NumberEntity):
         self._attr_native_max_value = DEFAULT_VOUCHER.get(entity_description.key).get("max", 10000)
         self._attr_native_step = DEFAULT_VOUCHER.get(entity_description.key).get("step", 1)
 
-    def _get_scale(self) -> float:
-        """Scale factor."""
-        return float(DEFAULT_VOUCHER.get(self.entity_description.key).get("scale", 1))
-
     @property
     def native_value(self) -> int:
         """Return the entity value to represent the entity state."""
-        return int(self.coordinator.get_entry_option(self.entity_description.key) / self._get_scale())
+        return int(self.coordinator.get_entry_option(self.entity_description.key))
 
     async def async_set_native_value(self, value: float) -> None:
         """Change the value."""
-        value = int(value)
         await self.coordinator.async_set_entry_option(
             self.entity_description.key,
-            int(value) * self._get_scale(),
+            int(value),
         )

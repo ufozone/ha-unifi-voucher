@@ -1,7 +1,9 @@
 """UniFi Hotspot Manager integration."""
 from __future__ import annotations
 
-from homeassistant.core import HomeAssistant
+from homeassistant.core import (
+    HomeAssistant,
+)
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.exceptions import (
     ConfigEntryAuthFailed,
@@ -20,20 +22,15 @@ from .api import (
     UnifiVoucherApiAuthenticationError,
     UnifiVoucherApiAccessError,
 )
+from .services import (
+    async_setup_services,
+    async_unload_services,
+)
 
 CONFIG_SCHEMA = cv.empty_config_schema(DOMAIN)
 
-async def async_setup(hass: HomeAssistant, config: dict) -> bool:
-    """Set up UniFi Hotspot Manager component."""
-    hass.data.setdefault(DOMAIN, {})
-
-    return True
-
-
 async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
     """Set up platform from a ConfigEntry."""
-    hass.data.setdefault(DOMAIN, {})
-
     try:
         coordinator = UnifiVoucherCoordinator(
             hass=hass,
@@ -51,11 +48,15 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
     except Exception as err:
         raise ConfigEntryNotReady from err
 
-    hass.data[DOMAIN][config_entry.entry_id] = coordinator
+    hass.data.setdefault(DOMAIN, {})[config_entry.entry_id] = coordinator
     await hass.config_entries.async_forward_entry_setups(config_entry, PLATFORMS)
     config_entry.async_on_unload(
         config_entry.add_update_listener(async_reload_entry)
     )
+
+    # Register services
+    if len(hass.data[DOMAIN]) == 1:
+        async_setup_services(hass, coordinator)
 
     return True
 
@@ -65,6 +66,11 @@ async def async_unload_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> 
     if unload_ok := await hass.config_entries.async_unload_platforms(config_entry, PLATFORMS):
         # Remove config entry from domain.
         hass.data[DOMAIN].pop(config_entry.entry_id)
+
+    if not hass.data[DOMAIN]:
+        async_unload_services(hass)
+        del hass.data[DOMAIN]
+
     return unload_ok
 
 

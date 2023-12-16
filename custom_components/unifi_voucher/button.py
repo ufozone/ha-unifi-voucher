@@ -44,13 +44,6 @@ async def async_setup_entry(
     coordinator = hass.data[DOMAIN][config_entry.entry_id]
     entity_descriptions = [
         UnifiVoucherButtonDescription(
-            key="update",
-            icon="mdi:update",
-            translation_key="update",
-            device_class=ButtonDeviceClass.UPDATE,
-            press_action=lambda coordinator: coordinator.async_update_vouchers(),
-        ),
-        UnifiVoucherButtonDescription(
             key="create",
             icon="mdi:numeric-positive-1",
             translation_key="create",
@@ -58,11 +51,18 @@ async def async_setup_entry(
             press_action=lambda coordinator: coordinator.async_create_voucher(),
         ),
         UnifiVoucherButtonDescription(
-            key="remove",
+            key="delete",
             icon="mdi:numeric-negative-1",
-            translation_key="remove",
+            translation_key="delete",
             device_class=ButtonDeviceClass.RESTART,
-            press_action=lambda coordinator: coordinator.async_remove_voucher(),
+            press_action=lambda coordinator: coordinator.async_delete_voucher(),
+        ),
+        UnifiVoucherButtonDescription(
+            key="update",
+            icon="mdi:update",
+            translation_key="update",
+            device_class=ButtonDeviceClass.UPDATE,
+            press_action=lambda coordinator: coordinator.async_update_vouchers(),
         ),
     ]
 

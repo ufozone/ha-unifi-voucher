@@ -1,2 +1,5 @@
 /.project
 /.pydevproject
+/.vscode/settings.json
+/custom_components/aiounifi/
+/custom_components/unifi_test/

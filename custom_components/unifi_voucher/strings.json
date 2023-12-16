@@ -55,7 +55,7 @@
           "voucher_number": "How many new vouchers should be created at the same time?",
           "voucher_quota": "How often should a voucher be usable? (0 = unlimited)",
           "voucher_expire": "How long should a voucher be valid from the time it is used?",
-          "voucher_byte_quota": "How much data traffic should be available per voucher? (0 = unlimited)"
+          "voucher_usage_quota": "How much data traffic should be available per voucher? (0 = unlimited)"
         }
       }
     }
@@ -78,7 +78,7 @@
           }
         }
       },
-      "remove": {
+      "delete": {
         "name": "Delete voucher",
         "state_attributes": {
           "last_pull": {
@@ -164,13 +164,13 @@
               "valid_multi": "Valid multiple times"
             }
           },
-          "up_bandwidth": {
+          "rate_max_up": {
             "name": "Upload bandwidth"
           },
-          "down_bandwidth": {
+          "rate_max_down": {
             "name": "Download bandwidth"
           },
-          "byte_quota": {
+          "usage_quota": {
             "name": "Data limit"
           },
           "last_pull": {
@@ -178,6 +178,56 @@
           }
         }
       }
+    }
+  },
+  "services": {
+    "list": {
+      "name": "List Vouchers",
+      "description": "Get a list of all valid vouchers."
+    },
+    "create": {
+      "name": "Create Voucher",
+      "description": "Create a new voucher with your own parameters or the default settings of the integration.",
+      "fields": {
+        "number": {
+          "name": "Number of Vouchers",
+          "description": "Specifies how many vouchers are created per call."
+        },
+        "quota": {
+          "name": "Uses per Voucher",
+          "description": "Specifies how often a voucher can be used (0 = unlimited)."
+        },
+        "expire": {
+          "name": "Expiration",
+          "description": "Specifies how long a voucher is valid (in hours) from the time it is entered."
+        },
+        "usage_quota": {
+          "name": "Data limit",
+          "description": "Specifies how much data volume (in MB) is available for the voucher."
+        },
+        "rate_max_up": {
+          "name": "Upload bandwidth",
+          "description": "Specifies how much upload bandwidth (in kbit/s) is available for the voucher."
+        },
+        "rate_max_down": {
+          "name": "Download bandwidth",
+          "description": "Specifies how much upload bandwidth (in kbit/s) is available for the voucher."
+        }
+      }
+    },
+    "delete": {
+      "name": "Remove Voucher",
+      "description": "Remove a special voucher or the last created voucher.",
+      "fields": {
+        "id": {
+          "name": "Voucher ID",
+          "description": "ID of the voucher to be deleted."
+        }
+      }
+    },
+    "update": {
+      "name": "Update Vouchers",
+      "description": "Fetch data for vouchers from UniFi Controller now."
     }
   }
 }

@@ -1,0 +1,76 @@
+# Describes the format for available unifi hotspot manager services
+
+list:
+
+create:
+  fields:
+    number:
+      required: false
+      example: 1
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 10000
+          mode: slider
+    quota:
+      required: false
+      example: 1
+      default: 1
+      selector:
+        number:
+          min: 0
+          max: 10000
+          step: 1
+          mode: slider
+    expire:
+      required: false
+      example: 24
+      default: 24
+      selector:
+        number:
+          min: 1
+          max: 1000000
+          step: 1
+          mode: slider
+          unit_of_measurement: hours
+    usage_quota:
+      required: false
+      example: 1024
+      selector:
+        number:
+          min: 0
+          max: 1048576
+          step: 1
+          mode: slider
+          unit_of_measurement: MB
+    rate_max_up:
+      required: false
+      example: 1024
+      selector:
+        number:
+          min: 0
+          max: 100000
+          step: 1
+          mode: slider
+          unit_of_measurement: "kbit/s"
+    rate_max_down:
+      required: false
+      example: 10240
+      selector:
+        number:
+          min: 0
+          max: 100000
+          step: 1
+          mode: slider
+          unit_of_measurement: "kbit/s"
+
+delete:
+  fields:
+    id:
+      required: false
+      example: 657ae4bb4543a5559017060f
+      selector:
+        text:
+
+update:

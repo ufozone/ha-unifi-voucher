@@ -498,7 +498,7 @@ class UnifiVoucherOptionsFlowHandler(OptionsFlow):
                         selector.NumberSelectorConfig(
                             mode=selector.NumberSelectorMode.BOX,
                             min=DEFAULT_VOUCHER[CONF_VOUCHER_EXPIRE].get("min", 0),
-                            max=DEFAULT_VOUCHER[CONF_VOUCHER_EXPIRE].get("max", 10000),
+                            max=DEFAULT_VOUCHER[CONF_VOUCHER_EXPIRE].get("max", 1000000),
                             step=DEFAULT_VOUCHER[CONF_VOUCHER_EXPIRE].get("step", 1),
                             unit_of_measurement=UnitOfTime.HOURS,
                         )
@@ -520,17 +520,15 @@ def _get_option(
     option: str,
     fallback_default: int = 0
 ) -> int:
-    _scale = DEFAULT_VOUCHER[option].get("scale", 1)
-    _default = DEFAULT_VOUCHER[option].get("default", fallback_default) * _scale
+    _default = DEFAULT_VOUCHER[option].get("default", fallback_default)
     _value = input.get(option, _default)
-    return int(_value / _scale)
+    return int(_value)
 
 def _set_option(
     input: dict[str, any],
     option: str,
     fallback_default: int = 0
 ) -> int:
-    _scale = DEFAULT_VOUCHER[option].get("scale", 1)
     _default = DEFAULT_VOUCHER[option].get("default", fallback_default)
     _value = input.get(option, _default)
-    return int(_value * _scale)
+    return int(_value)

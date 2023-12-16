@@ -55,7 +55,7 @@
           "voucher_number": "Wie viele neue Voucher sollen gleichzeitig erstellt werden?",
           "voucher_quota": "Wie häufig soll ein Voucher nutzbar sein? (0 = unbegrenzt)",
           "voucher_expire": "Wie lange soll ein Voucher ab Einlösen gültig sein?",
-          "voucher_byte_quota": "Wie viel Datenverkehr soll pro Voucher nutzbar sein? (0 = unbegrenzt)"
+          "voucher_usage_quota": "Wie viel Datenverkehr soll pro Voucher nutzbar sein? (0 = unbegrenzt)"
         }
       }
     }
@@ -78,7 +78,7 @@
           }
         }
       },
-      "remove": {
+      "delete": {
         "name": "Gutschein löschen",
         "state_attributes": {
           "last_pull": {
@@ -164,13 +164,13 @@
               "valid_multi": "Mehrmals gültig"
             }
           },
-          "up_bandwidth": {
+          "rate_max_up": {
             "name": "Upload-Geschwindigkeit"
           },
-          "down_bandwidth": {
+          "rate_max_down": {
             "name": "Download-Geschwindigkeit"
           },
-          "byte_quota": {
+          "usage_quota": {
             "name": "Datengrenze"
           },
           "last_pull": {
@@ -178,6 +178,56 @@
           }
         }
       }
+    }
+  },
+  "services": {
+    "list": {
+      "name": "Gutscheine auflisten",
+      "description": "Gibt eine Liste aller gültigen Gutscheine zurück."
+    },
+    "create": {
+      "name": "Gutschein erstellen",
+      "description": "Erstellt einen neuen Gutschein mit eigenen Parametern oder den Standardeinstellungen der Integration.",
+      "fields": {
+        "number": {
+          "name": "Anzahl der Gutscheine",
+          "description": "Gibt an, wie viele Gutscheine pro Anruf erstellt werden."
+        },
+        "quota": {
+          "name": "Verwendungen pro Gutschein",
+          "description": "Gibt an, wie oft ein Gutschein verwendet werden kann (0 = unbegrenzt)."
+        },
+        "expire": {
+          "name": "Ablauf",
+          "description": "Gibt an, wie lange ein Gutschein ab dem Zeitpunkt seiner Eingabe gültig ist (in Stunden)."
+        },
+        "usage_quota": {
+          "name": "Datengrenze",
+          "description": "Gibt an, wie viel Datenvolumen (in MB) für den Gutschein zur Verfügung steht."
+        },
+        "rate_max_up": {
+          "name": "Upload-Geschwindigkeit",
+          "description": "Gibt an, wie viel Upload-Bandbreite (in kbit/s) für den Gutschein verfügbar ist."
+        },
+        "rate_max_down": {
+          "name": "Download-Geschwindigkeit",
+          "description": "Gibt an, wie viel Download-Bandbreite (in kbit/s) für den Gutschein verfügbar ist."
+        }
+      }
+    },
+    "delete": {
+      "name": "Gutschein löschen",
+      "description": "Entfernt einen speziellen Gutschein oder den zuletzt erstellten Gutschein.",
+      "fields": {
+        "id": {
+          "name": "Gutschein-ID",
+          "description": "ID des zu löschenden Gutscheins."
+        }
+      }
+    },
+    "update": {
+      "name": "Gutscheine aktualisieren",
+      "description": "Holt jetzt die Daten der Gutscheine vom UniFi Controller ab."
     }
   }
 }
