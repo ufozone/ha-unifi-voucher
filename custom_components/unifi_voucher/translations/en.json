@@ -25,7 +25,8 @@
           "wlan_name": "What is the name of your guest WLAN?",
           "voucher_number": "How many new vouchers should be created at the same time?",
           "voucher_quota": "How much data traffic should be available per voucher? (0 = unlimited)",
-          "voucher_expire": "How long should a voucher be valid from the time it is used?"
+          "voucher_expire": "How long should a voucher be valid from the time it is used?",
+          "voucher_usage_quota": "How much data traffic should be available per voucher? (0 = unlimited)"
         }
       }
     },

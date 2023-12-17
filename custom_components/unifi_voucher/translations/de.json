@@ -23,9 +23,10 @@
         "description": "Ändere hier die Einstellungen der Integration.",
         "data": {
           "wlan_name": "Wie lautet der Namen deines Gast-WLANs?",
-          "voucher_number": "Wie viele neue Voucher sollen gleichzeitig erstellt werden?",
-          "voucher_quota": "Wie viel Datenverkehr soll pro Voucher nutzbar sein? (0 = unbegrenzt)",
-          "voucher_expire": "Wie lange soll ein Voucher ab Einlösen gültig sein?"
+          "voucher_number": "Wie viele neue Gutschein sollen gleichzeitig erstellt werden?",
+          "voucher_quota": "Wie viel Datenverkehr soll pro Gutschein nutzbar sein? (0 = unbegrenzt)",
+          "voucher_expire": "Wie lange soll ein Gutschein ab Einlösen gültig sein?",
+          "voucher_usage_quota": "Wie viel Datenverkehr soll pro Gutschein nutzbar sein? (0 = unbegrenzt)"
         }
       }
     },
@@ -52,10 +53,10 @@
         "description": "Ändere hier die Einstellungen der Integration.",
         "data": {
           "wlan_name": "Wie lautet der Namen deines Gast-WLANs?",
-          "voucher_number": "Wie viele neue Voucher sollen gleichzeitig erstellt werden?",
-          "voucher_quota": "Wie häufig soll ein Voucher nutzbar sein? (0 = unbegrenzt)",
-          "voucher_expire": "Wie lange soll ein Voucher ab Einlösen gültig sein?",
-          "voucher_usage_quota": "Wie viel Datenverkehr soll pro Voucher nutzbar sein? (0 = unbegrenzt)"
+          "voucher_number": "Wie viele neue Gutschein sollen gleichzeitig erstellt werden?",
+          "voucher_quota": "Wie häufig soll ein Gutschein nutzbar sein? (0 = unbegrenzt)",
+          "voucher_expire": "Wie lange soll ein Gutschein ab Einlösen gültig sein?",
+          "voucher_usage_quota": "Wie viel Datenverkehr soll pro Gutschein nutzbar sein? (0 = unbegrenzt)"
         }
       }
     }
