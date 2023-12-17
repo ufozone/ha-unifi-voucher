@@ -42,7 +42,38 @@ def async_setup_services(
     @verify_domain_control(hass, DOMAIN)
     async def async_list(service_call: ServiceCall) -> ServiceResponse:
         LOGGER.debug(service_call)
-        _vouchers = coordinator.vouchers.values()
+        _vouchers = []
+        vouchers = coordinator.vouchers.values()
+        for voucher in vouchers:
+            _x = {
+                "id": voucher.get("id"),
+                "code": voucher.get("code"),
+                "quota": voucher.get("quota"),
+                "used": voucher.get("used"),
+                "duration": int(voucher.get("duration").total_seconds() / 3600),
+                "status": voucher.get("status"),
+                "create_time": voucher.get("create_time"),
+            }
+            if voucher.get("start_time") is not None:
+                _x["start_time"] = voucher.get("start_time")
+
+            if voucher.get("end_time") is not None:
+                _x["end_time"] = voucher.get("end_time")
+
+            if voucher.get("status_expires") is not None:
+                _x["status_expires"] = int(voucher["status_expires"].total_seconds() / 3600)
+
+            if voucher.get("qos_usage_quota") > 0:
+                _x["usage_quota"] = voucher.get("qos_usage_quota")
+
+            if voucher.get("qos_rate_max_up") > 0:
+                _x["rate_max_up"] = voucher.get("qos_rate_max_up")
+
+            if voucher.get("qos_rate_max_down") > 0:
+                _x["rate_max_down"] = voucher.get("qos_rate_max_down")
+
+            _vouchers.append(_x)
+
         return {
             "count": len(_vouchers),
             "vouchers": list(_vouchers),
