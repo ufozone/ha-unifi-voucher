@@ -81,7 +81,7 @@ class UnifiVoucherSensor(UnifiVoucherEntity, SensorEntity):
         for period_key, period_seconds in periods:
             if seconds >= period_seconds:
                 period_value, seconds = divmod(seconds, period_seconds)
-                strings.append("%s %s" % (period_value, period_key))
+                strings.append(f"{period_value} {period_key}")
 
         return ", ".join(strings)
 
