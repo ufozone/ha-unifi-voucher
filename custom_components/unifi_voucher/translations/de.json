@@ -24,7 +24,7 @@
         "data": {
           "wlan_name": "Wie lautet der Namen deines Gast-WLANs?",
           "voucher_number": "Wie viele neue Gutschein sollen gleichzeitig erstellt werden?",
-          "voucher_quota": "Wie viel Datenverkehr soll pro Gutschein nutzbar sein? (0 = unbegrenzt)",
+          "voucher_quota": "Wie häufig soll ein Gutschein nutzbar sein? (0 = unbegrenzt)",
           "voucher_duration": "Wie lange soll ein Gutschein ab Einlösen gültig sein?",
           "voucher_usage_quota": "Wie viel Datenverkehr soll pro Gutschein nutzbar sein? (0 = unbegrenzt)"
         }
