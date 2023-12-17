@@ -23,7 +23,7 @@ create:
           max: 10000
           step: 1
           mode: slider
-    expire:
+    duration:
       required: false
       example: 24
       default: 24

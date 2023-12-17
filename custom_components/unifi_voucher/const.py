@@ -23,7 +23,7 @@ CONF_SITE_ID = "site_id"
 CONF_WLAN_NAME = "wlan_name"
 CONF_VOUCHER_NUMBER = "voucher_number"
 CONF_VOUCHER_QUOTA = "voucher_quota"
-CONF_VOUCHER_EXPIRE = "voucher_expire"
+CONF_VOUCHER_DURATION = "voucher_duration"
 CONF_VOUCHER_USAGE_QUOTA = "voucher_usage_quota"
 CONF_VOUCHER_RATE_MAX_UP = "voucher_rate_max_up"
 CONF_VOUCHER_RATE_MAX_DOWN = "voucher_rate_max_down"
@@ -51,7 +51,7 @@ DEFAULT_VOUCHER = {
         "min": 0,
         "max": 10000,
     },
-    CONF_VOUCHER_EXPIRE: {
+    CONF_VOUCHER_DURATION: {
         "default": 24,
         "min": 1,
         "max": 1000000,

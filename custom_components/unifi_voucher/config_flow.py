@@ -40,7 +40,7 @@ from .const import (
     CONF_WLAN_NAME,
     CONF_VOUCHER_NUMBER,
     CONF_VOUCHER_QUOTA,
-    CONF_VOUCHER_EXPIRE,
+    CONF_VOUCHER_DURATION,
 )
 from .api import (
     UnifiVoucherApiClient,
@@ -266,7 +266,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                     CONF_WLAN_NAME: user_input.get(CONF_WLAN_NAME, "").strip(),
                     CONF_VOUCHER_NUMBER: _set_option(user_input, CONF_VOUCHER_NUMBER),
                     CONF_VOUCHER_QUOTA: _set_option(user_input, CONF_VOUCHER_QUOTA),
-                    CONF_VOUCHER_EXPIRE: _set_option(user_input, CONF_VOUCHER_EXPIRE),
+                    CONF_VOUCHER_DURATION: _set_option(user_input, CONF_VOUCHER_DURATION),
                 }
             )
             # User is done, create the config entry.
@@ -337,17 +337,17 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                         )
                     ),
                     vol.Optional(
-                        CONF_VOUCHER_EXPIRE,
-                        default=DEFAULT_VOUCHER[CONF_VOUCHER_EXPIRE].get("default", 0),
+                        CONF_VOUCHER_DURATION,
+                        default=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("default", 0),
                         description={
-                            "suggested_value": _get_option((user_input or {}), CONF_VOUCHER_EXPIRE),
+                            "suggested_value": _get_option((user_input or {}), CONF_VOUCHER_DURATION),
                         },
                     ): selector.NumberSelector(
                         selector.NumberSelectorConfig(
                             mode=selector.NumberSelectorMode.BOX,
-                            min=DEFAULT_VOUCHER[CONF_VOUCHER_EXPIRE].get("min", 0),
-                            max=DEFAULT_VOUCHER[CONF_VOUCHER_EXPIRE].get("max", 10000),
-                            step=DEFAULT_VOUCHER[CONF_VOUCHER_EXPIRE].get("step", 1),
+                            min=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("min", 0),
+                            max=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("max", 10000),
+                            step=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("step", 1),
                             unit_of_measurement=UnitOfTime.HOURS,
                         )
                     ),
@@ -438,7 +438,7 @@ class UnifiVoucherOptionsFlowHandler(OptionsFlow):
                     CONF_WLAN_NAME: user_input.get(CONF_WLAN_NAME, "").strip(),
                     CONF_VOUCHER_NUMBER: _set_option(user_input, CONF_VOUCHER_NUMBER),
                     CONF_VOUCHER_QUOTA: _set_option(user_input, CONF_VOUCHER_QUOTA),
-                    CONF_VOUCHER_EXPIRE: _set_option(user_input, CONF_VOUCHER_EXPIRE),
+                    CONF_VOUCHER_DURATION: _set_option(user_input, CONF_VOUCHER_DURATION),
                 }
             )
             # User is done, update the config entry.
@@ -489,17 +489,17 @@ class UnifiVoucherOptionsFlowHandler(OptionsFlow):
                         )
                     ),
                     vol.Optional(
-                        CONF_VOUCHER_EXPIRE,
-                        default=DEFAULT_VOUCHER[CONF_VOUCHER_EXPIRE].get("default", 0),
+                        CONF_VOUCHER_DURATION,
+                        default=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("default", 0),
                         description={
-                            "suggested_value": _get_option((user_input or self.options or {}), CONF_VOUCHER_EXPIRE),
+                            "suggested_value": _get_option((user_input or self.options or {}), CONF_VOUCHER_DURATION),
                         },
                     ): selector.NumberSelector(
                         selector.NumberSelectorConfig(
                             mode=selector.NumberSelectorMode.BOX,
-                            min=DEFAULT_VOUCHER[CONF_VOUCHER_EXPIRE].get("min", 0),
-                            max=DEFAULT_VOUCHER[CONF_VOUCHER_EXPIRE].get("max", 1000000),
-                            step=DEFAULT_VOUCHER[CONF_VOUCHER_EXPIRE].get("step", 1),
+                            min=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("min", 0),
+                            max=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("max", 1000000),
+                            step=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("step", 1),
                             unit_of_measurement=UnitOfTime.HOURS,
                         )
                     ),

@@ -25,7 +25,7 @@
           "wlan_name": "What is the name of your guest WLAN?",
           "voucher_number": "How many new vouchers should be created at the same time?",
           "voucher_quota": "How much data traffic should be available per voucher? (0 = unlimited)",
-          "voucher_expire": "How long should a voucher be valid from the time it is used?",
+          "voucher_duration": "How long should a voucher be valid from the time it is used?",
           "voucher_usage_quota": "How much data traffic should be available per voucher? (0 = unlimited)"
         }
       }
@@ -55,7 +55,7 @@
           "wlan_name": "What is the name of your guest WLAN?",
           "voucher_number": "How many new vouchers should be created at the same time?",
           "voucher_quota": "How often should a voucher be usable? (0 = unlimited)",
-          "voucher_expire": "How long should a voucher be valid from the time it is used?",
+          "voucher_duration": "How long should a voucher be valid from the time it is used?",
           "voucher_usage_quota": "How much data traffic should be available per voucher? (0 = unlimited)"
         }
       }
@@ -118,7 +118,7 @@
           }
         }
       },
-      "voucher_expire": {
+      "voucher_duration": {
         "name": "Standard: Expire",
         "state_attributes": {
           "last_pull": {
@@ -198,8 +198,8 @@
           "name": "Quota per Voucher",
           "description": "Specifies how often a voucher can be used (0 = unlimited)."
         },
-        "expire": {
-          "name": "Expiration",
+        "duration": {
+          "name": "Duration",
           "description": "Specifies how long a voucher is valid (in hours) from the time it is entered."
         },
         "usage_quota": {

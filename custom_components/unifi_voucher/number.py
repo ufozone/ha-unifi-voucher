@@ -15,7 +15,7 @@ from homeassistant.helpers.entity import Entity
 from .const import (
     DOMAIN,
     CONF_VOUCHER_QUOTA,
-    CONF_VOUCHER_EXPIRE,
+    CONF_VOUCHER_DURATION,
     DEFAULT_VOUCHER,
 )
 from .coordinator import UnifiVoucherCoordinator
@@ -36,10 +36,10 @@ async def async_setup_entry(
             translation_key=CONF_VOUCHER_QUOTA,
         ),
         NumberEntityDescription(
-            key=CONF_VOUCHER_EXPIRE,
+            key=CONF_VOUCHER_DURATION,
             icon="mdi:clock-outline",
             native_unit_of_measurement=UnitOfTime.HOURS,
-            translation_key=CONF_VOUCHER_EXPIRE,
+            translation_key=CONF_VOUCHER_DURATION,
         ),
     ]
 

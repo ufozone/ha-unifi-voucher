@@ -31,7 +31,7 @@ from .const import (
     CONF_WLAN_NAME,
     CONF_VOUCHER_NUMBER,
     CONF_VOUCHER_QUOTA,
-    CONF_VOUCHER_EXPIRE,
+    CONF_VOUCHER_DURATION,
     DEFAULT_VOUCHER,
 )
 from .api import (
@@ -230,7 +230,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         self,
         number: int | None = None,
         quota: int | None = None,
-        expire: int | None = None,
+        duration: int | None = None,
         usage_quota: int | None = None,
         rate_max_up: int | None = None,
         rate_max_down: int | None = None,
@@ -243,14 +243,14 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
             if quota is None:
                 quota = int(self.get_entry_option(CONF_VOUCHER_QUOTA))
 
-            if expire is None:
-                expire = int(self.get_entry_option(CONF_VOUCHER_EXPIRE))
+            if duration is None:
+                duration = int(self.get_entry_option(CONF_VOUCHER_DURATION))
 
             await self.client.controller.request(
                 UnifiVoucherCreateRequest.create(
                     number=number,
                     quota=quota,
-                    expire_number=expire,
+                    expire_number=duration,
                     expire_unit=60,
                     usage_quota=usage_quota,
                     rate_max_up=rate_max_up,

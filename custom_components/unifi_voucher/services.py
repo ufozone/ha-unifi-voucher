@@ -19,7 +19,7 @@ from .const import (
     DOMAIN,
     CONF_VOUCHER_NUMBER,
     CONF_VOUCHER_QUOTA,
-    CONF_VOUCHER_EXPIRE,
+    CONF_VOUCHER_DURATION,
     CONF_VOUCHER_USAGE_QUOTA,
     CONF_VOUCHER_RATE_MAX_UP,
     CONF_VOUCHER_RATE_MAX_DOWN,
@@ -85,7 +85,7 @@ def async_setup_services(
         await coordinator.async_create_voucher(
             number=service_call.data.get("number"),
             quota=service_call.data.get("quota"),
-            expire=service_call.data.get("expire"),
+            duration=service_call.data.get("duration"),
             usage_quota=service_call.data.get("usage_quota"),
             rate_max_up=service_call.data.get("rate_max_up"),
             rate_max_down=service_call.data.get("rate_max_down"),
@@ -137,13 +137,13 @@ def async_setup_services(
                     )
                 ),
                 vol.Optional(
-                    "expire",
-                    default=coordinator.get_entry_option(CONF_VOUCHER_EXPIRE)
+                    "duration",
+                    default=coordinator.get_entry_option(CONF_VOUCHER_DURATION)
                 ): vol.All(
                     vol.Coerce(int),
                     vol.Range(
-                        min=DEFAULT_VOUCHER[CONF_VOUCHER_EXPIRE].get("min", 1),
-                        max=DEFAULT_VOUCHER[CONF_VOUCHER_EXPIRE].get("max", 1000000),
+                        min=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("min", 1),
+                        max=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("max", 1000000),
                     )
                 ),
                 vol.Optional(
