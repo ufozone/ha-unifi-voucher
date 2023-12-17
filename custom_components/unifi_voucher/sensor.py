@@ -1,6 +1,8 @@
 """UniFi Hotspot Manager sensor platform."""
 from __future__ import annotations
 
+from datetime import timedelta
+
 from homeassistant.core import HomeAssistant
 from homeassistant.const import (
     UnitOfInformation,
@@ -67,6 +69,22 @@ class UnifiVoucherSensor(UnifiVoucherEntity, SensorEntity):
         )
         self.entity_description = entity_description
 
+    def _format_duration(self, duration: timedelta) -> str:
+        seconds = int(duration.total_seconds())
+        periods = [
+            (UnitOfTime.DAYS,    60*60*24),
+            (UnitOfTime.HOURS,   60*60),
+            (UnitOfTime.MINUTES, 60),
+            (UnitOfTime.SECONDS, 1),
+        ]
+        strings = []
+        for period_key, period_seconds in periods:
+            if seconds >= period_seconds:
+                period_value, seconds = divmod(seconds, period_seconds)
+                strings.append("%s %s" % (period_value, period_key))
+
+        return ", ".join(strings)
+
     def _get_latest_voucher(self) -> dict[str, any] | None:
         """Get last voucher."""
         if (voucher_id := self.coordinator.latest_voucher_id) in self.coordinator.vouchers:
@@ -84,7 +102,7 @@ class UnifiVoucherSensor(UnifiVoucherEntity, SensorEntity):
             "id": voucher.get("id"),
             "quota": voucher.get("quota"),
             "used": voucher.get("used"),
-            "duration": str(voucher.get("duration")) + " " + UnitOfTime.HOURS,
+            "duration": self._format_duration(voucher.get("duration")),
             "status": voucher.get("status").lower(),
             "create_time": voucher.get("create_time"),
         }
@@ -95,7 +113,7 @@ class UnifiVoucherSensor(UnifiVoucherEntity, SensorEntity):
             _x["end_time"] = voucher.get("end_time")
 
         if voucher.get("status_expires") is not None:
-            _x["status_expires"] = str(voucher.get("status_expires")) + " " + UnitOfTime.HOURS
+            _x["status_expires"] = self._format_duration(voucher.get("status_expires"))
 
         if voucher.get("qos_usage_quota") > 0:
             _x["usage_quota"] = str(voucher.get("qos_usage_quota")) + " " + UnitOfInformation.MEGABYTES

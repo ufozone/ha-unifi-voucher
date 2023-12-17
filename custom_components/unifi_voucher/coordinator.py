@@ -202,7 +202,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
                 "id": voucher.id,
                 "code": voucher.code,
                 "quota": voucher.quota,
-                "duration": int(voucher.duration.total_seconds() / 3600),
+                "duration": voucher.duration,
                 "qos_overwrite": voucher.qos_overwrite,
                 "qos_usage_quota": voucher.qos_usage_quota,
                 "qos_rate_max_up": voucher.qos_rate_max_up,
@@ -212,7 +212,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
                 "start_time": voucher.start_time,
                 "end_time": voucher.end_time,
                 "status": voucher.status,
-                "status_expires": int(voucher.status_expires.total_seconds() / 3600) if voucher.status_expires else None,
+                "status_expires": voucher.status_expires,
             }
             _vouchers[voucher.id] = _voucher
 
