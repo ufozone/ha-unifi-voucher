@@ -52,6 +52,7 @@ The voucher can be presented together with the QR code on a lovelace card:
       style:
         top: 15%
         left: 50%
+        color: white
         font-size: 200%
         font-weight: bold
         cursor: default
@@ -74,6 +75,7 @@ The voucher can be presented together with the QR code on a lovelace card:
         background: rgba(11, 11, 11, 70%)
         padding: 10px
         height: 60px
+        color: white
         border-radius: 12px
         font-size: 275%
         font-weight: bold
@@ -89,6 +91,7 @@ The voucher can be presented together with the QR code on a lovelace card:
       style:
         top: 61%
         left: 67%
+        color: white
         cursor: default
       tap_action:
         action: none
