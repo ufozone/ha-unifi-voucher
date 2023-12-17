@@ -76,12 +76,12 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
             try:
                 client = UnifiVoucherApiClient(
                     self.hass,
-                    host=user_input[CONF_HOST],
-                    username=user_input[CONF_USERNAME],
-                    password=user_input[CONF_PASSWORD],
-                    port=int(user_input[CONF_PORT]),
+                    host=user_input.get(CONF_HOST),
+                    username=user_input.get(CONF_USERNAME),
+                    password=user_input.get(CONF_PASSWORD),
+                    port=int(user_input.get(CONF_PORT)),
                     site_id=DEFAULT_SITE_ID,
-                    verify_ssl=user_input[CONF_VERIFY_SSL],
+                    verify_ssl=user_input.get(CONF_VERIFY_SSL, False),
                 )
                 self.sites = await client.get_sites()
             except UnifiVoucherApiConnectionError:
@@ -97,10 +97,10 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
             if not errors:
                 # Input is valid, set data and options
                 self.data = {
-                    CONF_HOST: user_input.get(CONF_HOST, "").strip(),
-                    CONF_USERNAME: user_input.get(CONF_USERNAME, "").strip(),
-                    CONF_PASSWORD: user_input.get(CONF_PASSWORD, "").strip(),
-                    CONF_PORT: int(user_input[CONF_PORT]),
+                    CONF_HOST: user_input.get(CONF_HOST),
+                    CONF_USERNAME: user_input.get(CONF_USERNAME),
+                    CONF_PASSWORD: user_input.get(CONF_PASSWORD),
+                    CONF_PORT: int(user_input.get(CONF_PORT)),
                     CONF_SITE_ID: DEFAULT_SITE_ID,
                     CONF_VERIFY_SSL: user_input.get(CONF_VERIFY_SSL, False),
                 }
