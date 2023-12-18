@@ -41,6 +41,7 @@ from .const import (
     CONF_VOUCHER_NUMBER,
     CONF_VOUCHER_QUOTA,
     CONF_VOUCHER_DURATION,
+    CONF_VOUCHER_USAGE_QUOTA,
 )
 from .api import (
     UnifiVoucherApiClient,
@@ -267,6 +268,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                     CONF_VOUCHER_NUMBER: _set_option(user_input, CONF_VOUCHER_NUMBER),
                     CONF_VOUCHER_QUOTA: _set_option(user_input, CONF_VOUCHER_QUOTA),
                     CONF_VOUCHER_DURATION: _set_option(user_input, CONF_VOUCHER_DURATION),
+                    CONF_VOUCHER_USAGE_QUOTA: _set_option(user_input, CONF_VOUCHER_USAGE_QUOTA),
                 }
             )
             # User is done, create the config entry.
@@ -338,16 +340,31 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                     ),
                     vol.Optional(
                         CONF_VOUCHER_DURATION,
-                        default=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("default", 0),
+                        default=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("default", 24),
                         description={
                             "suggested_value": _get_option((user_input or {}), CONF_VOUCHER_DURATION),
                         },
                     ): selector.NumberSelector(
                         selector.NumberSelectorConfig(
                             mode=selector.NumberSelectorMode.BOX,
-                            min=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("min", 0),
-                            max=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("max", 10000),
+                            min=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("min", 1),
+                            max=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("max", 1000000),
                             step=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("step", 1),
+                            unit_of_measurement=UnitOfTime.HOURS,
+                        )
+                    ),
+                    vol.Optional(
+                        CONF_VOUCHER_USAGE_QUOTA,
+                        default=DEFAULT_VOUCHER[CONF_VOUCHER_USAGE_QUOTA].get("default", 0),
+                        description={
+                            "suggested_value": _get_option((user_input or {}), CONF_VOUCHER_USAGE_QUOTA),
+                        },
+                    ): selector.NumberSelector(
+                        selector.NumberSelectorConfig(
+                            mode=selector.NumberSelectorMode.BOX,
+                            min=DEFAULT_VOUCHER[CONF_VOUCHER_USAGE_QUOTA].get("min", 0),
+                            max=DEFAULT_VOUCHER[CONF_VOUCHER_USAGE_QUOTA].get("max", 1048576),
+                            step=DEFAULT_VOUCHER[CONF_VOUCHER_USAGE_QUOTA].get("step", 1),
                             unit_of_measurement=UnitOfTime.HOURS,
                         )
                     ),
@@ -439,6 +456,7 @@ class UnifiVoucherOptionsFlowHandler(OptionsFlow):
                     CONF_VOUCHER_NUMBER: _set_option(user_input, CONF_VOUCHER_NUMBER),
                     CONF_VOUCHER_QUOTA: _set_option(user_input, CONF_VOUCHER_QUOTA),
                     CONF_VOUCHER_DURATION: _set_option(user_input, CONF_VOUCHER_DURATION),
+                    CONF_VOUCHER_USAGE_QUOTA: _set_option(user_input, CONF_VOUCHER_USAGE_QUOTA),
                 }
             )
             # User is done, update the config entry.
@@ -490,16 +508,31 @@ class UnifiVoucherOptionsFlowHandler(OptionsFlow):
                     ),
                     vol.Optional(
                         CONF_VOUCHER_DURATION,
-                        default=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("default", 0),
+                        default=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("default", 24),
                         description={
                             "suggested_value": _get_option((user_input or self.options or {}), CONF_VOUCHER_DURATION),
                         },
                     ): selector.NumberSelector(
                         selector.NumberSelectorConfig(
                             mode=selector.NumberSelectorMode.BOX,
-                            min=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("min", 0),
+                            min=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("min", 1),
                             max=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("max", 1000000),
                             step=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("step", 1),
+                            unit_of_measurement=UnitOfTime.HOURS,
+                        )
+                    ),
+                    vol.Optional(
+                        CONF_VOUCHER_USAGE_QUOTA,
+                        default=DEFAULT_VOUCHER[CONF_VOUCHER_USAGE_QUOTA].get("default", 0),
+                        description={
+                            "suggested_value": _get_option((user_input or self.options or {}), CONF_VOUCHER_USAGE_QUOTA),
+                        },
+                    ): selector.NumberSelector(
+                        selector.NumberSelectorConfig(
+                            mode=selector.NumberSelectorMode.BOX,
+                            min=DEFAULT_VOUCHER[CONF_VOUCHER_USAGE_QUOTA].get("min", 0),
+                            max=DEFAULT_VOUCHER[CONF_VOUCHER_USAGE_QUOTA].get("max", 1000000),
+                            step=DEFAULT_VOUCHER[CONF_VOUCHER_USAGE_QUOTA].get("step", 1),
                             unit_of_measurement=UnitOfTime.HOURS,
                         )
                     ),
