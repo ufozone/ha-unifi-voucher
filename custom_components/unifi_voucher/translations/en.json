@@ -103,7 +103,7 @@
     },
     "number": {
       "voucher_number": {
-        "name": "Standard: Vouchers",
+        "name": "Default: Vouchers",
         "state_attributes": {
           "last_pull": {
             "name": "Last pull"
@@ -111,7 +111,7 @@
         }
       },
       "voucher_quota": {
-        "name": "Standard: Quota",
+        "name": "Default: Quota",
         "state_attributes": {
           "last_pull": {
             "name": "Last pull"
@@ -119,7 +119,15 @@
         }
       },
       "voucher_duration": {
-        "name": "Standard: Duration",
+        "name": "Default: Duration",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
+      },
+      "voucher_usage_quota": {
+        "name": "Default: Data limit",
         "state_attributes": {
           "last_pull": {
             "name": "Last pull"

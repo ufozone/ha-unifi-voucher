@@ -125,6 +125,14 @@
             "name": "Letzter Abruf"
           }
         }
+      },
+      "voucher_usage_quota": {
+        "name": "Standard: Datenkontingent",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Letzter Abruf"
+          }
+        }
       }
     },
     "sensor": {
@@ -172,7 +180,7 @@
             "name": "Download-Geschwindigkeit"
           },
           "usage_quota": {
-            "name": "Datengrenze"
+            "name": "Datenkontingent"
           },
           "last_pull": {
             "name": "Letzter Abruf"
@@ -203,7 +211,7 @@
           "description": "Gibt an, wie lange ein Gutschein ab dem Zeitpunkt seiner Eingabe gültig ist (in Stunden)."
         },
         "usage_quota": {
-          "name": "Datengrenze",
+          "name": "Datenkontingent",
           "description": "Gibt an, wie viel Datenvolumen (in MB) für den Gutschein zur Verfügung steht."
         },
         "rate_max_up": {
