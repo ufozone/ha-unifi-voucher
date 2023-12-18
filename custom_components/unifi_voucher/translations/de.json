@@ -119,7 +119,7 @@
         }
       },
       "voucher_duration": {
-        "name": "Standard: Ablaufen",
+        "name": "Standard: Laufzeit",
         "state_attributes": {
           "last_pull": {
             "name": "Letzter Abruf"
@@ -199,7 +199,7 @@
           "description": "Gibt an, wie oft ein Gutschein verwendet werden kann (0 = unbegrenzt)."
         },
         "duration": {
-          "name": "Ablauf",
+          "name": "Laufzeit",
           "description": "Gibt an, wie lange ein Gutschein ab dem Zeitpunkt seiner Eingabe gültig ist (in Stunden)."
         },
         "usage_quota": {

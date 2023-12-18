@@ -119,7 +119,7 @@
         }
       },
       "voucher_duration": {
-        "name": "Standard: Expire",
+        "name": "Standard: Duration",
         "state_attributes": {
           "last_pull": {
             "name": "Last pull"
