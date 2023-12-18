@@ -186,7 +186,7 @@ Start setup:
     last_poll
     ```
 
-* remove
+* delete
 
     ```
     attributes: 
@@ -215,7 +215,7 @@ _These entities are disabled by default. You have to activate it if you want to 
     last_poll
     ```
 
-* voucher_expire
+* voucher_duration
 
     ```
     attributes: 
@@ -241,9 +241,9 @@ _These entities are disabled by default. You have to activate it if you want to 
 
     Create a new voucher with your own parameters or the default settings of the integration.
 
-* remove:
+* delete:
 
-    Remove a special voucher or the last created voucher.
+    Delete a special voucher or the last created voucher.
 
 * update:
 
