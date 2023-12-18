@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from homeassistant.core import HomeAssistant
 from homeassistant.const import (
+    UnitOfInformation,
     UnitOfTime,
 )
 from homeassistant.config_entries import ConfigEntry
@@ -16,6 +17,7 @@ from .const import (
     DOMAIN,
     CONF_VOUCHER_QUOTA,
     CONF_VOUCHER_DURATION,
+    CONF_VOUCHER_USAGE_QUOTA,
     DEFAULT_VOUCHER,
 )
 from .coordinator import UnifiVoucherCoordinator
@@ -40,6 +42,12 @@ async def async_setup_entry(
             icon="mdi:clock-outline",
             native_unit_of_measurement=UnitOfTime.HOURS,
             translation_key=CONF_VOUCHER_DURATION,
+        ),
+        NumberEntityDescription(
+            key=CONF_VOUCHER_USAGE_QUOTA,
+            icon="mdi:database-sync",
+            native_unit_of_measurement=UnitOfInformation.MEGABYTES,
+            translation_key=CONF_VOUCHER_USAGE_QUOTA,
         ),
     ]
 
