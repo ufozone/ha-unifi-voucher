@@ -17,6 +17,7 @@ from homeassistant.const import (
     CONF_PORT,
     CONF_USERNAME,
     CONF_VERIFY_SSL,
+    UnitOfInformation,
     UnitOfTime,
 )
 from homeassistant.data_entry_flow import FlowResult
@@ -365,7 +366,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                             min=DEFAULT_VOUCHER[CONF_VOUCHER_USAGE_QUOTA].get("min", 0),
                             max=DEFAULT_VOUCHER[CONF_VOUCHER_USAGE_QUOTA].get("max", 1048576),
                             step=DEFAULT_VOUCHER[CONF_VOUCHER_USAGE_QUOTA].get("step", 1),
-                            unit_of_measurement=UnitOfTime.HOURS,
+                            unit_of_measurement=UnitOfInformation.MEGABYTES,
                         )
                     ),
                 }
@@ -533,7 +534,7 @@ class UnifiVoucherOptionsFlowHandler(OptionsFlow):
                             min=DEFAULT_VOUCHER[CONF_VOUCHER_USAGE_QUOTA].get("min", 0),
                             max=DEFAULT_VOUCHER[CONF_VOUCHER_USAGE_QUOTA].get("max", 1000000),
                             step=DEFAULT_VOUCHER[CONF_VOUCHER_USAGE_QUOTA].get("step", 1),
-                            unit_of_measurement=UnitOfTime.HOURS,
+                            unit_of_measurement=UnitOfInformation.MEGABYTES,
                         )
                     ),
                 }
