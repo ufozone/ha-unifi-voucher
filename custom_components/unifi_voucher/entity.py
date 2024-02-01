@@ -2,12 +2,7 @@
 from __future__ import annotations
 
 from homeassistant.core import callback
-from homeassistant.const import (
-    ATTR_CONFIGURATION_URL,
-    ATTR_NAME,
-    ATTR_IDENTIFIERS,
-    ATTR_MANUFACTURER,
-)
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.util import slugify
 
@@ -44,6 +39,14 @@ class UnifiVoucherEntity(CoordinatorEntity):
 
         self._additional_extra_state_attributes = {}
         self.entity_id = f"{entity_type}.{self._unique_id}"
+        self._attr_device_info = DeviceInfo(
+            identifiers={
+                (DOMAIN, self._entry_id)
+            },
+            name=self.coordinator.get_entry_title(),
+            manufacturer=MANUFACTURER,
+            configuration_url=self.self.coordinator.get_configuration_url(),
+        )
 
     def _update_extra_state_attributes(self) -> None:
         """Update extra attributes."""
@@ -62,18 +65,6 @@ class UnifiVoucherEntity(CoordinatorEntity):
     def available(self) -> bool:
         """Return True if entity is available."""
         return self.coordinator._available
-
-    @property
-    def device_info(self):
-        """Return the device info."""
-        return {
-            ATTR_IDENTIFIERS: {
-                (DOMAIN, self._entry_id)
-            },
-            ATTR_NAME: self.coordinator.get_entry_title(),
-            ATTR_MANUFACTURER: MANUFACTURER,
-            ATTR_CONFIGURATION_URL: self.coordinator.get_configuration_url(),
-        }
 
     @property
     def extra_state_attributes(self) -> dict[str, any]:
