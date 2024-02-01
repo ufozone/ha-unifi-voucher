@@ -14,7 +14,7 @@
     "aiounifi"
   ],
   "requirements": [
-    "aiounifi==68"
+    "aiounifi==69"
   ],
   "version": "1.0.1"
 }
