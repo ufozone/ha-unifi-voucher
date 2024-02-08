@@ -45,7 +45,7 @@ class UnifiVoucherEntity(CoordinatorEntity):
             },
             name=self.coordinator.get_entry_title(),
             manufacturer=MANUFACTURER,
-            configuration_url=self.self.coordinator.get_configuration_url(),
+            configuration_url=self.coordinator.get_configuration_url(),
         )
 
     def _update_extra_state_attributes(self) -> None:
