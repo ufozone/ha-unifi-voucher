@@ -333,7 +333,7 @@ class UnifiVoucherApiClient:
             async with asyncio.timeout(5):
                 await self.controller.login()
         except (
-            asyncio.TimeoutError,
+            TimeoutError,
             aiounifi.BadGateway,
             aiounifi.ServiceUnavailable,
             aiounifi.AiounifiException,
@@ -374,7 +374,7 @@ class UnifiVoucherApiClient:
             )
             raise UnifiVoucherApiAuthenticationError from err
         except (
-            asyncio.TimeoutError,
+            TimeoutError,
             aiounifi.BadGateway,
             aiounifi.ServiceUnavailable,
             aiounifi.RequestError,
@@ -427,7 +427,7 @@ class UnifiVoucherApiClient:
             )
             raise UnifiVoucherApiAuthenticationError from err
         except (
-            asyncio.TimeoutError,
+            TimeoutError,
             aiounifi.BadGateway,
             aiounifi.ServiceUnavailable,
             aiounifi.RequestError,
