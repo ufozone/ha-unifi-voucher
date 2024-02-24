@@ -60,19 +60,19 @@ class UnifiTypedVoucher(TypedDict):
     note: str
     code: str
     quota: int
-    duration: int
+    duration: float
     qos_overwrite: bool
     qos_usage_quota: str
     qos_rate_max_up: int
     qos_rate_max_down: int
     used: int
-    create_time: datetime
-    start_time: int
-    end_time: int
+    create_time: float
+    start_time: float
+    end_time: float
     for_hotspot: bool
     admin_name: str
     status: str
-    status_expires: int
+    status_expires: float
 
 @dataclass
 class UnifiVoucherListRequest(ApiRequest):
@@ -184,7 +184,7 @@ class UnifiVoucher(ApiItem):
     def code(self) -> str:
         """Code."""
         if len(c := self.raw.get("code", "")) > 5:
-            return c[:5] + '-' + c[5:]
+            return f"{c[:5]}-{c[5:]}"
         return c
 
     @property
@@ -267,9 +267,9 @@ class UnifiVoucher(ApiItem):
     @property
     def status_expires(self) -> timedelta | None:
         """Status expires."""
-        if self.raw.get("status_expires", 0) > 0:
+        if self.raw.get("status_expires", 0.0) > 0:
             return timedelta(
-                seconds=self.raw.get("status_expires")
+                seconds=self.raw.get("status_expires", 0.0)
             )
         return None
 
