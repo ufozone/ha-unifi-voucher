@@ -233,19 +233,19 @@ _These entities are disabled by default. You have to activate it if you want to 
 
 ### Services
 
-* list:
+* `unifi_voucher.list`:
 
     Get a list of all valid vouchers.
 
-* create:
+* `unifi_voucher.create`:
 
     Create a new voucher with your own parameters or the default settings of the integration.
 
-* delete:
+* `unifi_voucher.delete`:
 
     Delete a special voucher or the last created voucher.
 
-* update:
+* `unifi_voucher.update`:
 
     Fetch data from UniFi Controller immediately.
 
