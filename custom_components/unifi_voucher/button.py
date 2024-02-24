@@ -11,7 +11,10 @@ from homeassistant.components.button import (
     ButtonEntity,
     ButtonEntityDescription,
 )
-from homeassistant.helpers.entity import Entity
+from homeassistant.helpers.entity import (
+    Entity,
+    EntityCategory,
+)
 
 from .const import (
     DOMAIN,
@@ -62,6 +65,7 @@ async def async_setup_entry(
             icon="mdi:update",
             translation_key="update",
             device_class=ButtonDeviceClass.UPDATE,
+            entity_category=EntityCategory.DIAGNOSTIC,
             press_action=lambda coordinator: coordinator.async_update_vouchers(),
         ),
     ]

@@ -15,7 +15,10 @@ from homeassistant.components.image import (
     ImageEntity,
     ImageEntityDescription,
 )
-from homeassistant.helpers.entity import Entity
+from homeassistant.helpers.entity import (
+    Entity,
+    EntityCategory,
+)
 
 import homeassistant.util.dt as dt_util
 
@@ -42,6 +45,7 @@ async def async_setup_entry(
             translation_key=ATTR_QR_CODE,
             icon="mdi:qrcode",
             device_class=None,
+            entity_category=EntityCategory.DIAGNOSTIC,
         ),
     ]
 

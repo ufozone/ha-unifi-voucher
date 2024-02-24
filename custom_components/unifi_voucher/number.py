@@ -11,7 +11,10 @@ from homeassistant.components.number import (
     NumberEntity,
     NumberEntityDescription,
 )
-from homeassistant.helpers.entity import Entity
+from homeassistant.helpers.entity import (
+    Entity,
+    EntityCategory,
+)
 
 from .const import (
     DOMAIN,
@@ -36,18 +39,21 @@ async def async_setup_entry(
             key=CONF_VOUCHER_QUOTA,
             icon="mdi:numeric-9-plus",
             translation_key=CONF_VOUCHER_QUOTA,
+            entity_category=EntityCategory.CONFIG,
         ),
         NumberEntityDescription(
             key=CONF_VOUCHER_DURATION,
             icon="mdi:clock-outline",
             native_unit_of_measurement=UnitOfTime.HOURS,
             translation_key=CONF_VOUCHER_DURATION,
+            entity_category=EntityCategory.CONFIG,
         ),
         NumberEntityDescription(
             key=CONF_VOUCHER_USAGE_QUOTA,
             icon="mdi:database-sync",
             native_unit_of_measurement=UnitOfInformation.MEGABYTES,
             translation_key=CONF_VOUCHER_USAGE_QUOTA,
+            entity_category=EntityCategory.CONFIG,
         ),
     ]
 
