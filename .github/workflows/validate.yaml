@@ -30,7 +30,7 @@ jobs:
     strategy:
       matrix:
         python-version:
-          - "3.11"
+          - "3.12"
     name: Run tests
     steps:
       - name: Check out code from GitHub
