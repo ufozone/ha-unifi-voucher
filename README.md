@@ -25,7 +25,7 @@ Key features of the integration include:
 * **Voucher Creation:** Users can effortlessly generate new access codes, with various configuration options such as validity period and available data volume.
 * **Display of Voucher:** The last created voucher is presented in the Home Assistant interface. As soon as the voucher has been used, the next one will be displayed.
 * **QR Code Display:** The integration enables the display of a QR code for the guest Wi-Fi, facilitating quick connectivity for guests.
-* **Automation:** The integration can be incorporated into existing automations, enabling, for instance, time-triggered voucher creation.
+* **Automation:** The integration can be integrated into existing automations and allows, for example, the time-controlled creation of vouchers.
 * **User-Friendliness:** The integration is designed to offer an intuitive user experience, utilizing the Home Assistant interface as a central control center for guest Wi-Fi management.
 
 The UniFi Hotspot Manager Integration provides a practical solution for the temporary provision of Wi-Fi access, seamlessly integrating into the Home Assistant environment for intuitive use.
@@ -127,8 +127,6 @@ Requires Home Assistant 2023.11.0 or newer.
 Installation using Home Assistant Community Store (HACS) is recommended.
 
 1. If HACS is not installed, follow HACS installation and configuration at https://hacs.xyz/.
-
-2. Visit HACS _Integrations_ pane and add `https://github.com/ufozone/ha-unifi-voucher.git` as an `Integration` by following [these instructions](https://hacs.xyz/docs/faq/custom_repositories/).
 
 2. Click the button below or visit the HACS _Integrations_ pane and search for "UniFi Hotspot Manager".
 
