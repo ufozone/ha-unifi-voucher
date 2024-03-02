@@ -47,7 +47,7 @@ The voucher can be presented together with the QR code on a lovelace card:
   image: /local/hotspot-bg.jpg
   elements:
     - type: state-label
-      entity: image.5e9c5769873fdb051c706194_qr_code
+      entity: image.123456789073fdb051c706194_qr_code
       attribute: wlan_name
       style:
         top: 15%
