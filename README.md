@@ -1,4 +1,5 @@
 # UniFi Hotspot Manager
+
 [![License][license-shield]](LICENSE)
 ![Project Maintenance][maintenance-shield]
 [![GitHub Activity][commits-shield]][commits]
@@ -22,6 +23,7 @@ UniFi Hotspot Manager as a Custom Component for Home Assistant.
 This integration facilitates user-friendly management of guest Wi-Fi vouchers. By integrating with Home Assistant, users can swiftly and easily generate and display personalized access codes. These vouchers can then be shared with guests, granting temporary access to the Wi-Fi network.
 
 Key features of the integration include:
+
 * **Voucher Creation:** Users can effortlessly generate new access codes, with various configuration options such as validity period and available data volume.
 * **Display of Voucher:** The last created voucher is presented in the Home Assistant interface. As soon as the voucher has been used, the next one will be displayed.
 * **QR Code Display:** The integration enables the display of a QR code for the guest Wi-Fi, facilitating quick connectivity for guests.
@@ -42,7 +44,7 @@ The voucher can be presented together with the QR code on a lovelace card:
   <summary>Blueprint of the example</summary>
   The example shown can be implemented as follows. The image file for the background must be stored in the `/config/www/` folder.
 
-  ```
+  ```yaml
   type: picture-elements
   image: /local/hotspot-bg.jpg
   elements:
@@ -116,6 +118,7 @@ The voucher can be presented together with the QR code on a lovelace card:
       service_data:
         entity_id: button.123456789073fdb051c706194_create
   ```
+
 </details>
 
 ## Installation
@@ -126,7 +129,7 @@ Requires Home Assistant 2023.11.0 or newer.
 
 Installation using Home Assistant Community Store (HACS) is recommended.
 
-1. If HACS is not installed, follow HACS installation and configuration at https://hacs.xyz/.
+1. If HACS is not installed, follow HACS installation and configuration at <https://hacs.xyz/>.
 
 2. Click the button below or visit the HACS _Integrations_ pane and search for "UniFi Hotspot Manager".
 
@@ -164,29 +167,29 @@ Start setup:
 
 * All configuration options are offered from the front end.
 * For UniFi OS a local-only user needs to be created. A user who uses the Ubiquiti cloud will not work.
-* The user needs administrator or hotspot privileges in order to manage guest vouchers.
+* The user needs super admin, site admin or hotspot privileges in order to manage guest vouchers.
 
-## Available components 
+## Available components
 
 ### Buttons
 
 * update
 
-    ```
+    ```text
     attributes: 
     last_poll
     ```
 
 * create
 
-    ```
+    ```text
     attributes: 
     last_poll
     ```
 
 * delete
 
-    ```
+    ```text
     attributes: 
     last_poll
     ```
@@ -197,7 +200,7 @@ _This entity is disabled by default. You have to activate it if you want to use 
 
 * qr_code
 
-    ```
+    ```text
     attributes: 
     wlan_name, last_poll
     ```
@@ -208,14 +211,14 @@ _These entities are disabled by default. You have to activate it if you want to 
 
 * voucher_quota
 
-    ```
+    ```text
     attributes: 
     last_poll
     ```
 
 * voucher_duration
 
-    ```
+    ```text
     attributes: 
     last_poll
     ```
@@ -224,7 +227,7 @@ _These entities are disabled by default. You have to activate it if you want to 
 
 * voucher
 
-    ```
+    ```text
     attributes: 
     wlan_name, id, quota, used, duration, status, create_time, start_time, end_time, status_expires, usage_quota, rate_max_up, rate_max_down, last_poll
     ```
@@ -253,7 +256,7 @@ To enable debug logging for this integration you can control this in your Home A
 
 Set the logging to debug with the following settings in case of problems:
 
-```
+```yaml
 logger:
   default: warn
   logs:
