@@ -4,4 +4,4 @@ ruff==0.3.2
 pydocstyle==6.3.0
 isort==5.13.2
 aiounifi==71
-pytest-homeassistant-custom-component==0.13.107
+pytest-homeassistant-custom-component==0.13.108
