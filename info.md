@@ -9,8 +9,8 @@
 [![Community Forum][forum-shield]][forum]
 
 [![GitHub Release][release-shield]][releases]
-[![release-badge]][release-workflow]
 [![issues][issues-shield]][issues-link]
+[![release-badge]][release-workflow]
 [![validate-badge]][validate-workflow]
 [![lint-badge]][lint-workflow]
 
