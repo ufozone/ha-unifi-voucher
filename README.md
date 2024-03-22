@@ -8,15 +8,11 @@
 [![Discord][discord-shield]][discord]
 [![Community Forum][forum-shield]][forum]
 
-Stable -
-[![GitHub Release][stable-release-shield]][releases]
+[![GitHub Release][release-shield]][releases]
 [![release-badge]][release-workflow]
-
-Latest -
-[![GitHub Release][latest-release-shield]][releases]
+[![issues][issues-shield]][issues-link]
 [![validate-badge]][validate-workflow]
 [![lint-badge]][lint-workflow]
-[![issues][issues-shield]][issues-link]
 
 UniFi Hotspot Manager as a Custom Component for Home Assistant.
 
@@ -280,12 +276,11 @@ After a restart detailed log entries will appear in `/config/home-assistant.log`
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
 
+[releases]: https://github.com/ufozone/ha-unifi-voucher/releases
+[release-shield]: https://img.shields.io/github/v/release/ufozone/ha-unifi-voucher?style=flat
+
 [issues-shield]: https://img.shields.io/github/issues/ufozone/ha-unifi-voucher?style=flat
 [issues-link]: https://github.com/ufozone/ha-unifi-voucher/issues
-
-[releases]: https://github.com/ufozone/ha-unifi-voucher/releases
-[stable-release-shield]: https://img.shields.io/github/v/release/ufozone/ha-unifi-voucher?style=flat
-[latest-release-shield]: https://img.shields.io/github/v/release/ufozone/ha-unifi-voucher?include_prereleases&style=flat
 
 [lint-badge]: https://github.com/ufozone/ha-unifi-voucher/actions/workflows/lint.yaml/badge.svg
 [lint-workflow]: https://github.com/ufozone/ha-unifi-voucher/actions/workflows/lint.yaml
