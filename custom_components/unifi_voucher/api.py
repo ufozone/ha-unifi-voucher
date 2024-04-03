@@ -2,16 +2,6 @@
 from __future__ import annotations
 
 import asyncio
-from dataclasses import dataclass
-from typing import (
-    Self,
-    TypedDict,
-)
-
-from datetime import (
-    datetime,
-    timedelta,
-)
 
 from aiohttp import CookieJar
 
@@ -27,7 +17,6 @@ from homeassistant.core import (
     HomeAssistant,
 )
 from homeassistant.helpers import aiohttp_client
-import homeassistant.util.dt as dt_util
 
 from .const import (
     LOGGER,
