@@ -23,6 +23,12 @@ from homeassistant.helpers.update_coordinator import (
 )
 import homeassistant.util.dt as dt_util
 
+from aiounifi.interfaces.vouchers import Vouchers
+from aiounifi.models.voucher import (
+    VoucherCreateRequest,
+    VoucherDeleteRequest,
+)
+
 from .const import (
     DOMAIN,
     LOGGER,
@@ -36,9 +42,6 @@ from .const import (
 )
 from .api import (
     UnifiVoucherApiClient,
-    UnifiVouchers,
-    UnifiVoucherCreateRequest,
-    UnifiVoucherDeleteRequest,
     UnifiVoucherApiAuthenticationError,
     UnifiVoucherApiAccessError,
     UnifiVoucherApiError,
@@ -109,6 +112,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         """Schedule update all registered listeners after 1 second."""
         if self._scheduled_update_listeners:
             self._scheduled_update_listeners.cancel()
+
         self._scheduled_update_listeners = self.hass.loop.call_later(
             1,
             lambda: self.async_update_listeners(),
@@ -186,7 +190,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         _vouchers = {}
         _latest_voucher_id = None
 
-        vouchers = UnifiVouchers(self.client.controller)
+        vouchers = Vouchers(self.client.controller)
         await vouchers.update()
         self._last_pull = dt_util.now()
         self._available = True
@@ -247,7 +251,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
                 duration = int(self.get_entry_option(CONF_VOUCHER_DURATION))
 
             await self.client.controller.request(
-                UnifiVoucherCreateRequest.create(
+                VoucherCreateRequest.create(
                     number=number,
                     quota=quota,
                     expire_number=duration,
@@ -274,7 +278,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
                     raise ValueError
 
             await self.client.controller.request(
-                UnifiVoucherDeleteRequest.create(
+                VoucherDeleteRequest.create(
                     obj_id=obj_id,
                 )
             )
@@ -285,7 +289,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
     async def async_update_vouchers(
         self,
     ) -> None:
-        """Create new voucher."""
+        """Update vouchers."""
         try:
             await self.async_fetch_vouchers()
 
