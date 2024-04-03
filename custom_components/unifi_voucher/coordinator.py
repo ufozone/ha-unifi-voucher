@@ -32,6 +32,7 @@ from .const import (
     CONF_VOUCHER_NUMBER,
     CONF_VOUCHER_QUOTA,
     CONF_VOUCHER_DURATION,
+    CONF_VOUCHER_USAGE_QUOTA,
     DEFAULT_VOUCHER,
 )
 from .api import (
@@ -245,6 +246,9 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
 
             if duration is None:
                 duration = int(self.get_entry_option(CONF_VOUCHER_DURATION))
+
+            if usage_quota is None:
+                usage_quota = int(self.get_entry_option(CONF_VOUCHER_USAGE_QUOTA))
 
             await self.client.controller.request(
                 UnifiVoucherCreateRequest.create(
