@@ -137,6 +137,22 @@
             "name": "Last pull"
           }
         }
+      },
+      "voucher_rate_max_up": {
+        "name": "Default: Upload bandwidth",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
+      },
+      "voucher_rate_max_down": {
+        "name": "Default: Download bandwidth",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
       }
     },
     "sensor": {

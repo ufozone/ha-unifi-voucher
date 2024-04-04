@@ -137,6 +137,22 @@
             "name": "Letzter Abruf"
           }
         }
+      },
+      "voucher_rate_max_up": {
+        "name": "Standard: Upload-Geschwindigkeit",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Letzter Abruf"
+          }
+        }
+      },
+      "voucher_rate_max_down": {
+        "name": "Standard: Download-Geschwindigkeit",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Letzter Abruf"
+          }
+        }
       }
     },
     "sensor": {
