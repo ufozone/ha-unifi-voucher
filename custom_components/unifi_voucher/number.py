@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from homeassistant.core import HomeAssistant
 from homeassistant.const import (
+    UnitOfDataRate,
     UnitOfInformation,
     UnitOfTime,
 )
@@ -21,6 +22,8 @@ from .const import (
     CONF_VOUCHER_QUOTA,
     CONF_VOUCHER_DURATION,
     CONF_VOUCHER_USAGE_QUOTA,
+    CONF_VOUCHER_RATE_MAX_UP,
+    CONF_VOUCHER_RATE_MAX_DOWN,
     DEFAULT_VOUCHER,
 )
 from .coordinator import UnifiVoucherCoordinator
@@ -53,6 +56,20 @@ async def async_setup_entry(
             icon="mdi:database-sync",
             native_unit_of_measurement=UnitOfInformation.MEGABYTES,
             translation_key=CONF_VOUCHER_USAGE_QUOTA,
+            entity_category=EntityCategory.CONFIG,
+        ),
+        NumberEntityDescription(
+            key=CONF_VOUCHER_RATE_MAX_UP,
+            icon="mdi:upload",
+            native_unit_of_measurement=UnitOfDataRate.KILOBITS_PER_SECOND,
+            translation_key=CONF_VOUCHER_RATE_MAX_UP,
+            entity_category=EntityCategory.CONFIG,
+        ),
+        NumberEntityDescription(
+            key=CONF_VOUCHER_RATE_MAX_DOWN,
+            icon="mdi:download",
+            native_unit_of_measurement=UnitOfDataRate.KILOBITS_PER_SECOND,
+            translation_key=CONF_VOUCHER_RATE_MAX_DOWN,
             entity_category=EntityCategory.CONFIG,
         ),
     ]
