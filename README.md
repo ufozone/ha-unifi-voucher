@@ -169,13 +169,6 @@ Start setup:
 
 ### Buttons
 
-* update
-
-    ```text
-    attributes: 
-    last_poll
-    ```
-
 * create
 
     ```text
@@ -184,6 +177,13 @@ Start setup:
     ```
 
 * delete
+
+    ```text
+    attributes: 
+    last_poll
+    ```
+
+* update
 
     ```text
     attributes: 
@@ -213,6 +213,27 @@ _These entities are disabled by default. You have to activate it if you want to 
     ```
 
 * voucher_duration
+
+    ```text
+    attributes: 
+    last_poll
+    ```
+
+* voucher_usage_quota
+
+    ```text
+    attributes: 
+    last_poll
+    ```
+
+* voucher_rate_max_up
+
+    ```text
+    attributes: 
+    last_poll
+    ```
+
+* voucher_rate_max_down
 
     ```text
     attributes: 
