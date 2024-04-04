@@ -17,6 +17,7 @@ from homeassistant.const import (
     CONF_PORT,
     CONF_USERNAME,
     CONF_VERIFY_SSL,
+    UnitOfDataRate,
     UnitOfInformation,
     UnitOfTime,
 )
@@ -43,6 +44,8 @@ from .const import (
     CONF_VOUCHER_QUOTA,
     CONF_VOUCHER_DURATION,
     CONF_VOUCHER_USAGE_QUOTA,
+    CONF_VOUCHER_RATE_MAX_UP,
+    CONF_VOUCHER_RATE_MAX_DOWN,
 )
 from .api import (
     UnifiVoucherApiClient,
@@ -270,6 +273,8 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                     CONF_VOUCHER_QUOTA: _set_option(user_input, CONF_VOUCHER_QUOTA),
                     CONF_VOUCHER_DURATION: _set_option(user_input, CONF_VOUCHER_DURATION),
                     CONF_VOUCHER_USAGE_QUOTA: _set_option(user_input, CONF_VOUCHER_USAGE_QUOTA),
+                    CONF_VOUCHER_RATE_MAX_UP: _set_option(user_input, CONF_VOUCHER_RATE_MAX_UP),
+                    CONF_VOUCHER_RATE_MAX_DOWN: _set_option(user_input, CONF_VOUCHER_RATE_MAX_DOWN),
                 }
             )
             # User is done, create the config entry.
@@ -369,6 +374,36 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                             unit_of_measurement=UnitOfInformation.MEGABYTES,
                         )
                     ),
+                    vol.Optional(
+                        CONF_VOUCHER_RATE_MAX_UP,
+                        default=DEFAULT_VOUCHER[CONF_VOUCHER_RATE_MAX_UP].get("default", 0),
+                        description={
+                            "suggested_value": _get_option((user_input or {}), CONF_VOUCHER_RATE_MAX_UP),
+                        },
+                    ): selector.NumberSelector(
+                        selector.NumberSelectorConfig(
+                            mode=selector.NumberSelectorMode.BOX,
+                            min=DEFAULT_VOUCHER[CONF_VOUCHER_RATE_MAX_UP].get("min", 0),
+                            max=DEFAULT_VOUCHER[CONF_VOUCHER_RATE_MAX_UP].get("max", 100000),
+                            step=DEFAULT_VOUCHER[CONF_VOUCHER_RATE_MAX_UP].get("step", 1),
+                            unit_of_measurement=UnitOfDataRate.KILOBITS_PER_SECOND,
+                        )
+                    ),
+                    vol.Optional(
+                        CONF_VOUCHER_RATE_MAX_DOWN,
+                        default=DEFAULT_VOUCHER[CONF_VOUCHER_RATE_MAX_DOWN].get("default", 0),
+                        description={
+                            "suggested_value": _get_option((user_input or {}), CONF_VOUCHER_RATE_MAX_DOWN),
+                        },
+                    ): selector.NumberSelector(
+                        selector.NumberSelectorConfig(
+                            mode=selector.NumberSelectorMode.BOX,
+                            min=DEFAULT_VOUCHER[CONF_VOUCHER_RATE_MAX_DOWN].get("min", 0),
+                            max=DEFAULT_VOUCHER[CONF_VOUCHER_RATE_MAX_DOWN].get("max", 100000),
+                            step=DEFAULT_VOUCHER[CONF_VOUCHER_RATE_MAX_DOWN].get("step", 1),
+                            unit_of_measurement=UnitOfDataRate.KILOBITS_PER_SECOND,
+                        )
+                    ),
                 }
             ),
             last_step=True,
@@ -458,6 +493,8 @@ class UnifiVoucherOptionsFlowHandler(OptionsFlow):
                     CONF_VOUCHER_QUOTA: _set_option(user_input, CONF_VOUCHER_QUOTA),
                     CONF_VOUCHER_DURATION: _set_option(user_input, CONF_VOUCHER_DURATION),
                     CONF_VOUCHER_USAGE_QUOTA: _set_option(user_input, CONF_VOUCHER_USAGE_QUOTA),
+                    CONF_VOUCHER_RATE_MAX_UP: _set_option(user_input, CONF_VOUCHER_RATE_MAX_UP),
+                    CONF_VOUCHER_RATE_MAX_DOWN: _set_option(user_input, CONF_VOUCHER_RATE_MAX_DOWN),
                 }
             )
             # User is done, update the config entry.
@@ -535,6 +572,36 @@ class UnifiVoucherOptionsFlowHandler(OptionsFlow):
                             max=DEFAULT_VOUCHER[CONF_VOUCHER_USAGE_QUOTA].get("max", 1000000),
                             step=DEFAULT_VOUCHER[CONF_VOUCHER_USAGE_QUOTA].get("step", 1),
                             unit_of_measurement=UnitOfInformation.MEGABYTES,
+                        )
+                    ),
+                    vol.Optional(
+                        CONF_VOUCHER_RATE_MAX_UP,
+                        default=DEFAULT_VOUCHER[CONF_VOUCHER_RATE_MAX_UP].get("default", 0),
+                        description={
+                            "suggested_value": _get_option((user_input or self.options or {}), CONF_VOUCHER_RATE_MAX_UP),
+                        },
+                    ): selector.NumberSelector(
+                        selector.NumberSelectorConfig(
+                            mode=selector.NumberSelectorMode.BOX,
+                            min=DEFAULT_VOUCHER[CONF_VOUCHER_RATE_MAX_UP].get("min", 0),
+                            max=DEFAULT_VOUCHER[CONF_VOUCHER_RATE_MAX_UP].get("max", 100000),
+                            step=DEFAULT_VOUCHER[CONF_VOUCHER_RATE_MAX_UP].get("step", 1),
+                            unit_of_measurement=UnitOfDataRate.KILOBITS_PER_SECOND,
+                        )
+                    ),
+                    vol.Optional(
+                        CONF_VOUCHER_RATE_MAX_DOWN,
+                        default=DEFAULT_VOUCHER[CONF_VOUCHER_RATE_MAX_DOWN].get("default", 0),
+                        description={
+                            "suggested_value": _get_option((user_input or self.options or {}), CONF_VOUCHER_RATE_MAX_DOWN),
+                        },
+                    ): selector.NumberSelector(
+                        selector.NumberSelectorConfig(
+                            mode=selector.NumberSelectorMode.BOX,
+                            min=DEFAULT_VOUCHER[CONF_VOUCHER_RATE_MAX_DOWN].get("min", 0),
+                            max=DEFAULT_VOUCHER[CONF_VOUCHER_RATE_MAX_DOWN].get("max", 100000),
+                            step=DEFAULT_VOUCHER[CONF_VOUCHER_RATE_MAX_DOWN].get("step", 1),
+                            unit_of_measurement=UnitOfDataRate.KILOBITS_PER_SECOND,
                         )
                     ),
                 }

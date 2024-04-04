@@ -26,7 +26,9 @@
           "voucher_number": "How many new vouchers should be created at the same time?",
           "voucher_quota": "How often should a voucher be usable? (0 = unlimited)",
           "voucher_duration": "How long should a voucher be valid from the time it is used?",
-          "voucher_usage_quota": "How much data traffic should be available per voucher? (0 = unlimited)"
+          "voucher_usage_quota": "How much data traffic should be available per voucher? (0 = unlimited)",
+          "voucher_rate_max_up": "How much upload bandwidth should be available per voucher? (0 = unlimited)",
+          "voucher_rate_max_down": "How much download bandwidth should be available per voucher? (0 = unlimited)"
         }
       }
     },
@@ -56,7 +58,9 @@
           "voucher_number": "How many new vouchers should be created at the same time?",
           "voucher_quota": "How often should a voucher be usable? (0 = unlimited)",
           "voucher_duration": "How long should a voucher be valid from the time it is used?",
-          "voucher_usage_quota": "How much data traffic should be available per voucher? (0 = unlimited)"
+          "voucher_usage_quota": "How much data traffic should be available per voucher? (0 = unlimited)",
+          "voucher_rate_max_up": "How much upload bandwidth should be available per voucher? (0 = unlimited)",
+          "voucher_rate_max_down": "How much download bandwidth should be available per voucher? (0 = unlimited)"
         }
       }
     }
@@ -220,7 +224,7 @@
         },
         "rate_max_down": {
           "name": "Download bandwidth",
-          "description": "Specifies how much upload bandwidth (in kbit/s) is available for the voucher."
+          "description": "Specifies how much download bandwidth (in kbit/s) is available for the voucher."
         }
       }
     },
