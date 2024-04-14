@@ -119,7 +119,8 @@ The voucher can be presented together with the QR code on a lovelace card:
 
 ## Installation
 
-Requires Home Assistant 2023.11.0 or newer.
+> [!IMPORTANT]  
+> Requires Home Assistant 2023.11.0 or newer.
 
 ### Installation through HACS
 
