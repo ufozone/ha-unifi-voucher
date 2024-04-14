@@ -171,24 +171,27 @@ Start setup:
 
 * create
 
-    ```text
-    attributes: 
-    last_poll
-    ```
+  Attributes:
+
+  ```text
+  last_poll
+  ```
 
 * delete
 
-    ```text
-    attributes: 
-    last_poll
-    ```
+  Attributes:
+
+  ```text
+  last_poll
+  ```
 
 * update
 
-    ```text
-    attributes: 
-    last_poll
-    ```
+  Attributes:
+
+  ```text
+  last_poll
+  ```
 
 ### Images
 
@@ -196,10 +199,11 @@ _This entity is disabled by default. You have to activate it if you want to use 
 
 * qr_code
 
-    ```text
-    attributes: 
-    wlan_name, last_poll
-    ```
+  Attributes:
+
+  ```text
+  wlan_name, last_poll
+  ```
 
 ### Numbers
 
@@ -207,47 +211,53 @@ _These entities are disabled by default. You have to activate it if you want to 
 
 * voucher_quota
 
-    ```text
-    attributes: 
-    last_poll
-    ```
+  Attributes:
+
+  ```text
+  last_poll
+  ```
 
 * voucher_duration
 
-    ```text
-    attributes: 
-    last_poll
-    ```
+  Attributes:
+
+  ```text
+  last_poll
+  ```
 
 * voucher_usage_quota
 
-    ```text
-    attributes: 
-    last_poll
-    ```
+  Attributes:
+
+  ```text
+  last_poll
+  ```
 
 * voucher_rate_max_up
 
-    ```text
-    attributes: 
-    last_poll
-    ```
+  Attributes:
+
+  ```text
+  last_poll
+  ```
 
 * voucher_rate_max_down
 
-    ```text
-    attributes: 
-    last_poll
-    ```
+  Attributes:
+
+  ```text
+  last_poll
+  ```
 
 ### Sensors
 
 * voucher
 
-    ```text
-    attributes: 
-    wlan_name, id, quota, used, duration, status, create_time, start_time, end_time, status_expires, usage_quota, rate_max_up, rate_max_down, last_poll
-    ```
+  Attributes:
+
+  ```text
+  wlan_name, id, quota, used, duration, status, create_time, start_time, end_time, status_expires, usage_quota, rate_max_up, rate_max_down, last_poll
+  ```
 
 ### Services
 
