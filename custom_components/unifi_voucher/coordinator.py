@@ -23,8 +23,8 @@ from homeassistant.helpers.update_coordinator import (
 )
 import homeassistant.util.dt as dt_util
 
-from aiounifi.interfaces.vouchers import Vouchers
-from aiounifi.models.voucher import (
+from .aiounifi.interfaces.vouchers import Vouchers
+from .aiounifi.models.voucher import (
     VoucherCreateRequest,
     VoucherDeleteRequest,
 )
