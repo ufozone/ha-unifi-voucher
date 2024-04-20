@@ -160,7 +160,7 @@ class Voucher(ApiItem):
 
     @property
     def qos_overwrite(self) -> bool:
-        """QoS defaults overwritten by the use of this voucher."""
+        """Defaults for QoS overwritten by the use of this voucher."""
         return self.raw.get("qos_overwrite", False)
 
     @property
