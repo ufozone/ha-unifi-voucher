@@ -3,5 +3,5 @@ colorlog==6.8.2
 ruff==0.4.2
 pydocstyle==6.3.0
 isort==5.13.2
-aiounifi==76
+aiounifi==77
 pytest-homeassistant-custom-component==0.13.117
