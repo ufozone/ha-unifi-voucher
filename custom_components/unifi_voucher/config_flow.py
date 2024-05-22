@@ -206,7 +206,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
 
             if config_entry:
                 self.hass.config_entries.async_update_entry(
-                    config_entry, data=self.config
+                    config_entry, data=self.data
                 )
                 await self.hass.config_entries.async_reload(
                     config_entry.entry_id
