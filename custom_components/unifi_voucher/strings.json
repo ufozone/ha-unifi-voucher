@@ -40,7 +40,8 @@
       "no_access": "No access",
       "unknown": "[%key:common::config_flow::error::unknown%]",
       "timeout_connect": "[%key:common::config_flow::error::timeout_connect%]",
-      "site_invalid": "Site invalid"
+      "site_invalid": "Site invalid",
+      "path_invalid": "The specified path to the file is invalid: absolute path is needed."
     },
     "abort": {
       "already_configured": "[%key:common::config_flow::abort::already_configured_service%]",
@@ -49,7 +50,9 @@
     }
   },
   "options": {
-    "error": {},
+    "error": {
+      "path_invalid": "The specified path to the file is invalid: absolute path is needed."
+    },
     "step": {
       "init": {
         "title": "Settings",

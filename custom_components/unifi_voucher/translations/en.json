@@ -40,7 +40,8 @@
       "no_access": "No access",
       "unknown": "Unexpected error",
       "timeout_connect": "Timeout establishing connection",
-      "site_invalid": "Site invalid"
+      "site_invalid": "Site invalid",
+      "path_invalid": "The specified path to the file is invalid: absolute path is needed."
     },
     "abort": {
       "already_configured": "Service is already configured",
@@ -49,7 +50,9 @@
     }
   },
   "options": {
-    "error": {},
+    "error": {
+      "path_invalid": "The specified path to the file is invalid: absolute path is needed."
+    },
     "step": {
       "init": {
         "title": "Settings",

@@ -40,7 +40,8 @@
       "no_access": "Kein Zugriff",
       "unknown": "Unerwarteter Fehler",
       "timeout_connect": "Zeitüberschreitung beim Verbindungsaufbau",
-      "site_invalid": "Site ungültig"
+      "site_invalid": "Site ungültig",
+      "path_invalid": "Der angegebene Pfad zur Datei ist ungültig: Der absoluter Pfad wird benötigt."
     },
     "abort": {
       "already_configured": "Dienst ist bereits konfiguriert",
@@ -49,7 +50,9 @@
     }
   },
   "options": {
-    "error": {},
+    "error": {
+      "path_invalid": "Der angegebene Pfad zur Datei ist ungültig: Der absoluter Pfad wird benötigt."
+    },
     "step": {
       "init": {
         "title": "Einstellungen",
