@@ -98,6 +98,7 @@ class UnifiVoucherImage(UnifiVoucherEntity, ImageEntity):
             self.cached_image = wlan_qr_code(
                 name=self.current_wlan_name,
                 password=None,
+                kind="png",
             )
         return self.cached_image
 
