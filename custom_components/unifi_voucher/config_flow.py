@@ -613,7 +613,7 @@ class UnifiVoucherOptionsFlowHandler(OptionsFlow):
                     ),
                     vol.Optional(
                         CONF_CREATE_IF_NONE_EXISTS,
-                        default=(user_input or {}).get(CONF_CREATE_IF_NONE_EXISTS, False),
+                        default=(user_input or self.options or {}).get(CONF_CREATE_IF_NONE_EXISTS, False),
                     ): selector.BooleanSelector(),
                 }
             ),
