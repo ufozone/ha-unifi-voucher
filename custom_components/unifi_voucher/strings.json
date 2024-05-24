@@ -29,7 +29,7 @@
           "voucher_usage_quota": "How much data traffic should be available per voucher? (0 = unlimited)",
           "voucher_rate_max_up": "How much upload bandwidth should be available per voucher? (0 = unlimited)",
           "voucher_rate_max_down": "How much download bandwidth should be available per voucher? (0 = unlimited)",
-          "create_if_none_exists": "Should a new voucher be created if no more is available?"
+          "create_if_none_exists": "Should new vouchers be created if no more are available?"
         }
       }
     },
@@ -62,7 +62,7 @@
           "voucher_usage_quota": "How much data traffic should be available per voucher? (0 = unlimited)",
           "voucher_rate_max_up": "How much upload bandwidth should be available per voucher? (0 = unlimited)",
           "voucher_rate_max_down": "How much download bandwidth should be available per voucher? (0 = unlimited)",
-          "create_if_none_exists": "Should a new voucher be created if no more is available?"
+          "create_if_none_exists": "Should new vouchers be created if no more are available?"
         }
       }
     }
