@@ -4,4 +4,6 @@ ruff==0.4.4
 pydocstyle==6.3.0
 isort==5.13.2
 aiounifi==78
+segno==1.6.0
+Pillow==10.3.0
 homeassistant==2023.11.0

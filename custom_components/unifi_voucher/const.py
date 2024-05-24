@@ -28,6 +28,7 @@ CONF_VOUCHER_USAGE_QUOTA = "voucher_usage_quota"
 CONF_VOUCHER_RATE_MAX_UP = "voucher_rate_max_up"
 CONF_VOUCHER_RATE_MAX_DOWN = "voucher_rate_max_down"
 CONF_CREATE_IF_NONE_EXISTS = "create_if_none_exists"
+CONF_QRCODE_LOGO_PATH = "qrcode_logo_path"
 
 ATTR_EXTRA_STATE_ATTRIBUTES = "extra_state_attributes"
 ATTR_LAST_PULL = "last_pull"
