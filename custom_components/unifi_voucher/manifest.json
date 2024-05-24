@@ -12,7 +12,8 @@
   "issue_tracker": "https://github.com/ufozone/ha-unifi-voucher/issues",
   "loggers": [
     "aiounifi",
-    "Pillow"
+    "Pillow",
+    "segno"
   ],
   "requirements": [
     "aiounifi>=77",
