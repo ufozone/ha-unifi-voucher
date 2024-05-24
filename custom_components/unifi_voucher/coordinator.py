@@ -99,9 +99,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         self._available = False
         try:
             # Update vouchers.
-            await self.async_fetch_vouchers(
-                self.config_entry.options.get(CONF_CREATE_IF_NONE_EXISTS, False)
-            )
+            await self.async_fetch_vouchers()
 
             LOGGER.debug("_async_update_data")
             LOGGER.debug(self.vouchers)
@@ -192,7 +190,6 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
 
     async def async_fetch_vouchers(
         self,
-        create_if_none_exists: bool = False,
     ) -> None:
         """Fetch data for all vouchers."""
         _vouchers = {}
@@ -240,7 +237,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         self.latest_voucher_id = _latest_voucher_id
 
         # If no voucher found, create a new one
-        if _latest_voucher_id is None and create_if_none_exists is True:
+        if _latest_voucher_id is None and self.config_entry.options.get(CONF_CREATE_IF_NONE_EXISTS, False):
             LOGGER.info("No voucher found, create a new one")
             await self.async_create_voucher()
 
@@ -314,7 +311,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
     ) -> None:
         """Update vouchers."""
         try:
-            await self.async_fetch_vouchers(False)
+            await self.async_fetch_vouchers()
 
             # Always update HA states after a command was executed.
             # API calls that change the lawn mower's state update the local object when
