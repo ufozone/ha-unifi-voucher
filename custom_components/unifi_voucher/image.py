@@ -10,8 +10,6 @@ import segno
 
 from PIL import Image
 
-from aiounifi.models.wlan import wlan_qr_code
-
 from homeassistant.core import (
     HomeAssistant,
     callback,
