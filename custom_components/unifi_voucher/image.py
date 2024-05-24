@@ -4,6 +4,15 @@ Support for QR code for guest WLANs.
 """
 from __future__ import annotations
 
+import io
+import os
+import segno
+
+from PIL import (
+    Image,
+    ImageDraw,
+)
+
 from aiounifi.models.wlan import wlan_qr_code
 
 from homeassistant.core import (
@@ -30,7 +39,6 @@ from .const import (
 )
 from .coordinator import UnifiVoucherCoordinator
 from .entity import UnifiVoucherEntity
-
 
 async def async_setup_entry(
     hass: HomeAssistant,
@@ -95,11 +103,38 @@ class UnifiVoucherImage(UnifiVoucherEntity, ImageEntity):
     def image(self) -> bytes | None:
         """Return bytes of image."""
         if self.cached_image is None:
-            self.cached_image = wlan_qr_code(
-                name=self.current_wlan_name,
+            img_byte_arr = io.BytesIO()
+            qrcode_content = segno.helpers.make_wifi_data(
+                ssid=self.current_wlan_name,
                 password=None,
-                kind="png",
+                security="nopass",
             )
+            img_qrcode = segno.make(qrcode_content, error='h')
+            img_qrcode.save(
+                out=img_byte_arr,
+                kind="png",
+                scale=5,
+            )
+            # QR code logo is given
+            if (_qrcode_logo_path := self.coordinator.get_qrcode_logo_path()) and os.path.isfile(_qrcode_logo_path):
+                img_byte_arr.seek(0)  # Important to let Pillow load the PNG
+                img_qrcode = Image.open(img_byte_arr)
+                img_qrcode = img_qrcode.convert("RGB")  # Ensure colors for the output
+                img_width, img_height = img_qrcode.size
+                logo_max_size = img_height // 3
+                img_logo = Image.open(_qrcode_logo_path, "r")
+                img_logo.thumbnail((logo_max_size, logo_max_size)) # Resize the logo to logo_max_size
+                img_qrcode.paste(
+                    img_logo, ((img_width - img_logo.size[0]) // 2, (img_height - img_logo.size[1]) // 2), img_logo
+                )
+                img_byte_arr = io.BytesIO()
+                img_qrcode.save(
+                    img_byte_arr,
+                    format="PNG",
+                    #optimize=True,
+                    #compress_level=9,
+                )
+            self.cached_image = img_byte_arr.getvalue()
         return self.cached_image
 
     @property

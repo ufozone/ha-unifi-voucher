@@ -42,6 +42,7 @@ from .const import (
     CONF_VOUCHER_RATE_MAX_UP,
     CONF_VOUCHER_RATE_MAX_DOWN,
     CONF_CREATE_IF_NONE_EXISTS,
+    CONF_QRCODE_LOGO_PATH,
     DEFAULT_IDENTIFIER_STRING,
     DEFAULT_VOUCHER,
 )
@@ -154,6 +155,12 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
     ) -> str:
         """Get guest WLAN name."""
         return self.config_entry.options.get(CONF_WLAN_NAME, "")
+
+    def get_qrcode_logo_path(
+        self,
+    ) -> str:
+        """Get QR code logo path."""
+        return self.config_entry.options.get(CONF_QRCODE_LOGO_PATH, "")
 
     def get_entry_option(
         self,
