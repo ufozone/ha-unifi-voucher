@@ -34,6 +34,7 @@ ATTR_AVAILABLE = "available"
 ATTR_VOUCHER = "voucher"
 ATTR_QR_CODE = "qr_code"
 
+DEFAULT_IDENTIFIER_STRING = "HA-generated"
 DEFAULT_SITE_ID = "default"
 DEFAULT_HOST = ""
 DEFAULT_USERNAME = ""

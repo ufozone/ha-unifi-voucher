@@ -41,6 +41,7 @@ from .const import (
     CONF_VOUCHER_USAGE_QUOTA,
     CONF_VOUCHER_RATE_MAX_UP,
     CONF_VOUCHER_RATE_MAX_DOWN,
+    DEFAULT_IDENTIFIER_STRING,
     DEFAULT_VOUCHER,
 )
 from .api import (
@@ -199,7 +200,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         self._available = True
         for voucher in vouchers.values():
             # No HA generated voucher
-            if not voucher.note.startswith("HA-generated"):
+            if not voucher.note.startswith(DEFAULT_IDENTIFIER_STRING):
                 continue
             # Voucher is full used
             if voucher.quota > 0 and voucher.quota <= voucher.used:
@@ -271,7 +272,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
                     usage_quota=usage_quota,
                     rate_max_up=rate_max_up,
                     rate_max_down=rate_max_down,
-                    note="HA-generated",
+                    note=DEFAULT_IDENTIFIER_STRING,
                 )
             )
             await self.async_update_vouchers()
