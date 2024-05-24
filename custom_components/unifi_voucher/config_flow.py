@@ -46,6 +46,7 @@ from .const import (
     CONF_VOUCHER_USAGE_QUOTA,
     CONF_VOUCHER_RATE_MAX_UP,
     CONF_VOUCHER_RATE_MAX_DOWN,
+    CONF_CREATE_IF_NONE_EXISTS,
 )
 from .api import (
     UnifiVoucherApiClient,
@@ -275,6 +276,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                     CONF_VOUCHER_USAGE_QUOTA: _set_option(user_input, CONF_VOUCHER_USAGE_QUOTA),
                     CONF_VOUCHER_RATE_MAX_UP: _set_option(user_input, CONF_VOUCHER_RATE_MAX_UP),
                     CONF_VOUCHER_RATE_MAX_DOWN: _set_option(user_input, CONF_VOUCHER_RATE_MAX_DOWN),
+                    CONF_CREATE_IF_NONE_EXISTS: user_input.get(CONF_CREATE_IF_NONE_EXISTS, False),
                 }
             )
             # User is done, create the config entry.
@@ -404,6 +406,10 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                             unit_of_measurement=UnitOfDataRate.KILOBITS_PER_SECOND,
                         )
                     ),
+                    vol.Optional(
+                        CONF_CREATE_IF_NONE_EXISTS,
+                        default=(user_input or {}).get(CONF_CREATE_IF_NONE_EXISTS, False),
+                    ): selector.BooleanSelector(),
                 }
             ),
             last_step=True,
@@ -495,6 +501,7 @@ class UnifiVoucherOptionsFlowHandler(OptionsFlow):
                     CONF_VOUCHER_USAGE_QUOTA: _set_option(user_input, CONF_VOUCHER_USAGE_QUOTA),
                     CONF_VOUCHER_RATE_MAX_UP: _set_option(user_input, CONF_VOUCHER_RATE_MAX_UP),
                     CONF_VOUCHER_RATE_MAX_DOWN: _set_option(user_input, CONF_VOUCHER_RATE_MAX_DOWN),
+                    CONF_CREATE_IF_NONE_EXISTS: user_input.get(CONF_CREATE_IF_NONE_EXISTS, False),
                 }
             )
             # User is done, update the config entry.
@@ -604,6 +611,10 @@ class UnifiVoucherOptionsFlowHandler(OptionsFlow):
                             unit_of_measurement=UnitOfDataRate.KILOBITS_PER_SECOND,
                         )
                     ),
+                    vol.Optional(
+                        CONF_CREATE_IF_NONE_EXISTS,
+                        default=(user_input or self.options or {}).get(CONF_CREATE_IF_NONE_EXISTS, False),
+                    ): selector.BooleanSelector(),
                 }
             ),
             last_step=True,

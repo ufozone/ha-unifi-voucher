@@ -41,6 +41,8 @@ from .const import (
     CONF_VOUCHER_USAGE_QUOTA,
     CONF_VOUCHER_RATE_MAX_UP,
     CONF_VOUCHER_RATE_MAX_DOWN,
+    CONF_CREATE_IF_NONE_EXISTS,
+    DEFAULT_IDENTIFIER_STRING,
     DEFAULT_VOUCHER,
 )
 from .api import (
@@ -195,11 +197,12 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
 
         vouchers = Vouchers(self.client.controller)
         await vouchers.update()
+
         self._last_pull = dt_util.now()
         self._available = True
         for voucher in vouchers.values():
             # No HA generated voucher
-            if not voucher.note.startswith("HA-generated"):
+            if not voucher.note.startswith(DEFAULT_IDENTIFIER_STRING):
                 continue
             # Voucher is full used
             if voucher.quota > 0 and voucher.quota <= voucher.used:
@@ -232,6 +235,11 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
 
         self.vouchers = _vouchers
         self.latest_voucher_id = _latest_voucher_id
+
+        # If no voucher found, create a new one
+        if _latest_voucher_id is None and self.config_entry.options.get(CONF_CREATE_IF_NONE_EXISTS, False):
+            LOGGER.info("No voucher found, create a new one")
+            await self.async_create_voucher()
 
     async def async_create_voucher(
         self,
@@ -271,7 +279,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
                     usage_quota=usage_quota,
                     rate_max_up=rate_max_up,
                     rate_max_down=rate_max_down,
-                    note="HA-generated",
+                    note=DEFAULT_IDENTIFIER_STRING,
                 )
             )
             await self.async_update_vouchers()
