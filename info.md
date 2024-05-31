@@ -130,7 +130,7 @@ Installation using Home Assistant Community Store (HACS) is recommended.
 
 2. Click the button below or visit the HACS _Integrations_ pane and add `https://github.com/ufozone/ha-unifi-voucher.git` as an `Integration` by following [these instructions](https://hacs.xyz/docs/faq/custom_repositories/).
 
-    [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=ufozone&repository=ha-unifi-voucher)
+    [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=ufozone&repository=ha-unifi-voucher&category=integration)
 
 3. Install the integration.
 
