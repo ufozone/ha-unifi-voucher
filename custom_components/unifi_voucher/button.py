@@ -16,9 +16,6 @@ from homeassistant.helpers.entity import (
     EntityCategory,
 )
 
-from .const import (
-    DOMAIN,
-)
 from .coordinator import UnifiVoucherCoordinator
 from .entity import UnifiVoucherEntity
 

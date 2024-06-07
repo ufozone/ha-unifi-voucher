@@ -17,7 +17,6 @@ from homeassistant.components.sensor import (
 from homeassistant.helpers.entity import Entity
 
 from .const import (
-    DOMAIN,
     CONF_WLAN_NAME,
     ATTR_VOUCHER,
 )

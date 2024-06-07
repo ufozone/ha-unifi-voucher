@@ -28,7 +28,6 @@ import homeassistant.util.dt as dt_util
 
 from .const import (
     LOGGER,
-    DOMAIN,
     CONF_WLAN_NAME,
     ATTR_QR_CODE,
 )

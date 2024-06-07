@@ -18,7 +18,6 @@ from homeassistant.helpers.entity import (
 )
 
 from .const import (
-    DOMAIN,
     CONF_VOUCHER_QUOTA,
     CONF_VOUCHER_DURATION,
     CONF_VOUCHER_USAGE_QUOTA,

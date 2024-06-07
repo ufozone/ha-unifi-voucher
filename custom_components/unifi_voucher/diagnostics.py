@@ -8,10 +8,6 @@ from homeassistant.const import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 
-from .const import (
-    DOMAIN,
-)
-
 TO_REDACT = {
     CONF_PASSWORD,
 }
