@@ -6,4 +6,4 @@ isort==5.13.2
 aiounifi==79
 segno==1.6.1
 Pillow==10.4.0
-homeassistant==2023.11.0
+homeassistant==2024.8.0
