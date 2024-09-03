@@ -8,7 +8,7 @@
           "username": "Gebruikersnaam",
           "password": "Wachtwoord",
           "port": "Poort",
-          "verify_ssl": "Verify SSL certificate"
+          "verify_ssl": "SSL-certificaat verifiëren"
         }
       },
       "site": {
@@ -35,11 +35,11 @@
       }
     },
     "error": {
-      "cannot_connect": "Failed to connect",
+      "cannot_connect": "Kan geen verbinding maken",
       "invalid_auth": "Ongeldige authenticatie",
       "invalid_host": "Ongeldige hostnaam of IP-adres",
       "no_access": "Geen toegang",
-      "unknown": "Unexpected error",
+      "unknown": "Onverwachte fout",
       "timeout_connect": "Time-out voor het tot stand brengen van verbinding",
       "site_invalid": "Site ongeldig",
       "path_invalid": "Het opgegeven pad naar het bestand is ongeldig: een absoluut pad is nodig."
