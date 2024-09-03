@@ -1,0 +1,269 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "Stel uw UniFi Hotspot Manager Manager-instantie in.",
+        "data": {
+          "host": "Host",
+          "username": "Gebruikersnaam",
+          "password": "Wachtwoord",
+          "port": "Poort",
+          "verify_ssl": "SSL-certificaat verifiëren"
+        }
+      },
+      "site": {
+        "title": "Selecteer locatie",
+        "description": "Selecteer de site waarvoor u de vouchers wilt beheren.",
+        "data": {
+          "site_id": "Selecteer locatie"
+        }
+      },
+      "options": {
+        "title": "Instellingen",
+        "description": "Wijzig hier de integratie-instellingen.",
+        "data": {
+          "wlan_name": "Wat is de naam van je gasten WLAN?",
+          "voucher_number": "Hoeveel nieuwe vouchers moeten er tegelijkertijd worden aangemaakt?",
+          "voucher_quota": "Hoe vaak moet een voucher bruikbaar zijn? (0 = onbeperkt)",
+          "voucher_duration": "Hoe lang moet een voucher geldig zijn vanaf het moment dat deze wordt gebruikt?",
+          "voucher_usage_quota": "Hoeveel dataverkeer moet er per voucher beschikbaar zijn? (0 = onbeperkt)",
+          "voucher_rate_max_up": "Hoeveel uploadbandbreedte moet beschikbaar zijn per voucher? (0 = onbeperkt)",
+          "voucher_rate_max_down": "Hoeveel downloadbandbreedte moet beschikbaar zijn per voucher? (0 = onbeperkt)",
+          "create_if_none_exists": "Moeten er nieuwe vouchers worden aangemaakt als er geen meer beschikbaar zijn?",
+          "qrcode_logo_path": "Pad naar het logo voor de QR-code"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Kan geen verbinding maken",
+      "invalid_auth": "Ongeldige authenticatie",
+      "invalid_host": "Ongeldige hostnaam of IP-adres",
+      "no_access": "Geen toegang",
+      "unknown": "Onverwachte fout",
+      "timeout_connect": "Time-out voor het tot stand brengen van verbinding",
+      "site_invalid": "Site ongeldig",
+      "path_invalid": "Het opgegeven pad naar het bestand is ongeldig: een absoluut pad is nodig."
+    },
+    "abort": {
+      "already_configured": "Service is al geconfigureerd",
+      "configuration_updated": "Configuratie bijgewerkt",
+      "reauth_successful": "Opnieuw verifiëren is gelukt"
+    }
+  },
+  "options": {
+    "error": {
+      "path_invalid": "Het opgegeven pad naar het bestand is ongeldig: een volledig pad is nodig."
+    },
+    "step": {
+      "init": {
+        "title": "Instellingen",
+        "description": "Wijzig hier de integratie-instellingen.",
+        "data": {
+          "wlan_name": "Wat is de naam van je gasten WLAN?",
+          "voucher_number": "Hoeveel nieuwe vouchers moeten er tegelijkertijd worden aangemaakt?",
+          "voucher_quota": "Hoe vaak moet een voucher bruikbaar zijn? (0 = onbeperkt)",
+          "voucher_duration": "Hoe lang moet een voucher geldig zijn vanaf het moment dat deze wordt gebruikt?",
+          "voucher_usage_quota": "Hoeveel dataverkeer moet er per voucher beschikbaar zijn? (0 = onbeperkt)",
+          "voucher_rate_max_up": "Hoeveel uploadbandbreedte moet beschikbaar zijn per voucher? (0 = onbeperkt)",
+          "voucher_rate_max_down": "Hoeveel downloadbandbreedte moet beschikbaar zijn per voucher? (0 = onbeperkt)",
+          "create_if_none_exists": "Moeten er nieuwe vouchers worden aangemaakt als er geen meer beschikbaar zijn?",
+          "qrcode_logo_path": "Pad naar het logo voor de QR-code"
+        }
+      }
+    }
+  },
+  "entity": {
+    "button": {
+      "update": {
+        "name": "Update",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
+      },
+      "create": {
+        "name": "Voucher maken",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
+      },
+      "delete": {
+        "name": "Voucher verwijderen",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
+      }
+    },
+    "image": {
+      "qr_code": {
+        "name": "Gast WLAN QR-code",
+        "state_attributes": {
+          "wlan_name": {
+            "name": "WLAN name"
+          },
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
+      }
+    },
+    "number": {
+      "voucher_number": {
+        "name": "Standaard: Vouchers",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
+      },
+      "voucher_quota": {
+        "name": "Standaard: Quota",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
+      },
+      "voucher_duration": {
+        "name": "Standaard: Duur",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
+      },
+      "voucher_usage_quota": {
+        "name": "Standaard: Datalimiet",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
+      },
+      "voucher_rate_max_up": {
+        "name": "Standaard: uploadbandbreedte",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
+      },
+      "voucher_rate_max_down": {
+        "name": "Standaard: downloadbandbreedte",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
+      }
+    },
+    "sensor": {
+      "voucher": {
+        "name": "Voucher",
+        "state_attributes": {
+          "wlan_name": {
+            "name": "WLAN Name"
+          },
+          "quota": {
+            "name": "Quota"
+          },
+          "used": {
+            "name": "Gebruikt"
+          },
+          "duration": {
+            "name": "Duur"
+          },
+          "create_time": {
+            "name": "Gemaakt"
+          },
+          "start_time": {
+            "name": "Gestart"
+          },
+          "end_time": {
+            "name": "Eindigt"
+          },
+          "status_expires": {
+            "name": "Verloopt"
+          },
+          "status": {
+            "name": "Status",
+            "state": {
+              "used": "Laatste keer gebruikt",
+              "used_multiple": "Meerdere keren gebruikt",
+              "expired": "Verlopen",
+              "valid_one": "Eenmalig geldig",
+              "valid_multi": "Meerdere keren geldig"
+            }
+          },
+          "rate_max_up": {
+            "name": "Upload bandwidth"
+          },
+          "rate_max_down": {
+            "name": "Download bandwidth"
+          },
+          "usage_quota": {
+            "name": "Data limiet"
+          },
+          "last_pull": {
+            "name": "Last pull"
+          }
+        }
+      }
+    }
+  },
+  "services": {
+    "list": {
+      "name": "Lijst met vouchers",
+      "description": "Ontvang een lijst met alle geldige vouchers."
+    },
+    "create": {
+      "name": "Voucher maken",
+      "description": "Maak een nieuw voucher aan met uw eigen parameters of de standaardinstellingen van de integratie.",
+      "fields": {
+        "number": {
+          "name": "Aantal vouchers",
+          "description": "Geeft aan hoeveel vouchers er per oproep worden aangemaakt."
+        },
+        "quota": {
+          "name": "Quota per Voucher",
+          "description": "Geeft aan hoe vaak een voucher kan worden gebruikt (0 = onbeperkt)."
+        },
+        "duration": {
+          "name": "DuratDurationion",
+          "description": "Geeft aan hoe lang een voucher geldig is (in uren) vanaf het moment dat deze wordt ingevoerd."
+        },
+        "usage_quota": {
+          "name": "Datalimiet",
+          "description": "Geeft aan hoeveel datalimiet (in MB) beschikbaar is voor de voucher."
+        },
+        "rate_max_up": {
+          "name": "Upload bandwidth",
+          "description": "Geeft aan hoeveel uploadbandbreedte (in kbit/s) beschikbaar is voor de voucher."
+        },
+        "rate_max_down": {
+          "name": "Download bandwidth",
+          "description": "Geeft aan hoeveel downloadbandbreedte (in kbit/s) beschikbaar is voor de voucher."
+        }
+      }
+    },
+    "delete": {
+      "name": "Voucher verwijderen",
+      "description": "Verwijder een speciale voucher of de laatst aangemaakte voucher.",
+      "fields": {
+        "id": {
+          "name": "Voucher ID",
+          "description": "ID van de voucher die moet worden verwijderd."
+        }
+      }
+    },
+    "update": {
+      "name": "Vouchers bijwerken",
+      "description": "Haal nu gegevens voor vouchers op van UniFi Controller."
+    }
+  }
+}
