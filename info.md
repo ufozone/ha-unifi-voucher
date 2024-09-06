@@ -22,7 +22,7 @@ Key features of the integration include:
 
 * **Voucher Creation:** Users can effortlessly generate new access codes, with various configuration options such as validity period and available data volume.
 * **Display of Voucher:** The last created voucher is presented in the Home Assistant interface. As soon as the voucher has been used, the next one will be displayed.
-* **QR Code Display:** The integration enables the display of a QR code for the guest Wi-Fi, facilitating quick connectivity for guests.
+* **QR Code Display:** The integration enables the display of a QR code for the guest Wi-Fi, facilitating quick connectivity for guests. Optionally, your own logo can be shown in the QR code.
 * **Automation:** The integration can be integrated into existing automations and allows, for example, the time-controlled creation of vouchers.
 * **User-Friendliness:** The integration is designed to offer an intuitive user experience, utilizing the Home Assistant interface as a central control center for guest Wi-Fi management.
 
@@ -165,6 +165,10 @@ Start setup:
 * All configuration options are offered from the front end.
 * For UniFi OS a local-only user needs to be created. A user who uses the Ubiquiti cloud will not work.
 * The user needs super admin, site admin or hotspot privileges in order to manage guest vouchers.
+* If the name of the WiFi guest network is specified, a QR code is created for the quick connection.
+* Your own logo can be integrated into the QR code. Store the logo into your home assistant instance, e.g. `/config/www/`.
+
+    The folder `/config/custom_components/unifi_voucher/` is over written when the integration is updated, store the custom image in another location.
 
 ## Available components
 
