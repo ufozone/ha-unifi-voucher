@@ -119,7 +119,7 @@ The voucher can be presented together with the QR code on a lovelace card:
 
 ## Installation
 
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > Requires Home Assistant 2023.11.0 or newer.
 
 ### Installation through HACS
@@ -128,7 +128,7 @@ Installation using Home Assistant Community Store (HACS) is recommended.
 
 1. If HACS is not installed, follow HACS installation and configuration at <https://hacs.xyz/>.
 
-2. Click the button below or visit the HACS _Integrations_ pane and search for "UniFi Hotspot Manager".
+2. Click the button below or visit HACS and search for "UniFi Hotspot Manager" (make sure no type filter is set).
 
     [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=ufozone&repository=ha-unifi-voucher&category=integration)
 
