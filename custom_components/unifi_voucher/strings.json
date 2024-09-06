@@ -28,7 +28,9 @@
           "voucher_duration": "How long should a voucher be valid from the time it is used?",
           "voucher_usage_quota": "How much data traffic should be available per voucher? (0 = unlimited)",
           "voucher_rate_max_up": "How much upload bandwidth should be available per voucher? (0 = unlimited)",
-          "voucher_rate_max_down": "How much download bandwidth should be available per voucher? (0 = unlimited)"
+          "voucher_rate_max_down": "How much download bandwidth should be available per voucher? (0 = unlimited)",
+          "create_if_none_exists": "Should new vouchers be created if no more are available?",
+          "qrcode_logo_path": "Path to the logo for the QR code"
         }
       }
     },
@@ -39,7 +41,8 @@
       "no_access": "No access",
       "unknown": "[%key:common::config_flow::error::unknown%]",
       "timeout_connect": "[%key:common::config_flow::error::timeout_connect%]",
-      "site_invalid": "Site invalid"
+      "site_invalid": "Site invalid",
+      "path_invalid": "The specified path to the file is invalid: absolute path is needed."
     },
     "abort": {
       "already_configured": "[%key:common::config_flow::abort::already_configured_service%]",
@@ -48,7 +51,9 @@
     }
   },
   "options": {
-    "error": {},
+    "error": {
+      "path_invalid": "The specified path to the file is invalid: absolute path is needed."
+    },
     "step": {
       "init": {
         "title": "Settings",
@@ -60,7 +65,9 @@
           "voucher_duration": "How long should a voucher be valid from the time it is used?",
           "voucher_usage_quota": "How much data traffic should be available per voucher? (0 = unlimited)",
           "voucher_rate_max_up": "How much upload bandwidth should be available per voucher? (0 = unlimited)",
-          "voucher_rate_max_down": "How much download bandwidth should be available per voucher? (0 = unlimited)"
+          "voucher_rate_max_down": "How much download bandwidth should be available per voucher? (0 = unlimited)",
+          "create_if_none_exists": "Should new vouchers be created if no more are available?",
+          "qrcode_logo_path": "Path to the logo for the QR code"
         }
       }
     }

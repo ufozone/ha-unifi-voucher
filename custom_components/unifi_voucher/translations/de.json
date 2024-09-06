@@ -28,7 +28,9 @@
           "voucher_duration": "Wie lange soll ein Gutschein ab Einlösen gültig sein?",
           "voucher_usage_quota": "Wie viel Datenverkehr soll pro Gutschein nutzbar sein? (0 = unbegrenzt)",
           "voucher_rate_max_up": "Wie viel Upload-Bandbreite soll pro Gutschein nutzbar sein? (0 = unbegrenzt)",
-          "voucher_rate_max_down": "Wie viel Download-Bandbreite soll pro Gutschein nutzbar sein? (0 = unbegrenzt)"
+          "voucher_rate_max_down": "Wie viel Download-Bandbreite soll pro Gutschein nutzbar sein? (0 = unbegrenzt)",
+          "create_if_none_exists": "Sollen neue Gutscheine erstellt werden, wenn keine verfügbar sind?",
+          "qrcode_logo_path": "Pfad zum Logo für den QR-Code"
         }
       }
     },
@@ -39,7 +41,8 @@
       "no_access": "Kein Zugriff",
       "unknown": "Unerwarteter Fehler",
       "timeout_connect": "Zeitüberschreitung beim Verbindungsaufbau",
-      "site_invalid": "Site ungültig"
+      "site_invalid": "Site ungültig",
+      "path_invalid": "Der angegebene Pfad zur Datei ist ungültig: Der absoluter Pfad wird benötigt."
     },
     "abort": {
       "already_configured": "Dienst ist bereits konfiguriert",
@@ -48,7 +51,9 @@
     }
   },
   "options": {
-    "error": {},
+    "error": {
+      "path_invalid": "Der angegebene Pfad zur Datei ist ungültig: Der absoluter Pfad wird benötigt."
+    },
     "step": {
       "init": {
         "title": "Einstellungen",
@@ -60,7 +65,9 @@
           "voucher_duration": "Wie lange soll ein Gutschein ab Einlösen gültig sein?",
           "voucher_usage_quota": "Wie viel Datenverkehr soll pro Gutschein nutzbar sein? (0 = unbegrenzt)",
           "voucher_rate_max_up": "Wie viel Upload-Bandbreite soll pro Gutschein nutzbar sein? (0 = unbegrenzt)",
-          "voucher_rate_max_down": "Wie viel Download-Bandbreite soll pro Gutschein nutzbar sein? (0 = unbegrenzt)"
+          "voucher_rate_max_down": "Wie viel Download-Bandbreite soll pro Gutschein nutzbar sein? (0 = unbegrenzt)",
+          "create_if_none_exists": "Sollen neue Gutscheine erstellt werden, wenn keine verfügbar sind?",
+          "qrcode_logo_path": "Pfad zum Logo für den QR-Code"
         }
       }
     }

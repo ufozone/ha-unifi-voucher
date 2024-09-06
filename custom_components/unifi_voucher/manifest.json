@@ -11,10 +11,14 @@
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/ufozone/ha-unifi-voucher/issues",
   "loggers": [
-    "aiounifi"
+    "aiounifi",
+    "Pillow",
+    "segno"
   ],
   "requirements": [
-    "aiounifi==75"
+    "aiounifi>=79",
+    "Pillow>=10.4.0",
+    "segno>=1.6.0"
   ],
-  "version": "1.2.0"
+  "version": "1.3.0"
 }

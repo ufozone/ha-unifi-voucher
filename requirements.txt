@@ -1,7 +1,9 @@
-pip>=21.0,<24.1
+pip>=21.0,<24.3
 colorlog==6.8.2
-ruff==0.4.1
+ruff==0.6.3
 pydocstyle==6.3.0
 isort==5.13.2
-aiounifi==75
-homeassistant==2023.11.0
+aiounifi==80
+segno==1.6.1
+Pillow==10.4.0
+homeassistant==2024.8.0

@@ -1,6 +1,8 @@
 """Adds config flow for UniFi Hotspot Manager."""
 from __future__ import annotations
 
+import os
+
 from homeassistant.core import (
     HomeAssistant,
     callback,
@@ -46,6 +48,8 @@ from .const import (
     CONF_VOUCHER_USAGE_QUOTA,
     CONF_VOUCHER_RATE_MAX_UP,
     CONF_VOUCHER_RATE_MAX_DOWN,
+    CONF_CREATE_IF_NONE_EXISTS,
+    CONF_QRCODE_LOGO_PATH,
 )
 from .api import (
     UnifiVoucherApiClient,
@@ -206,7 +210,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
 
             if config_entry:
                 self.hass.config_entries.async_update_entry(
-                    config_entry, data=self.config
+                    config_entry, data=self.data
                 )
                 await self.hass.config_entries.async_reload(
                     config_entry.entry_id
@@ -264,25 +268,34 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
         user_input: dict[str, any] | None = None,
     ) -> FlowResult:
         """Third step in config flow to save options."""
+        errors: dict[str, str] = {}
         if user_input is not None:
-            # Input is valid, set data.
-            self.options.update(
-                {
-                    CONF_WLAN_NAME: user_input.get(CONF_WLAN_NAME, "").strip(),
-                    CONF_VOUCHER_NUMBER: _set_option(user_input, CONF_VOUCHER_NUMBER),
-                    CONF_VOUCHER_QUOTA: _set_option(user_input, CONF_VOUCHER_QUOTA),
-                    CONF_VOUCHER_DURATION: _set_option(user_input, CONF_VOUCHER_DURATION),
-                    CONF_VOUCHER_USAGE_QUOTA: _set_option(user_input, CONF_VOUCHER_USAGE_QUOTA),
-                    CONF_VOUCHER_RATE_MAX_UP: _set_option(user_input, CONF_VOUCHER_RATE_MAX_UP),
-                    CONF_VOUCHER_RATE_MAX_DOWN: _set_option(user_input, CONF_VOUCHER_RATE_MAX_DOWN),
-                }
-            )
-            # User is done, create the config entry.
-            return self.async_create_entry(
-                title=self.title,
-                data=self.data,
-                options=self.options,
-            )
+            qrcode_logo_path = user_input.get(CONF_QRCODE_LOGO_PATH, "").strip()
+
+            if qrcode_logo_path and not os.path.isfile(qrcode_logo_path):
+                errors["base"] = "path_invalid"
+
+            if not errors:
+                # Input is valid, set data.
+                self.options.update(
+                    {
+                        CONF_WLAN_NAME: user_input.get(CONF_WLAN_NAME, "").strip(),
+                        CONF_VOUCHER_NUMBER: _set_option(user_input, CONF_VOUCHER_NUMBER),
+                        CONF_VOUCHER_QUOTA: _set_option(user_input, CONF_VOUCHER_QUOTA),
+                        CONF_VOUCHER_DURATION: _set_option(user_input, CONF_VOUCHER_DURATION),
+                        CONF_VOUCHER_USAGE_QUOTA: _set_option(user_input, CONF_VOUCHER_USAGE_QUOTA),
+                        CONF_VOUCHER_RATE_MAX_UP: _set_option(user_input, CONF_VOUCHER_RATE_MAX_UP),
+                        CONF_VOUCHER_RATE_MAX_DOWN: _set_option(user_input, CONF_VOUCHER_RATE_MAX_DOWN),
+                        CONF_CREATE_IF_NONE_EXISTS: user_input.get(CONF_CREATE_IF_NONE_EXISTS, False),
+                        CONF_QRCODE_LOGO_PATH: qrcode_logo_path,
+                    }
+                )
+                # User is done, create the config entry.
+                return self.async_create_entry(
+                    title=self.title,
+                    data=self.data,
+                    options=self.options,
+                )
 
         _default_wlan_name = ""
         try:
@@ -404,8 +417,23 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                             unit_of_measurement=UnitOfDataRate.KILOBITS_PER_SECOND,
                         )
                     ),
+                    vol.Optional(
+                        CONF_CREATE_IF_NONE_EXISTS,
+                        default=(user_input or {}).get(CONF_CREATE_IF_NONE_EXISTS, False),
+                    ): selector.BooleanSelector(),
+                    vol.Optional(
+                        CONF_QRCODE_LOGO_PATH,
+                        description={
+                            "suggested_value": (user_input or {}).get(CONF_QRCODE_LOGO_PATH, ""),
+                        },
+                    ): selector.TextSelector(
+                        selector.TextSelectorConfig(
+                            type=selector.TextSelectorType.TEXT
+                        ),
+                    ),
                 }
             ),
+            errors=errors,
             last_step=True,
         )
 
@@ -484,24 +512,33 @@ class UnifiVoucherOptionsFlowHandler(OptionsFlow):
         self, user_input: dict[str, any] | None = None
     ) -> FlowResult:
         """Options flow to save configurable options."""
+        errors: dict[str, str] = {}
         if user_input is not None:
-            # Input is valid, set data.
-            self.options.update(
-                {
-                    CONF_WLAN_NAME: user_input.get(CONF_WLAN_NAME, "").strip(),
-                    CONF_VOUCHER_NUMBER: _set_option(user_input, CONF_VOUCHER_NUMBER),
-                    CONF_VOUCHER_QUOTA: _set_option(user_input, CONF_VOUCHER_QUOTA),
-                    CONF_VOUCHER_DURATION: _set_option(user_input, CONF_VOUCHER_DURATION),
-                    CONF_VOUCHER_USAGE_QUOTA: _set_option(user_input, CONF_VOUCHER_USAGE_QUOTA),
-                    CONF_VOUCHER_RATE_MAX_UP: _set_option(user_input, CONF_VOUCHER_RATE_MAX_UP),
-                    CONF_VOUCHER_RATE_MAX_DOWN: _set_option(user_input, CONF_VOUCHER_RATE_MAX_DOWN),
-                }
-            )
-            # User is done, update the config entry.
-            return self.async_create_entry(
-                title="",
-                data=self.options,
-            )
+            qrcode_logo_path = user_input.get(CONF_QRCODE_LOGO_PATH, "").strip()
+
+            if qrcode_logo_path and not os.path.isfile(qrcode_logo_path):
+                errors["base"] = "path_invalid"
+
+            if not errors:
+                # Input is valid, set data.
+                self.options.update(
+                    {
+                        CONF_WLAN_NAME: user_input.get(CONF_WLAN_NAME, "").strip(),
+                        CONF_VOUCHER_NUMBER: _set_option(user_input, CONF_VOUCHER_NUMBER),
+                        CONF_VOUCHER_QUOTA: _set_option(user_input, CONF_VOUCHER_QUOTA),
+                        CONF_VOUCHER_DURATION: _set_option(user_input, CONF_VOUCHER_DURATION),
+                        CONF_VOUCHER_USAGE_QUOTA: _set_option(user_input, CONF_VOUCHER_USAGE_QUOTA),
+                        CONF_VOUCHER_RATE_MAX_UP: _set_option(user_input, CONF_VOUCHER_RATE_MAX_UP),
+                        CONF_VOUCHER_RATE_MAX_DOWN: _set_option(user_input, CONF_VOUCHER_RATE_MAX_DOWN),
+                        CONF_CREATE_IF_NONE_EXISTS: user_input.get(CONF_CREATE_IF_NONE_EXISTS, False),
+                        CONF_QRCODE_LOGO_PATH: qrcode_logo_path,
+                    }
+                )
+                # User is done, update the config entry.
+                return self.async_create_entry(
+                    title="",
+                    data=self.options,
+                )
         return self.async_show_form(
             step_id="init",
             data_schema=vol.Schema(
@@ -604,8 +641,23 @@ class UnifiVoucherOptionsFlowHandler(OptionsFlow):
                             unit_of_measurement=UnitOfDataRate.KILOBITS_PER_SECOND,
                         )
                     ),
+                    vol.Optional(
+                        CONF_CREATE_IF_NONE_EXISTS,
+                        default=(user_input or self.options or {}).get(CONF_CREATE_IF_NONE_EXISTS, False),
+                    ): selector.BooleanSelector(),
+                    vol.Optional(
+                        CONF_QRCODE_LOGO_PATH,
+                        description={
+                            "suggested_value": (user_input or self.options or {}).get(CONF_QRCODE_LOGO_PATH, ""),
+                        },
+                    ): selector.TextSelector(
+                        selector.TextSelectorConfig(
+                            type=selector.TextSelectorType.TEXT
+                        ),
+                    ),
                 }
             ),
+            errors=errors,
             last_step=True,
         )
 

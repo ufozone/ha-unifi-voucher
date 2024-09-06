@@ -48,28 +48,26 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
     except Exception as err:
         raise ConfigEntryNotReady from err
 
-    hass.data.setdefault(DOMAIN, {})[config_entry.entry_id] = coordinator
+    config_entry.runtime_data = coordinator
     await hass.config_entries.async_forward_entry_setups(config_entry, PLATFORMS)
     config_entry.async_on_unload(
         config_entry.add_update_listener(async_reload_entry)
     )
 
     # Register services
-    if len(hass.data[DOMAIN]) == 1:
-        async_setup_services(hass, coordinator)
+    async_setup_services(hass, coordinator)
 
     return True
 
 
 async def async_unload_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    if unload_ok := await hass.config_entries.async_unload_platforms(config_entry, PLATFORMS):
-        # Remove config entry from domain.
-        hass.data[DOMAIN].pop(config_entry.entry_id)
+    unload_ok = await hass.config_entries.async_unload_platforms(
+        config_entry, PLATFORMS
+    )
 
-    if not hass.data[DOMAIN]:
-        async_unload_services(hass)
-        del hass.data[DOMAIN]
+    # Un-register services
+    async_unload_services(hass)
 
     return unload_ok
 
