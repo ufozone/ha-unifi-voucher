@@ -16,9 +16,9 @@
     "segno"
   ],
   "requirements": [
-    "aiounifi>=79",
+    "aiounifi>=80",
     "Pillow>=10.4.0",
-    "segno>=1.6.0"
+    "segno>=1.6.1"
   ],
   "version": "1.3.0"
 }
