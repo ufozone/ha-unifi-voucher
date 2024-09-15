@@ -25,69 +25,78 @@ body:
   - type: markdown
     attributes:
       value: |
-        ## Environment
+        ## Home Assistant Environment
   - type: input
     id: version
     attributes:
       label: What version of the integration has the issue?
-      placeholder: v1.0.0
       description: >
         Can be found in: [Settings ⇒ Devices &amp; services ⇒ Integrations ⇒ Click on integration name](https://my.home-assistant.io/redirect/integration/?domain=unifi_voucher).
 
         [![Open your Home Assistant instance and show an integration.](https://my.home-assistant.io/badges/integration.svg)](https://my.home-assistant.io/redirect/integration/?domain=unifi_voucher)
+      placeholder: v1.1.0
     validations:
       required: true
   - type: input
     attributes:
       label: What was the last working version of the integration?
-      placeholder: v1.0.0
       description: >
         If known, otherwise leave blank.
+      placeholder: v1.0.0
   - type: input
     attributes:
       label: What version of Home Assistant Core has the issue?
-      placeholder: core-2024.9.0
       description: >
         Can be found in: [Settings ⇒ System ⇒ Repairs ⇒ Three Dots in Upper Right ⇒ System information](https://my.home-assistant.io/redirect/system_health/).
 
         [![Open your Home Assistant instance and show the system information.](https://my.home-assistant.io/badges/system_health.svg)](https://my.home-assistant.io/redirect/system_health/)
+      placeholder: core-2024.9.0
     validations:
       required: true
   - type: input
     attributes:
       label: What was the last working version of Home Assistant Core?
-      placeholder: core-2024.9.0
       description: >
         If known, otherwise leave blank.
+      placeholder: core-2024.8.0
+
+  - type: markdown
+    attributes:
+      value: |
+        ## UniFi Environment
   - type: input
     attributes:
       label: Which version of UniFi Network Application is running?
+      description: >
+        Can be found after logging in to your UniFi Controller: Network ⇒ Settings ⇒ Under the settings menu.
       placeholder: "8.4.62"
-      description: "Can be found after logging in to your UniFi Controller: Network ⇒ Settings ⇒ Under the settings menu."
     validations:
       required: true
   - type: dropdown
     attributes:
       label: Has UniFi Network Application been recently updated?
-      description: "If UniFi Network Application has recently been updated, a breaking change may have been hidden in it. We should find that out."
+      description: >
+        If UniFi Network Application has recently been updated, a breaking change may have been hidden in it. We should find that out.
       options:
         - "No"
         - "Yes"
     validations:
       required: true
   - type: dropdown
-    validations:
-      required: true
     attributes:
       label: What type of installation of UniFi Controller are you running?
-      description: 
+      description: >
+        It's important to know what environment your UniFi Controller is running in.
       options:
-        - "Locally Hosted (e.g. Docker, Virtual Machine)"
+        - "Locally installed (e.g. Docker, Virtual Machine)"
+        - "Hosted"
         - "Cloud Key G2+"
         - "UniFi Express"
         - "Cloud Gateway Ultra"
         - "Cloud Gateway Max"
         - "Dream Machine"
+    validations:
+      required: true
 
   - type: markdown
     attributes:
