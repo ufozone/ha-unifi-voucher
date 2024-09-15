@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "description": "Set up your UniFi Hotspot Manager Manager instance.",
+        "description": "Set up your UniFi Hotspot Manager instance.",
         "data": {
           "host": "[%key:common::config_flow::data::host%]",
           "username": "[%key:common::config_flow::data::username%]",

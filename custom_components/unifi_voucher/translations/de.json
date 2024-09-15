@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "description": "Richte deine UniFi Hotspot Manager Manager-Instanz ein.",
+        "description": "Richte deine UniFi Hotspot Manager-Instanz ein.",
         "data": {
           "host": "Host",
           "username": "Benutzername",
