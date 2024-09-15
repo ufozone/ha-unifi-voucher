@@ -30,7 +30,7 @@ body:
     id: version
     attributes:
       label: What version of the integration has the issue?
-      description: >
+      description: >-
         Can be found in: [Settings ⇒ Devices &amp; services ⇒ Integrations ⇒ Click on integration name](https://my.home-assistant.io/redirect/integration/?domain=unifi_voucher).
 
         [![Open your Home Assistant instance and show an integration.](https://my.home-assistant.io/badges/integration.svg)](https://my.home-assistant.io/redirect/integration/?domain=unifi_voucher)
@@ -40,13 +40,12 @@ body:
   - type: input
     attributes:
       label: What was the last working version of the integration?
-      description: >
-        If known, otherwise leave blank.
+      description: If known, otherwise leave blank.
       placeholder: v1.0.0
   - type: input
     attributes:
       label: What version of Home Assistant Core has the issue?
-      description: >
+      description: >-
         Can be found in: [Settings ⇒ System ⇒ Repairs ⇒ Three Dots in Upper Right ⇒ System information](https://my.home-assistant.io/redirect/system_health/).
 
         [![Open your Home Assistant instance and show the system information.](https://my.home-assistant.io/badges/system_health.svg)](https://my.home-assistant.io/redirect/system_health/)
@@ -56,8 +55,7 @@ body:
   - type: input
     attributes:
       label: What was the last working version of Home Assistant Core?
-      description: >
-        If known, otherwise leave blank.
+      description: If known, otherwise leave blank.
       placeholder: core-2024.8.0
 
   - type: markdown
@@ -75,8 +73,7 @@ body:
   - type: dropdown
     attributes:
       label: Has UniFi Network Application been recently updated?
-      description: >
-        If UniFi Network Application has recently been updated, a breaking change may have been hidden in it. We should find that out.
+      description: If UniFi Network Application has recently been updated, a breaking change may have been hidden in the latest version. We should find that out.
       options:
         - "No"
         - "Yes"
@@ -85,8 +82,7 @@ body:
   - type: dropdown
     attributes:
       label: What type of installation of UniFi Controller are you running?
-      description: >
-        It's important to know what environment your UniFi Controller is running in.
+      description: It's important to know what environment your UniFi Controller is running in.
       options:
         - "Locally installed (e.g. Docker, Virtual Machine)"
         - "Hosted"
