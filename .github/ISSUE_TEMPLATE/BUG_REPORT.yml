@@ -1,0 +1,130 @@
+name: Bug report
+description: File a bug report. 🐞
+title: "[Bug] "
+labels: ["bug"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report! Please provide the details below to help us address the issue.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Detailed description
+      description: >-
+        We need a detailed description of the issue. Tell us what you were trying to do and what happened.
+
+        Provide a clear and concise description of what the problem is.
+      placeholder: "Describe the bug in detail, including steps to reproduce, expected behavior, and actual behavior."
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Environment
+  - type: input
+    id: version
+    attributes:
+      label: What version of the integration has the issue?
+      placeholder: v1.0.0
+      description: >
+        Can be found in: [Settings ⇒ Devices &amp; services ⇒ Integrations ⇒ Click on integration name](https://my.home-assistant.io/redirect/integration/?domain=unifi_voucher).
+
+        [![Open your Home Assistant instance and show an integration.](https://my.home-assistant.io/badges/integration.svg)](https://my.home-assistant.io/redirect/integration/?domain=unifi_voucher)
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: What was the last working version of the integration?
+      placeholder: v1.0.0
+      description: >
+        If known, otherwise leave blank.
+  - type: input
+    attributes:
+      label: What version of Home Assistant Core has the issue?
+      placeholder: core-2024.9.0
+      description: >
+        Can be found in: [Settings ⇒ System ⇒ Repairs ⇒ Three Dots in Upper Right ⇒ System information](https://my.home-assistant.io/redirect/system_health/).
+
+        [![Open your Home Assistant instance and show the system information.](https://my.home-assistant.io/badges/system_health.svg)](https://my.home-assistant.io/redirect/system_health/)
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: What was the last working version of Home Assistant Core?
+      placeholder: core-2024.9.0
+      description: >
+        If known, otherwise leave blank.
+  - type: input
+    attributes:
+      label: Which version of UniFi Network Application is running?
+      placeholder: "8.4.62"
+      description: "Can be found after logging in to your UniFi Controller: Network ⇒ Settings ⇒ Under the settings menu."
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Has UniFi Network Application been recently updated?
+      description: "If UniFi Network Application has recently been updated, a breaking change may have been hidden in it. We should find that out."
+      options:
+        - "No"
+        - "Yes"
+    validations:
+      required: true
+  - type: dropdown
+    validations:
+      required: true
+    attributes:
+      label: What type of installation of UniFi Controller are you running?
+      description: 
+      options:
+        - "Locally Hosted (e.g. Docker, Virtual Machine)"
+        - "Cloud Key G2+"
+        - "UniFi Express"
+        - "Cloud Gateway Ultra"
+        - "Cloud Gateway Max"
+        - "Dream Machine"
+
+  - type: markdown
+    attributes:
+      value: |
+        # Details
+  - type: textarea
+    attributes:
+      label: Diagnostics information 
+      description: >-
+        The integration provide the ability to [download diagnostic data](https://www.home-assistant.io/docs/configuration/troubleshooting/#debug-logs-and-diagnostics).
+
+        **It would really help if you could download the diagnostics data for the device you are having issues with,
+        and <ins>drag-and-drop that file into the textbox below.</ins>**
+
+        It generally allows pinpointing defects and thus resolving issues faster.
+      placeholder: "Drag-and-drop the diagnostics data file here (do not copy-and-paste the content)"
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Logs
+      description: Anything in the logs that might be useful for us? For example, error message, or stack traces.
+      render: txt
+      placeholder: "Paste logs"
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Screenshots
+      description: Any relevant screenshots that can help identify the issue
+      placeholder: "Upload screenshots"
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Additional information
+      description: If you have any additional information for us, use the field below.
+    validations:
+      required: false
