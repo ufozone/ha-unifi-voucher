@@ -1,0 +1,269 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "Configure a sua instância do UniFi Hotspot Manager.",
+        "data": {
+          "host": "Host",
+          "username": "Nome de Utilizador",
+          "password": "Palavra-passe",
+          "port": "Porta",
+          "verify_ssl": "Verificar certificado SSL"
+        }
+      },
+      "site": {
+        "title": "Selecionar site",
+        "description": "Selecione o site para o qual deseja gerir os vouchers.",
+        "data": {
+          "site_id": "Selecionar site"
+        }
+      },
+      "options": {
+        "title": "Definições",
+        "description": "Altere as definições da integração aqui.",
+        "data": {
+          "wlan_name": "Qual é o nome da sua WLAN de convidados?",
+          "voucher_number": "Quantos novos vouchers devem ser criados ao mesmo tempo?",
+          "voucher_quota": "Quantas vezes um voucher pode ser utilizado? (0 = ilimitado)",
+          "voucher_duration": "Durante quanto tempo um voucher deve ser válido após ser utilizado?",
+          "voucher_usage_quota": "Quantos dados devem estar disponíveis por voucher? (0 = ilimitado)",
+          "voucher_rate_max_up": "Qual deve ser a largura de banda de upload disponível por voucher? (0 = ilimitado)",
+          "voucher_rate_max_down": "Qual deve ser a largura de banda de download disponível por voucher? (0 = ilimitado)",
+          "create_if_none_exists": "Devem ser criados novos vouchers se não houver mais disponíveis?",
+          "qrcode_logo_path": "Caminho para o logótipo para o código QR"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Falha ao ligar",
+      "invalid_auth": "Autenticação inválida",
+      "invalid_host": "Nome de host ou endereço IP inválido",
+      "no_access": "Sem acesso",
+      "unknown": "Erro inesperado",
+      "timeout_connect": "Tempo limite ao estabelecer ligação",
+      "site_invalid": "Site inválido",
+      "path_invalid": "O caminho especificado para o ficheiro é inválido: é necessário um caminho absoluto."
+    },
+    "abort": {
+      "already_configured": "Serviço já está configurado",
+      "configuration_updated": "Configuração atualizada",
+      "reauth_successful": "Re-autenticação bem-sucedida"
+    }
+  },
+  "options": {
+    "error": {
+      "path_invalid": "O caminho especificado para o ficheiro é inválido: é necessário um caminho absoluto."
+    },
+    "step": {
+      "init": {
+        "title": "Definições",
+        "description": "Altere as definições da integração aqui.",
+        "data": {
+          "wlan_name": "Qual é o nome da sua WLAN de convidados?",
+          "voucher_number": "Quantos novos vouchers devem ser criados ao mesmo tempo?",
+          "voucher_quota": "Quantas vezes um voucher pode ser utilizado? (0 = ilimitado)",
+          "voucher_duration": "Durante quanto tempo um voucher deve ser válido após ser utilizado?",
+          "voucher_usage_quota": "Quantos dados devem estar disponíveis por voucher? (0 = ilimitado)",
+          "voucher_rate_max_up": "Qual deve ser a largura de banda de upload disponível por voucher? (0 = ilimitado)",
+          "voucher_rate_max_down": "Qual deve ser a largura de banda de download disponível por voucher? (0 = ilimitado)",
+          "create_if_none_exists": "Devem ser criados novos vouchers se não houver mais disponíveis?",
+          "qrcode_logo_path": "Caminho para o logótipo para o código QR"
+        }
+      }
+    }
+  },
+  "entity": {
+    "button": {
+      "update": {
+        "name": "Atualizar",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Última atualização"
+          }
+        }
+      },
+      "create": {
+        "name": "Criar voucher",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Última atualização"
+          }
+        }
+      },
+      "delete": {
+        "name": "Eliminar voucher",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Última atualização"
+          }
+        }
+      }
+    },
+    "image": {
+      "qr_code": {
+        "name": "Código QR da WLAN de convidados",
+        "state_attributes": {
+          "wlan_name": {
+            "name": "Nome da WLAN"
+          },
+          "last_pull": {
+            "name": "Última atualização"
+          }
+        }
+      }
+    },
+    "number": {
+      "voucher_number": {
+        "name": "Padrão: Vouchers",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Última atualização"
+          }
+        }
+      },
+      "voucher_quota": {
+        "name": "Padrão: Quota",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Última atualização"
+          }
+        }
+      },
+      "voucher_duration": {
+        "name": "Padrão: Duração",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Última atualização"
+          }
+        }
+      },
+      "voucher_usage_quota": {
+        "name": "Padrão: Limite de dados",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Última atualização"
+          }
+        }
+      },
+      "voucher_rate_max_up": {
+        "name": "Padrão: Largura de banda de upload",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Última atualização"
+          }
+        }
+      },
+      "voucher_rate_max_down": {
+        "name": "Padrão: Largura de banda de download",
+        "state_attributes": {
+          "last_pull": {
+            "name": "Última atualização"
+          }
+        }
+      }
+    },
+    "sensor": {
+      "voucher": {
+        "name": "Voucher",
+        "state_attributes": {
+          "wlan_name": {
+            "name": "Nome da WLAN"
+          },
+          "quota": {
+            "name": "Quota"
+          },
+          "used": {
+            "name": "Usado"
+          },
+          "duration": {
+            "name": "Duração"
+          },
+          "create_time": {
+            "name": "Criado"
+          },
+          "start_time": {
+            "name": "Iniciado"
+          },
+          "end_time": {
+            "name": "Termina"
+          },
+          "status_expires": {
+            "name": "Expira"
+          },
+          "status": {
+            "name": "Estado",
+            "state": {
+              "used": "Utilizado uma vez",
+              "used_multiple": "Utilizado várias vezes",
+              "expired": "Expirado",
+              "valid_one": "Válido uma vez",
+              "valid_multi": "Válido várias vezes"
+            }
+          },
+          "rate_max_up": {
+            "name": "Largura de banda de upload"
+          },
+          "rate_max_down": {
+            "name": "Largura de banda de download"
+          },
+          "usage_quota": {
+            "name": "Limite de dados"
+          },
+          "last_pull": {
+            "name": "Última atualização"
+          }
+        }
+      }
+    }
+  },
+  "services": {
+    "list": {
+      "name": "Listar Vouchers",
+      "description": "Obter uma lista de todos os vouchers válidos."
+    },
+    "create": {
+      "name": "Criar Voucher",
+      "description": "Criar um novo voucher com os seus próprios parâmetros ou as definições padrão da integração.",
+      "fields": {
+        "number": {
+          "name": "Número de Vouchers",
+          "description": "Especifica quantos vouchers são criados por chamada."
+        },
+        "quota": {
+          "name": "Quota por Voucher",
+          "description": "Especifica quantas vezes um voucher pode ser utilizado (0 = ilimitado)."
+        },
+        "duration": {
+          "name": "Duração",
+          "description": "Especifica durante quanto tempo um voucher é válido (em horas) a partir do momento em que é utilizado."
+        },
+        "usage_quota": {
+          "name": "Limite de dados",
+          "description": "Especifica quantos MB de dados estão disponíveis para o voucher."
+        },
+        "rate_max_up": {
+          "name": "Largura de banda de upload",
+          "description": "Especifica quantos kbit/s de largura de banda de upload estão disponíveis para o voucher."
+        },
+        "rate_max_down": {
+          "name": "Largura de banda de download",
+          "description": "Especifica quantos kbit/s de largura de banda de download estão disponíveis para o voucher."
+        }
+      }
+    },
+    "delete": {
+      "name": "Remover Voucher",
+      "description": "Remover um voucher específico ou o último voucher criado.",
+      "fields": {
+        "id": {
+          "name": "ID do Voucher",
+          "description": "ID do voucher a ser removido."
+        }
+      }
+    },
+    "update": {
+      "name": "Atualizar Vouchers",
+      "description": "Obter dados dos vouchers do UniFi Controller agora."
+    }
+  }
+}
