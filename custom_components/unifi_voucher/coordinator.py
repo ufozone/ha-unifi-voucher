@@ -217,6 +217,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
 
             _voucher = {
                 "id": voucher.id,
+                "note": voucher.note,
                 "code": voucher.code,
                 "quota": voucher.quota,
                 "duration": voucher.duration,

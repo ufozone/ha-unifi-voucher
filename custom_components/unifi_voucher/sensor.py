@@ -19,6 +19,7 @@ from homeassistant.helpers.entity import Entity
 from .const import (
     CONF_WLAN_NAME,
     ATTR_VOUCHER,
+    DEFAULT_IDENTIFIER_STRING,
 )
 from .coordinator import UnifiVoucherCoordinator
 from .entity import UnifiVoucherEntity
@@ -105,6 +106,10 @@ class UnifiVoucherSensor(UnifiVoucherEntity, SensorEntity):
             "status": voucher.get("status").lower(),
             "create_time": voucher.get("create_time"),
         }
+        # If note longer than default identifier plus two characters ": "
+        if len(voucher.get("note")) > (_index := (len(DEFAULT_IDENTIFIER_STRING) + 2)):
+            _x["note"] = voucher.get("note")[_index:]
+
         if voucher.get("start_time") is not None:
             _x["start_time"] = voucher.get("start_time")
 
