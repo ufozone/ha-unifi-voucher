@@ -169,6 +169,12 @@
           "wlan_name": {
             "name": "WLAN Name"
           },
+          "id": {
+            "name": "Gutschein-ID"
+          },
+          "note": {
+            "name": "Notiz"
+          },
           "quota": {
             "name": "Kontingent"
           },
@@ -248,6 +254,10 @@
         "rate_max_down": {
           "name": "Download-Geschwindigkeit",
           "description": "Gibt an, wie viel Download-Bandbreite (in kbit/s) für den Gutschein verfügbar ist."
+        },
+        "note": {
+          "name": "Notiz",
+          "description": "Optionale Notiz, um den Gutschein identifizierbar zu machen."
         }
       }
     },

@@ -169,6 +169,12 @@
           "wlan_name": {
             "name": "WLAN Name"
           },
+          "id": {
+            "name": "Voucher ID"
+          },
+          "note": {
+            "name": "Opmerking"
+          },
           "quota": {
             "name": "Quota"
           },
@@ -248,6 +254,10 @@
         "rate_max_down": {
           "name": "Download bandwidth",
           "description": "Geeft aan hoeveel downloadbandbreedte (in kbit/s) beschikbaar is voor de voucher."
+        },
+        "note": {
+          "name": "Opmerking",
+          "description": "Optionele opmerking om de voucher identificeerbaar te maken."
         }
       }
     },

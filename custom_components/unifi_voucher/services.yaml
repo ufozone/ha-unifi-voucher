@@ -63,7 +63,11 @@ create:
           max: 100000
           step: 1
           mode: slider
-          unit_of_measurement: "kbit/s"
+    note:
+      required: false
+      example: "Billy Employee"
+      selector:
+        text:
 
 delete:
   fields:

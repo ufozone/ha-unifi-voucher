@@ -217,6 +217,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
 
             _voucher = {
                 "id": voucher.id,
+                "note": voucher.note,
                 "code": voucher.code,
                 "quota": voucher.quota,
                 "duration": voucher.duration,
@@ -256,6 +257,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         usage_quota: int | None = None,
         rate_max_up: int | None = None,
         rate_max_down: int | None = None,
+        note: str | None = None,
     ) -> None:
         """Create new voucher."""
         try:
@@ -277,6 +279,11 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
             if rate_max_down is None:
                 rate_max_down = int(self.get_entry_option(CONF_VOUCHER_RATE_MAX_DOWN))
 
+            if note:
+                note = DEFAULT_IDENTIFIER_STRING + ': ' + note
+            else:
+                note = DEFAULT_IDENTIFIER_STRING
+
             await self.client.controller.request(
                 VoucherCreateRequest.create(
                     number=number,
@@ -286,7 +293,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
                     usage_quota=usage_quota,
                     rate_max_up=rate_max_up,
                     rate_max_down=rate_max_down,
-                    note=DEFAULT_IDENTIFIER_STRING,
+                    note=note,
                 )
             )
             await self.async_update_vouchers()
