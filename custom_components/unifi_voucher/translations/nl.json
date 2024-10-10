@@ -256,7 +256,7 @@
           "description": "Geeft aan hoeveel downloadbandbreedte (in kbit/s) beschikbaar is voor de voucher."
         },
         "note": {
-          "name": "Note",
+          "name": "Opmerking",
           "description": "Optionele opmerking om de voucher identificeerbaar te maken."
         }
       }

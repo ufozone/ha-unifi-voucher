@@ -256,7 +256,7 @@
           "description": "Especifica quantos kbit/s de largura de banda de download estão disponíveis para o voucher."
         },
         "note": {
-          "name": "Note",
+          "name": "Nota",
           "description": "Nota facultativa para tornar o vale identificável."
         }
       }
