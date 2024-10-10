@@ -89,6 +89,7 @@ def async_setup_services(
             usage_quota=service_call.data.get("usage_quota"),
             rate_max_up=service_call.data.get("rate_max_up"),
             rate_max_down=service_call.data.get("rate_max_down"),
+            note=service_call.data.get("note"),
         )
 
     @verify_domain_control(hass, DOMAIN)
@@ -176,6 +177,7 @@ def async_setup_services(
                         max=DEFAULT_VOUCHER[CONF_VOUCHER_RATE_MAX_DOWN].get("max", 100000),
                     )
                 ),
+                vol.Optional("note"): str,
             }
         ),
     )

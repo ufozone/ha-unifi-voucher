@@ -279,7 +279,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
                 rate_max_down = int(self.get_entry_option(CONF_VOUCHER_RATE_MAX_DOWN))
 
             if note:
-                note = DEFAULT_IDENTIFIER_STRING + ' ' + note
+                note = DEFAULT_IDENTIFIER_STRING + ': ' + note
             else:
                 note = DEFAULT_IDENTIFIER_STRING
 
