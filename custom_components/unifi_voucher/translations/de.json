@@ -248,6 +248,10 @@
         "rate_max_down": {
           "name": "Download-Geschwindigkeit",
           "description": "Gibt an, wie viel Download-Bandbreite (in kbit/s) für den Gutschein verfügbar ist."
+        },
+        "note": {
+          "name": "Note",
+          "description": "Optionaler Hinweis, um den Gutschein identifizierbar zu machen."
         }
       }
     },

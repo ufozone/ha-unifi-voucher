@@ -248,6 +248,10 @@
         "rate_max_down": {
           "name": "Download bandwidth",
           "description": "Specifies how much download bandwidth (in kbit/s) is available for the voucher."
+        },
+        "note": {
+          "name": "Note",
+          "description": "Optional note to make the voucher identifiable."
         }
       }
     },

@@ -248,6 +248,10 @@
         "rate_max_down": {
           "name": "Largura de banda de download",
           "description": "Especifica quantos kbit/s de largura de banda de download estão disponíveis para o voucher."
+        },
+        "note": {
+          "name": "Note",
+          "description": "Nota facultativa para tornar o vale identificável."
         }
       }
     },
