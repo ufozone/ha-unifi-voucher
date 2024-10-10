@@ -169,6 +169,12 @@
           "wlan_name": {
             "name": "WLAN Name"
           },
+          "id": {
+            "name": "Gutschein-ID"
+          },
+          "note": {
+            "name": "Notiz"
+          },
           "quota": {
             "name": "Kontingent"
           },

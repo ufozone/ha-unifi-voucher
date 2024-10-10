@@ -169,6 +169,12 @@
           "wlan_name": {
             "name": "WLAN Name"
           },
+          "id": {
+            "name": "Voucher ID"
+          },
+          "note": {
+            "name": "Note"
+          },
           "quota": {
             "name": "Quota"
           },
