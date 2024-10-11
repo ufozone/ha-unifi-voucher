@@ -261,7 +261,7 @@ _These entities are disabled by default. You have to activate it if you want to 
   Attributes:
 
   ```text
-  wlan_name, id, quota, used, duration, status, create_time, start_time, end_time, status_expires, usage_quota, rate_max_up, rate_max_down, last_poll
+  wlan_name, id, note, quota, used, duration, status, create_time, start_time, end_time, status_expires, usage_quota, rate_max_up, rate_max_down, last_poll
   ```
 
 ### Services
