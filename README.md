@@ -174,7 +174,7 @@ Start setup:
 
 ### Buttons
 
-* create
+* button.*{config_id}*_create
 
   Attributes:
 
@@ -182,7 +182,7 @@ Start setup:
   last_poll
   ```
 
-* delete
+* button.*{config_id}*_delete
 
   Attributes:
 
@@ -190,7 +190,7 @@ Start setup:
   last_poll
   ```
 
-* update
+* button.*{config_id}*_update
 
   Attributes:
 
@@ -202,7 +202,7 @@ Start setup:
 
 *This entity is disabled by default. You have to activate it if you want to use it.*
 
-* qr_code
+* image.*{config_id}*_qr_code
 
   Attributes:
 
@@ -214,7 +214,7 @@ Start setup:
 
 *These entities are disabled by default. You have to activate it if you want to use it.*
 
-* voucher_quota
+* number.*{config_id}*_voucher_quota
 
   Attributes:
 
@@ -222,7 +222,7 @@ Start setup:
   last_poll
   ```
 
-* voucher_duration
+* number.*{config_id}*_voucher_duration
 
   Attributes:
 
@@ -230,7 +230,7 @@ Start setup:
   last_poll
   ```
 
-* voucher_usage_quota
+* number.*{config_id}*_voucher_usage_quota
 
   Attributes:
 
@@ -238,7 +238,7 @@ Start setup:
   last_poll
   ```
 
-* voucher_rate_max_up
+* number.*{config_id}*_voucher_rate_max_up
 
   Attributes:
 
@@ -246,7 +246,7 @@ Start setup:
   last_poll
   ```
 
-* voucher_rate_max_down
+* number.*{config_id}*_voucher_rate_max_down
 
   Attributes:
 
@@ -256,7 +256,7 @@ Start setup:
 
 ### Sensors
 
-* voucher
+* sensor.*{config_id}*_voucher
 
   Attributes:
 
