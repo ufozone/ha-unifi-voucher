@@ -200,7 +200,7 @@ Start setup:
 
 ### Images
 
-_This entity is disabled by default. You have to activate it if you want to use it._
+*This entity is disabled by default. You have to activate it if you want to use it.*
 
 * qr_code
 
@@ -212,7 +212,7 @@ _This entity is disabled by default. You have to activate it if you want to use 
 
 ### Numbers
 
-_These entities are disabled by default. You have to activate it if you want to use it._
+*These entities are disabled by default. You have to activate it if you want to use it.*
 
 * voucher_quota
 
