@@ -5,5 +5,5 @@ pydocstyle==6.3.0
 isort==5.13.2
 aiounifi==80
 segno==1.6.1
-Pillow==10.4.0
+Pillow==11.0.0
 pytest-homeassistant-custom-component==0.13.184
