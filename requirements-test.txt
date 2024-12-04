@@ -1,9 +1,9 @@
 pip>=21.0,<24.4
 colorlog==6.9.0
-ruff==0.7.4
+ruff==0.8.1
 pydocstyle==6.3.0
 isort==5.13.2
 aiounifi==80
 segno==1.6.1
 Pillow==11.0.0
-pytest-homeassistant-custom-component==0.13.183
+pytest-homeassistant-custom-component==0.13.184

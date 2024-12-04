@@ -1,8 +1,16 @@
 {
   "services": {
-    "create": "mdi:plus",
-    "delete": "mdi:delete",
-    "list": "mdi:format-list-bulleted",
-    "update": "mdi:update"
+    "create": {
+      "service": "mdi:plus"
+    },
+    "delete": {
+      "service": "mdi:delete"
+    },
+    "list": {
+      "service": "mdi:format-list-bulleted"
+    },
+    "update": {
+      "service": "mdi:update"
+    }
   }
 }
