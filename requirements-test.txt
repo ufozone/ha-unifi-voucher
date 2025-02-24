@@ -6,4 +6,4 @@ isort==6.0.0
 aiounifi==81
 segno==1.6.1
 Pillow==11.1.0
-pytest-homeassistant-custom-component==0.13.214
+pytest-homeassistant-custom-component==0.13.215
