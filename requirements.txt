@@ -3,7 +3,7 @@ colorlog==6.9.0
 ruff==0.9.10
 pydocstyle==6.3.0
 isort==6.0.1
-aiounifi==82
+aiounifi==83
 segno==1.6.1
 Pillow==11.1.0
 homeassistant==2025.2.0
