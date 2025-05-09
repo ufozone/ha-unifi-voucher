@@ -55,7 +55,7 @@ DEFAULT_VOUCHER = {
         "max": 10000,
     },
     CONF_VOUCHER_DURATION: {
-        "default": 24,
+        "default": 1440,
         "min": 1,
         "max": 1000000,
     },

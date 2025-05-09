@@ -25,15 +25,15 @@ create:
           mode: slider
     duration:
       required: false
-      example: 24
-      default: 24
+      example: 1440
+      default: 1440
       selector:
         number:
           min: 1
           max: 1000000
           step: 1
           mode: slider
-          unit_of_measurement: hours
+          unit_of_measurement: minutes
     usage_quota:
       required: false
       example: 1024

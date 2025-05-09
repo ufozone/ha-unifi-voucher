@@ -50,7 +50,7 @@ def async_setup_services(
                 "code": voucher.get("code"),
                 "quota": voucher.get("quota"),
                 "used": voucher.get("used"),
-                "duration": int(voucher.get("duration").total_seconds() / 3600),
+                "duration": int(voucher.get("duration").total_seconds() / 60),
                 "status": voucher.get("status"),
                 "create_time": voucher.get("create_time"),
             }
@@ -61,7 +61,7 @@ def async_setup_services(
                 _x["end_time"] = voucher.get("end_time")
 
             if voucher.get("status_expires") is not None:
-                _x["status_expires"] = int(voucher["status_expires"].total_seconds() / 3600)
+                _x["status_expires"] = int(voucher["status_expires"].total_seconds() / 60)
 
             if voucher.get("qos_usage_quota") > 0:
                 _x["usage_quota"] = voucher.get("qos_usage_quota")

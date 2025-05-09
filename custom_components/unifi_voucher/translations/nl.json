@@ -241,7 +241,7 @@
         },
         "duration": {
           "name": "DuratDurationion",
-          "description": "Geeft aan hoe lang een voucher geldig is (in uren) vanaf het moment dat deze wordt ingevoerd."
+          "description": "Geeft aan hoe lang een voucher geldig is (in notulen) vanaf het moment dat deze wordt ingevoerd."
         },
         "usage_quota": {
           "name": "Datalimiet",

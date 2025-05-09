@@ -241,7 +241,7 @@
         },
         "duration": {
           "name": "Laufzeit",
-          "description": "Gibt an, wie lange ein Gutschein ab dem Zeitpunkt seiner Eingabe gültig ist (in Stunden)."
+          "description": "Gibt an, wie lange ein Gutschein ab dem Zeitpunkt seiner Eingabe gültig ist (in Minuten)."
         },
         "usage_quota": {
           "name": "Datenkontingent",

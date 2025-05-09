@@ -289,7 +289,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
                     number=number,
                     quota=quota,
                     expire_number=duration,
-                    expire_unit=60,
+                    expire_unit=1,
                     usage_quota=usage_quota,
                     rate_max_up=rate_max_up,
                     rate_max_down=rate_max_down,

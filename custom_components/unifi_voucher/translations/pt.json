@@ -241,7 +241,7 @@
         },
         "duration": {
           "name": "Duração",
-          "description": "Especifica durante quanto tempo um voucher é válido (em horas) a partir do momento em que é utilizado."
+          "description": "Especifica durante quanto tempo um voucher é válido (em minutos) a partir do momento em que é utilizado."
         },
         "usage_quota": {
           "name": "Limite de dados",

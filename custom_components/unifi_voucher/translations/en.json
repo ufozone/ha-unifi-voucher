@@ -241,7 +241,7 @@
         },
         "duration": {
           "name": "Duration",
-          "description": "Specifies how long a voucher is valid (in hours) from the time it is entered."
+          "description": "Specifies how long a voucher is valid (in minutes) from the time it is entered."
         },
         "usage_quota": {
           "name": "Data limit",

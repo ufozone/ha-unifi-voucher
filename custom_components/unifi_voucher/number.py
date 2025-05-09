@@ -46,7 +46,7 @@ async def async_setup_entry(
         NumberEntityDescription(
             key=CONF_VOUCHER_DURATION,
             icon="mdi:clock-outline",
-            native_unit_of_measurement=UnitOfTime.HOURS,
+            native_unit_of_measurement=UnitOfTime.MINUTES,
             translation_key=CONF_VOUCHER_DURATION,
             entity_category=EntityCategory.CONFIG,
         ),

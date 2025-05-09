@@ -359,7 +359,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                     ),
                     vol.Optional(
                         CONF_VOUCHER_DURATION,
-                        default=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("default", 24),
+                        default=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("default", 1440),
                         description={
                             "suggested_value": _get_option((user_input or {}), CONF_VOUCHER_DURATION),
                         },
@@ -369,7 +369,7 @@ class UnifiVoucherConfigFlow(ConfigFlow, domain=DOMAIN):
                             min=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("min", 1),
                             max=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("max", 1000000),
                             step=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("step", 1),
-                            unit_of_measurement=UnitOfTime.HOURS,
+                            unit_of_measurement=UnitOfTime.MINUTES,
                         )
                     ),
                     vol.Optional(
@@ -583,7 +583,7 @@ class UnifiVoucherOptionsFlowHandler(OptionsFlow):
                     ),
                     vol.Optional(
                         CONF_VOUCHER_DURATION,
-                        default=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("default", 24),
+                        default=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("default", 1440),
                         description={
                             "suggested_value": _get_option((user_input or self.options or {}), CONF_VOUCHER_DURATION),
                         },
@@ -593,7 +593,7 @@ class UnifiVoucherOptionsFlowHandler(OptionsFlow):
                             min=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("min", 1),
                             max=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("max", 1000000),
                             step=DEFAULT_VOUCHER[CONF_VOUCHER_DURATION].get("step", 1),
-                            unit_of_measurement=UnitOfTime.HOURS,
+                            unit_of_measurement=UnitOfTime.MINUTES,
                         )
                     ),
                     vol.Optional(
