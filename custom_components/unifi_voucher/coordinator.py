@@ -4,9 +4,11 @@ from __future__ import annotations
 import asyncio
 
 from datetime import timedelta
+from awesomeversion import AwesomeVersion
 
 from homeassistant.core import HomeAssistant
 from homeassistant.const import (
+    __version__ as HAVERSION,
     CONF_HOST,
     CONF_PASSWORD,
     CONF_PORT,
@@ -65,12 +67,23 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         update_interval: timedelta = timedelta(seconds=UPDATE_INTERVAL),
     ) -> None:
         """Initialize."""
-        super().__init__(
-            hass=hass,
-            logger=LOGGER,
-            name=DOMAIN,
-            update_interval=update_interval,
-        )
+        # Version threshold for config_entry setting in options flow
+        # See: https://github.com/home-assistant/core/pull/129562
+        if AwesomeVersion(HAVERSION) > "2025.07.99":
+            super().__init__(
+                hass=hass,
+                logger=LOGGER,
+                name=DOMAIN,
+                config_entry=config_entry,
+                update_interval=update_interval,
+            )
+        else:
+            super().__init__(
+                hass=hass,
+                logger=LOGGER,
+                name=DOMAIN,
+                update_interval=update_interval,
+            )
         self.hass = hass
         self.config_entry = config_entry
         self.client = UnifiVoucherApiClient(
