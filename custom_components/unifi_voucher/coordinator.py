@@ -69,7 +69,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         """Initialize."""
         # Version threshold for config_entry setting in options flow
         # See: https://github.com/home-assistant/core/pull/129562
-        if AwesomeVersion(HAVERSION) > "2025.08.99":
+        if AwesomeVersion(HAVERSION) > "2025.07.99":
             super().__init__(
                 hass=hass,
                 logger=LOGGER,
