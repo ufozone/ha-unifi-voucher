@@ -39,7 +39,7 @@ def async_setup_services(
 ) -> None:
     """Set up services for UniFi Hotspot Manager integration."""
 
-    @verify_domain_control(hass, DOMAIN)
+    @verify_domain_control(DOMAIN)
     async def async_list(service_call: ServiceCall) -> ServiceResponse:
         LOGGER.debug(service_call)
         _vouchers = []
@@ -79,7 +79,7 @@ def async_setup_services(
             "vouchers": list(_vouchers),
         }
 
-    @verify_domain_control(hass, DOMAIN)
+    @verify_domain_control(DOMAIN)
     async def async_create(service_call: ServiceCall) -> None:
         LOGGER.debug(service_call)
         await coordinator.async_create_voucher(
@@ -92,14 +92,14 @@ def async_setup_services(
             note=service_call.data.get("note"),
         )
 
-    @verify_domain_control(hass, DOMAIN)
+    @verify_domain_control(DOMAIN)
     async def async_delete(service_call: ServiceCall) -> None:
         LOGGER.debug(service_call)
         await coordinator.async_delete_voucher(
             obj_id=service_call.data.get("id"),
         )
 
-    @verify_domain_control(hass, DOMAIN)
+    @verify_domain_control(DOMAIN)
     async def async_update(service_call: ServiceCall) -> None:
         LOGGER.debug(service_call)
         await coordinator.async_update_vouchers()
