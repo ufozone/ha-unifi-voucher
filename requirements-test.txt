@@ -1,5 +1,5 @@
 pip>=21.0,<25.3
-colorlog==6.9.0
+colorlog==6.10.1
 ruff==0.14.1
 pydocstyle==6.3.0
 isort==7.0.0
