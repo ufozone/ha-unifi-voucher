@@ -5,11 +5,18 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "friday"
+      time: "07:00"
 
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "friday"
+      time: "07:00"
+    allow:
+      # Allow both direct and indirect updates for all packages.
+      - dependency-type: "all"
     ignore:
       # Dependabot should not update Home Assistant as that should match the homeassistant key in hacs.json
       - dependency-name: "homeassistant"
