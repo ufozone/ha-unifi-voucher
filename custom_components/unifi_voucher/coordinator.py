@@ -161,7 +161,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         _host = self.config_entry.data.get(CONF_HOST)
         _port = self.config_entry.data.get(CONF_PORT)
         _site_id = self.config_entry.data.get(CONF_SITE_ID)
-        return f"https://{_host}:{_port}/network/{_site_id}/hotspot"
+        return f"https://{_host}:{_port}/network/{_site_id}/clients/hotspot"
 
     def get_wlan_name(
         self,
