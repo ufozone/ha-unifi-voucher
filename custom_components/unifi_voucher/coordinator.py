@@ -197,6 +197,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         )
         if self._scheduled_update_entry:
             self._scheduled_update_entry.cancel()
+
         self._scheduled_update_entry = self.hass.loop.call_later(
             3,
             lambda: self.hass.config_entries.async_update_entry(
