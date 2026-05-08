@@ -1,4 +1,4 @@
-pip>=26.1,<26.2
+pip>=26.1.1,<26.2
 colorlog==6.10.1
 ruff==0.15.12
 pydocstyle==6.3.0
