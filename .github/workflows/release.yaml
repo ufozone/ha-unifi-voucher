@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Get integration information
         id: information
         run: |
@@ -28,7 +28,7 @@ jobs:
           cd "${{ github.workspace }}/custom_components/${{ steps.information.outputs.name }}"
           zip ${{ steps.information.outputs.name }}.zip -r ./
       - name: Upload the zipfile as a release asset
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: ${{ github.workspace }}/custom_components/${{ steps.information.outputs.name }}/${{ steps.information.outputs.name }}.zip
           tag_name: ${{ github.event.release.tag_name }}
