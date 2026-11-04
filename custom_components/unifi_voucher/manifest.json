@@ -19,5 +19,5 @@
     "aiounifi>=90",
     "segno>=1.6.6"
   ],
-  "version": "1.5.3"
+  "version": "1.5.4"
 }
