@@ -214,4 +214,32 @@ class UnifiVoucherApiClient:
         api_request: ApiRequest,
     ) -> TypedApiResponse:
         """Make a request to the API, retry login on failure."""
-        return await self.controller.request(api_request)
+        try:
+            async with asyncio.timeout(10):
+                try:
+                    raw = await self.controller.request(api_request)
+                except aiounifi.LoginRequired:
+                    await self.controller.login()
+                    raw = await self.controller.request(api_request)
+        except (
+            aiounifi.Unauthorized,
+            aiounifi.Forbidden,
+        ) as err:
+            raise UnifiVoucherApiAuthenticationError from err
+        except aiounifi.NoPermission as err:
+            raise UnifiVoucherApiAccessError from err
+        except (
+            TimeoutError,
+            aiounifi.BadGateway,
+            aiounifi.ServiceUnavailable,
+            aiounifi.RequestError,
+            aiounifi.ResponseError,
+        ) as err:
+            raise UnifiVoucherApiConnectionError from err
+        except aiounifi.AiounifiException as err:
+            raise UnifiVoucherApiError from err
+
+        if not isinstance(raw, dict) or raw.get("meta", {}).get("rc") != "ok":
+            raise UnifiVoucherApiError("Invalid response from UniFi Network")
+
+        return raw

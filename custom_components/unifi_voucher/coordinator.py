@@ -29,6 +29,7 @@ from aiounifi.interfaces.vouchers import Vouchers
 from aiounifi.models.voucher import (
     VoucherCreateRequest,
     VoucherDeleteRequest,
+    VoucherListRequest,
 )
 
 from .const import (
@@ -211,13 +212,15 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
 
     async def async_fetch_vouchers(
         self,
+        allow_create: bool = True,
     ) -> None:
         """Fetch data for all vouchers."""
         _vouchers = {}
         _latest_voucher_id = None
 
+        raw = await self.client.request(VoucherListRequest.create())
         vouchers = Vouchers(self.client.controller)
-        await vouchers.update()
+        vouchers.process_raw(raw.get("data", []))
 
         self._last_pull = dt_util.now()
         self._available = True
@@ -259,7 +262,11 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
         self.latest_voucher_id = _latest_voucher_id
 
         # If no voucher found, create a new one
-        if _latest_voucher_id is None and self.config_entry.options.get(CONF_CREATE_IF_NONE_EXISTS, False):
+        if (
+            allow_create
+            and _latest_voucher_id is None
+            and self.config_entry.options.get(CONF_CREATE_IF_NONE_EXISTS, False)
+        ):
             LOGGER.info("No voucher found, create a new one")
             await self.async_create_voucher()
 
@@ -298,7 +305,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
             else:
                 note = DEFAULT_IDENTIFIER_STRING
 
-            await self.client.controller.request(
+            await self.client.request(
                 VoucherCreateRequest.create(
                     number=number,
                     quota=quota,
@@ -310,7 +317,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
                     note=note,
                 )
             )
-            await self.async_update_vouchers()
+            await self.async_update_vouchers(allow_create=False)
         except Exception as exception:
             LOGGER.exception(exception)
 
@@ -325,7 +332,7 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
                 if (obj_id := self.latest_voucher_id) is None:
                     raise ValueError
 
-            await self.client.controller.request(
+            await self.client.request(
                 VoucherDeleteRequest.create(
                     obj_id=obj_id,
                 )
@@ -336,10 +343,11 @@ class UnifiVoucherCoordinator(DataUpdateCoordinator):
 
     async def async_update_vouchers(
         self,
+        allow_create: bool = True,
     ) -> None:
         """Update vouchers."""
         try:
-            await self.async_fetch_vouchers()
+            await self.async_fetch_vouchers(allow_create=allow_create)
 
             # Always update HA states after a command was executed.
             # API calls that change the lawn mower's state update the local object when
